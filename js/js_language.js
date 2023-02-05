@@ -62,7 +62,7 @@ function updateLang_index() {
 // Language Arrays for different pages
 function buildIndexArray() {
     indexArray[0] = "Home";
-    indexArray[1] = '家';
+    indexArray[1] = '歸宿';
     indexArray[2] = "Search";
     indexArray[3] = '搜索';
     indexArray[4] = "Resume";
@@ -73,25 +73,25 @@ function buildIndexArray() {
     indexArray[9] = '游戲';
     indexArray[10] = 'Noodles';
     indexArray[11] = '麵';
-    indexArray[12] = 'Joseph Heaton';
-    indexArray[13] = '我的名字是何喬夫';
-    indexArray[14] = "English Teacher";
-    indexArray[15] = '你是誰？';
-    indexArray[16] = 'Friends & Family';
-    indexArray[17] = '朋友和家人';
+    indexArray[12] = 'Welcome to ';
+    indexArray[13] = '大家歡迎';
+    indexArray[14] = "josephheaton.com ";
+    indexArray[15] = 'josephheaton.com';
+    indexArray[16] = 'Photo Gallery';
+    indexArray[17] = '照片';
     indexArray[18] = 'Professional';
     indexArray[19] = '專業';
-    indexArray[20] = 'Former Students';
-    indexArray[21] = '前的學生';
+    indexArray[20] = 'Games';
+    indexArray[21] = '游戲';
     indexArray[22] = '中文';
     indexArray[23] = 'English';
     indexArray[24] = '語言:';
     indexArray[25] = 'Language:';
     indexArray[26] = '中文';
     indexArray[27] = 'English';
-    indexArray[28] = 'Coffee fanatic';
-    indexArray[29] = '專業';
-    indexArray[30] = 'Marathon runner';
-    indexArray[31] = '專業';
+    indexArray[28] = 'where I test out my web development projects.';
+    indexArray[29] = '？？？';
+    indexArray[30] = '？？？';
+    indexArray[31] = '？？？';
 }
 

@@ -1,15 +1,24 @@
-* {
-    font-family:'Courier New', Courier, monospace;
+
+@font-face {
+    font-family: Chinese1;
+    src: url(/static/SentyWEN2017.ttf);
+}
+@font-face {
+    font-family: Chinese2;
+    src: url(/static/HanyiSentyTang.ttf);
 }
 
+* {
+    font-family:'Courier New', Courier, monospace;
+    /* font-family:'Chinese2' */
+}
 
 body {
-    background-color: rgb(0, 0, 0);
+    background-color: black;
 } 
 
 div {
-    border-style:none;
-    border-color: red;
+    /* border: 2px solid red; */
 }
 
 /* Header */
@@ -20,20 +29,19 @@ div {
     font-family:'Courier New', Courier, monospace;
     position: fixed;
     top: 0px;
-    background-color: rgba(0,0,0,1);
+    background-color: rgba(12, 71, 57, 0.8);
     left:0px;
     height: 50px;
     font-size: x-large;
     width: 100%;
     z-index: 1;
-    border-style: none;
 }
 
 #lang0 { 
     left: 20px;
     position: absolute;
-    bottom:0px;
-    height:25px;
+    top:0px;
+    height:100%;
 }
 
 #search_container {
@@ -41,12 +49,12 @@ div {
     text-decoration: none;
     right: 20px;
     position: absolute;
-    bottom: 7px;
     width:200px;
-    text-align: right;
-    border-style: none;
-    padding: 15px;
+    display: flex;
+    align-items:center;
+    justify-content: flex-end;
     top:0px;
+    height:100%;
     
 }
 
@@ -63,22 +71,24 @@ div {
 }
 
 #topnav_links_container {
-    display: inline;
+    display: flex;
+    align-items: center;
     right: -700px;
-    bottom:0px;
+    top:0px;
     position: absolute;
+    height:100%;
 }
 
 
 .navlink:link, .navlink:visited {
-    position: relative;
     background-color: transparent;
     color: white;
     text-decoration: none;
-    padding:11px 15px;
-    height: 50px;
     z-index: 1;
-    bottom:0px;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    height:100%;
 }
 
 .navlink:hover, .navlink:active {
@@ -87,108 +97,109 @@ div {
 }
 
 /* Main content */
-
-/*   to right, rgba(247, 248, 251, 0), rgba(247, 248, 251, .2), rgba(45, 172, 192,1),rgba(45, 172, 192,1)    */
-
 #main_content {   
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.4), rgb(255, 255, 255),rgb(255, 255, 255)),
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.0), rgba(32, 168, 171, 0.6), rgb(32, 168, 171,.7)),
     url('/images/background_pic.jpg');
     background-repeat: no-repeat;
     background-position-x: 0px;
-    background-size: auto 100%;
-    height: 92vh;
+    background-position-x: 0px;
+    background-size: 100% auto;
+    top:50px;
+    width: 100%;
+    position: absolute;
+    height:92vh;
+    display: flex;
+    flex-direction: row;
+    left: 0px;
     margin:0px;
-    top:43px;
-    position: relative;
 }
 
+@media only screen and (max-width: 1250px) {
+    #main_content {
+        background-size: auto 100%;
+    }
+  }
+
 #main_middle {
-    position: absolute;
     width:70%;
-    left:0px;
-    border:1px solid;
-    border-color: red;
-    display:flex;
-    align-items: center;
+    display: flex;
+    align-items:flex-end;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10%;
 }
 
 #text_container {
-    background-color: rgb(255, 255, 255,.4);
-    padding:  1%;
-    position:absolute;
-    left: 30%;
+    background-color: rgba(18, 78, 69, 0.6);
+    padding:  2%;
+    color:white;
+    width: 350px;
+    font-size:1.2rem;
+    border-radius: 20px;;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-weight: 540;
     
 }
 
-#text_container ul li {
-    font-size: larger;
-    font-weight:600;
-    margin: 5px;
+#text_container :nth-child(3) {
+    font-size:2.2rem;
 }
 
 #paths_container {
-    position: absolute;
+    margin-top:0px;
     margin-right: 50px;
-    border: 2px solid;
-    border-color: red;
+    display: flex;
+    flex-direction: column;
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+    justify-content:space-evenly;
 }
 
 #paths_container a {
-    position:absolute;
-    background-repeat: no-repeat;
-    background-position-x: 0px;
-    background-size: auto 100%;
-    border: 2px solid;
-    border-color: red;
-    height:100px;
-    width:100px;
-    
+    margin:5%;
+    display: flex;
+    position: relative;
 }
-
-#paths_container:nth-child(1) {
-    background-image: url(/images/friends_pic.png);
-}
-#paths_container:nth-child(2) {
-    background-image: url(/images/prof_pic.png);
-}
-#paths_container:nth-child(3) {
-    background-image: url(/images/class_pic.png);
-}
-
 
 #paths_container img {
     height: 22vh;
+    filter:saturate(.2) contrast(.7) brightness(1.1);
     opacity: 1;
-    border-radius: 5%;
-    opacity: 1;
-    filter:brightness(.8);
-    border-radius: 20px;
-    border-color: rgb(0, 0, 0);
-    border-style: solid;
-    border-width: 6px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
 
 }
 
 .path_text {
     position: absolute;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size:xx-large;
-    font-weight: 540;
+    font-weight: 550;
     display: flex;
+    width: 97%;
+    margin: 5px;
     justify-content: center;
-    align-self: flex-end;
-    background-color: rgb(255, 255, 255,.6);
-    padding-bottom: 6px;
+    align-self:center;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1),rgba(12, 71, 57, 0.8),rgba(12, 71, 57, 0.8),rgba(12, 71, 57, 0.8),rgba(251, 251, 251, 0.1));
+    z-index: 5;
+    padding-bottom: 0px;
 
 
 
 }
 
 #paths_container a:hover img {
-    border-color: rgb(56, 104, 237);
-    border-style: solid;
-    border-width: 8px;
     transition: .2s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+    filter:saturate(.9) contrast(.9) brightness(1.0);
+}
+
+#paths_container a:hover div {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.1),rgba(12, 71, 57, 0.8),rgba(12, 71, 57, 0.8),rgba(12, 71, 57, 0.8),rgba(251, 251, 251, 0.1));
+    
 }
 
 /* footer */
@@ -199,7 +210,7 @@ div {
     width: 100%;
     display:flex;
     bottom: 5%;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 .lang_container a {
@@ -208,11 +219,11 @@ div {
 
 .lang_container a label {
     cursor: pointer;
-    color: rgb(30, 44, 192);
+    color: rgb(34, 145, 214);
     padding: 2px;
 }
 
 .lang_container a label:hover {
-    color: rgb(255, 255, 255);
-    background-color: black;
+    color: rgb(21, 21, 171);
+    background-color: rgb(255, 255, 255);
 }
