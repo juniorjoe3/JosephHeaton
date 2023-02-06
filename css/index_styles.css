@@ -23,79 +23,6 @@ body {
 
 /* Header */
 
-
-/* top nav bar */
-#topnav_container {
-    font-family:'Courier New', Courier, monospace;
-    position: fixed;
-    top: 0px;
-    background-color: rgba(12, 71, 57, 0.8);
-    left:0px;
-    height: 50px;
-    font-size: x-large;
-    width: 100%;
-    z-index: 1;
-}
-
-#lang0 { 
-    left: 20px;
-    position: absolute;
-    top:0px;
-    height:100%;
-}
-
-#search_container {
-    color: white;
-    text-decoration: none;
-    right: 20px;
-    position: absolute;
-    width:200px;
-    display: flex;
-    align-items:center;
-    justify-content: flex-end;
-    top:0px;
-    height:100%;
-    
-}
-
-#search_container:hover {
-    color:transparent;
-    transition: 0.1s;
-    width: 700px;
-}
-
-#search_container:hover #topnav_links_container {
-    right: 7px;
-    transition: .8s;
-    transition-delay: .1s;
-}
-
-#topnav_links_container {
-    display: flex;
-    align-items: center;
-    right: -700px;
-    top:0px;
-    position: absolute;
-    height:100%;
-}
-
-
-.navlink:link, .navlink:visited {
-    background-color: transparent;
-    color: white;
-    text-decoration: none;
-    z-index: 1;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    height:100%;
-}
-
-.navlink:hover, .navlink:active {
-    background-color: rgb(255, 255, 255);
-    color:rgb(0, 0, 0)
-}
-
 /* Main content */
 #main_content {   
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0),rgba(0, 0, 0, 0.0), rgba(32, 168, 171, 0.6), rgb(32, 168, 171,.7)),
@@ -104,14 +31,15 @@ body {
     background-position-x: 0px;
     background-position-x: 0px;
     background-size: 100% auto;
-    top:50px;
+    top:0px;
     width: 100%;
     position: absolute;
-    height:92vh;
+    height:100vh;
     display: flex;
     flex-direction: row;
     left: 0px;
     margin:0px;
+    overflow: hidden;
 }
 
 @media only screen and (max-width: 1250px) {
@@ -169,7 +97,7 @@ body {
     filter:saturate(.2) contrast(.7) brightness(1.1);
     opacity: 1;
     border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
+    box-shadow: 0 4px 8px 0 rgba(245, 239, 239, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
 
 }
 

@@ -1,6 +1,6 @@
 
 //Set up event listeners
-document.getElementById('index_lang_btn').addEventListener("click", function(){ toggleLang('index'); });  
+// document.getElementById('index_lang_btn').addEventListener("click", function(){ toggleLang('index'); });  
 
 
 //check local storage for current language setting
@@ -54,7 +54,9 @@ function updateLang_index() {
     for (let id = 0; id < indexArray.length; id+= 2) {
         idString = "lang" + id
         idNum = Number(id) + Number(currentLang);
+        if (document.getElementById(idString)){
         document.getElementById(idString).innerHTML = indexArray[idNum];
+        }
     }
 }
 
@@ -81,8 +83,8 @@ function buildIndexArray() {
     indexArray[17] = '照片';
     indexArray[18] = 'Professional';
     indexArray[19] = '專業';
-    indexArray[20] = 'Games';
-    indexArray[21] = '游戲';
+    indexArray[20] = 'Projects';
+    indexArray[21] = '???';
     indexArray[22] = '中文';
     indexArray[23] = 'English';
     indexArray[24] = '語言:';
