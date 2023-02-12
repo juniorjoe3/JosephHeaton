@@ -157,6 +157,7 @@ function printToPage(array) {
     imgTag.id = array[i][1];
     imgTag.className = "gal_images"
     imgTag.setAttribute('onmouseover','imgFocus(this)');
+    imgTag.setAttribute('onclick','imgClick(this)');
     imgTag.src = String("../gallery_images/" + array[i][2]);
   }
 }
@@ -183,12 +184,12 @@ function sliderUpdate() {
   const gal_width = document.getElementById('gallery_container').clientWidth;
   const gal_height = document.getElementById('gallery_container').clientHeight;
   const new_height = gal_height * (slider.value/100);
-  console.log(gal_width);
+  // console.log(gal_width);
   console.log('start');
   for (let i = 0; i < imgTags.length; i++) {
     const natural_ratio = Math.round((imgTags[i].naturalHeight / imgTags[i].naturalWidth)*10000) / 10000;
     const new_width = new_height / natural_ratio;
-    console.log(new_width);
+    // console.log(new_width);
     if (new_width < gal_width) {
       imgTags[i].style.height = slider.value + "%";
     }
@@ -199,4 +200,18 @@ function imgFocus(imgTag) {
   const pTag = document.getElementById('description')
   pTag.innerHTML = imgTag.id;
   console.log('run');
+}
+
+function imgClick(imgTag) {
+  const win = window.open('','Joseph Heaton - Full Image');
+  const img = win.document.createElement('img')
+  img.src = imgTag.src;
+  const imgRatio = img.naturalWidth / img.naturalHeight;
+  const winRatio = window.screen.width / window.screen.height;
+  if (imgRatio < winRatio) {
+    img.height = window.screen.height *.85;
+  } else {
+    img.width = window.screen.width *.85;
+  }
+  win.document.body.appendChild(img);
 }
