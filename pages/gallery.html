@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/com_topnav.css" />
     <link rel="stylesheet" type="text/css" href="../css/gallery_styles.css" />
+    <link rel="stylesheet" type="text/css" href="../css/com_scrollbar.css" />
+    <script type="text/javascript" src="../js/js_gallery.js"></script>
     <title>Joseph Heaton - Photos</title>
 </head>
 <body>
@@ -23,15 +25,30 @@
         </div>
     </div>
     <div id="main_content">
-        <div id="side_bar">
-            <button>hello</button>
+        <div id="left_side_bar">
+            <h2>Tags</h3>
+            <button id="toggleCheckboxes_btn" onclick="toggleCheckboxes()">Uncheck All</button>
+            <div id="tag_container">
+            </div>
         </div>
         <div id="gallery_container">
 
         </div>
+        <div id="right_side_bar">
+            <h2>Scale</h2>
+            <div class="slidecontainer">
+                <input type="range" min="20" max="95" value="50" class="slider" id="myRange" orient="vertical" oninput="sliderUpdate()" onchange="sliderUpdate()">
+            </div>
+        </div>
     </div>
-    <script type="module" src="../js/js_language.js"></script>
-    <script type="module" src="../js/js_gallery.js"></script>
-    <script type="module" src="../js/js_index.js"></script>
+    <div id="footer">
+        <div id="info_container">
+            <h3>Image Description:</h2>
+            <p id="description">awdwadwadda</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+        getGalleryStringFile();
+    </script>
 </body>
 </html>

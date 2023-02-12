@@ -1,8 +1,115 @@
-3, title, description, filename, 
-snow, yeet, snow.jpg,
-siblings, yolo, siblings.jpg,
-boat, a boat on the water, boat.jpg,
-church, my farewell at church, church.jpg,
-coffee, stock picture of expresso being brewed, Coffee.jpg,
-Detroit, The skyline of Detroit, Detroit.jpg,
-Roseville, a picture of National Coney Island, Roseville.jpg
+title, description, image, tags
+
+*row=> snow, Dad and I building a snowman in the front yard ~2019, snow.jpg 
+    *list=> Home, Me
+*row=> siblings, All four siblings together in Rogers City Michigan on a camping trip, siblings.jpg
+    *list=>  Family, Me
+*row=> church, Both Sam's and my farewell at church -2020, church.jpg 
+    *list=> Church, Me  
+*row=> Beach, The brothers walking back after swimming to a small island just off the beach, beach.jpg 
+    *list=> Family, Me
+*row=> Chiang, Chiang Kai-shek Memorial Hall in Taipei -2021, Chiang.jpg
+    *list=> Taipei, Taiwan
+*row=> Garden1, The garden of the National Palace Museum in Taipei -2021, Garden1.jpg 
+    *list=> Taipei, Taiwan
+*row=> Jiufen1, A view down one of Jiufen Old Street's many corridors, Jiufen1.jpg
+    *list=> Jiufen, Taiwan
+*row=> Jiufen2, A view down one of Jiufen Old Street's many corridors, Jiufen2.jpg
+    *list=> Jiufen, Taiwan
+*row=> Selfie1, The garden of the National Palace Museum in Taipei -2021, Selfie1.jpg
+    *list=> Taipei, Taiwan, Me
+*row=> Taipei_1, An ariel view of Taipei from Taipei 101, Taipei_1.jpg
+    *list=> Taipei, Taiwan
+*row=> Taipei_Fireworks1, 2021 to 2022 New Year celebration, Taipei_Fireworks1.jpg
+    *list=> Taipei, Taiwan, Celebration
+*row=> Taipei_Fireworks2, 2021 to 2022 New Year celebration, Taipei_Fireworks2.jpg
+    *list=> Taipei, Taiwan, Celebration
+*row=> Taipei_2, An ariel view of Taipei from Taipei 101, Taipei2.jpg
+    *list=> Taipei, Taiwan
+*row=> Taipei3, A selfie of me and Angel on top Taipei 101, Taipei3.jpg
+    *list=> Taipei, Taiwan, Me
+*row=> Taipei101, Taipei 101 from Elephant Mountain, Taipei101.jpg 
+    *list=> Taipei, Taiwan
+*row=> Taipei101_selfie, A selfie on top Elephant Mountain, Taipei101_selfie.jpg
+    *list=> Taipei, Taiwan, Me
+*row=> TeaHouse, The tea house we visited while in Jiufen Old Street, TeaHouse.jpg
+    *list=> Taiwan, Jiufen
+*row=> alishan1, Overlooking a tea field in Alishan, alishan1.jpg
+    *list=> Alishan,Taiwan
+*row=> alishan2, Sunset on Alishan, alishan2.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan3, Making a pit stop in Alishan, alishan3.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan4, On our way up Alishan ,alishan4.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan5, A window into heaven ,alishan5.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan6, On top Alishan ,alishan6.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan7, Tea fields around Alishan ,alishan7.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan8, Tea fields around Alishan,alishan8.jpg
+    *list=> Alishan, Me,Taiwan
+*row=> alishan9, Can you spot Angel? ,alishan9.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan10, Sunset in Alishan,alishan10.jpg
+    *list=> Alishan, Me,Taiwan
+*row=> alishan11, Hiking down a tea field in Alishan,alishan11.jpg
+    *list=> Alishan ,Taiwan
+*row=> alishan12, Taking the old Alishan train up to the trail,alishan12.jpg
+    *list=> Alishan, Me ,Taiwan
+*row=> alishan13, Us looking out over a tea field ,alishan13.jpg
+    *list=> Alishan, Me ,Taiwan
+*row=> alishan14, Us taking a quick break from scootering ,alishan14.jpg
+    *list=> Alishan, Me ,Taiwan
+*row=> bear1, Hanging out with bear while home in August, bear1.jpg 
+    *list=> Home
+*row=> bear2, Bear wanting to go to Taipei with me, bear2.jpg 
+    *list=> Home
+*row=> bigtree, Me standing in front of one of the largest trees in Taiwan, bigtree.jpg
+    *list=> Alishan, Me,Taiwan
+*row=> buddha, Fo Guang Shan Buddha Museum, buddha.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> buddha2, The golden Buddha at Fo Guang Shan Buddha Museum, buddha2.jpg
+    *list=> Kaohsiung, Taiwan, Me
+*row=> buddha3,  Fo Guang Shan Buddha Museum, buddha3.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> dolphins, Dolphin watching in Hualien, dolphins.jpg
+    *list=> Taiwan, Hualien
+*row=> dongdamen, Dong Da Men Night Market in Hualien, dongdamen.jpg
+    *list=> Taiwan, Hualien
+*row=> lanter, Lantern Festival at Lotus Ponds in Kaohsiung, lantern.jpg
+    *list=> Kaohsiung, Taiwan, Celebration
+*row=> light1, A light show for the Lantern Festival in Kaohsiung, light1.jpg
+    *list=> Kaohsiung, Taiwan, Celebration
+*row=> light2, A light show for the Lantern Festival in Kaohsiung, light2.jpg
+    *list=> Kaohsiung, Taiwan, Celebration
+*row=> light3, A light show for the Lantern Festival in Kaohsiung, light3.jpg
+    *list=> Kaohsiung, Taiwan, Celebration
+*row=> pillbox, The remnants of a Japanese pillbox from WW2, pillbox.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> ship, On board a former US then ROC Navy ship turned Museum in Tainan, ship.jpg
+    *list=>  Taiwan, Tainan
+*row=> ship2, On board a former US then ROC Navy ship turned Museum in Tainan, ship2.jpg
+    *list=> Taiwan, Tainan
+*row=> ShouShan, Going to ShouShan in my first week in Taiwan, ShouShan.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> shoushan, Hiking around ShouShan with Khessed, shoushan2.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> south1, The southern most point of Taiwan in Kenting, south1.jpg
+    *list=> Taiwan, Kenting
+*row=> south2, The southern most point of Taiwan in Kenting, south2.jpg
+    *list=> Taiwan, Kenting
+*row=> taiwan_home, The street I lived on for two years in Kaohsiung, taiwan_home.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> taroko, Taroko Park - looks like a Bond Villain's hideout , taroko.jpg
+    *list=> Hualien, Taiwan
+*row=> taroko1, Taroko Park, taroko1.jpg
+    *list=> Hualien, Taiwan
+*row=> taroko2, Taroko Park, taroko2.jpg
+    *list=> Hualien, Taiwan
+*row=> vaccine, Getting my first Covid vaccine at Kaohsiung Arena, vaccine.jpg
+    *list=> Kaohsiung, Taiwan
+*row=> weiwuying, Watching my first opera at Weiweying in Kaohsiung, Weiwuying.jpg
+    *list=> Kaohsiung, Taiwan
+
