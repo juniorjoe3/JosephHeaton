@@ -4,6 +4,7 @@ div {
 
 body {
     overflow:hidden;
+    background-color: rgba(12, 71, 57,1);
 }
 
 #main_content {
@@ -160,6 +161,8 @@ body {
     height: 100%;
     padding-right: 0;
     padding-left: 0;
+    background-color: white;
+    border-radius: 20px;
 }
 
 #gallery_container img {
