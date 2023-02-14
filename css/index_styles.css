@@ -25,12 +25,10 @@ body {
 
 /* Main content */
 #main_content {   
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0),rgba(43, 222, 201, 0.1), rgba(41, 229, 207, 0.6), rgba(43, 218, 198, 0.7)),
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0),rgba(43, 222, 201, 0.1), rgba(56, 196, 227, 0.6), rgba(57, 178, 218, 0.7)),
     url('/images/background_pic.jpg');
     background-repeat: no-repeat;
-    background-position-x: 0px;
-    background-position-x: 0px;
-    background-size: 100% auto;
+    background-size: cover;
     top:0px;
     width: 100%;
     position: absolute;
@@ -41,12 +39,6 @@ body {
     margin:0px;
     overflow: hidden;
 }
-
-@media only screen and (max-width: 1250px) {
-    #main_content {
-        background-size: auto 100%;
-    }
-  }
 
 #main_middle {
     width:70%;

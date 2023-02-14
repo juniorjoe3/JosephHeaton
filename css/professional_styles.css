@@ -1,0 +1,66 @@
+div {
+    /* border: 2px red solid; */
+}
+
+#main_content {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    margin: 0px;
+    padding: 0px;
+    bottom:50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    box-sizing: border-box;
+    /* height:100vh; */
+
+}
+
+#dragdrop_container {
+    position: relative;
+    height: 100%;
+    width:100px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#dragdrop_container .container {
+    height: 100px;
+    width: 100px;
+}
+
+#dragdrop_container .content {
+    height: 100px;
+    width: 100px;
+    font-size:2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor:grab;
+}
+
+#dragdrop_container .content:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
+}
+
+#dragdrop_container #drag1 {
+    background-color: green;
+}
+#dragdrop_container #drag2 {
+    background-color: rgb(7, 90, 214);
+}
+#dragdrop_container #drag3 {
+    background-color: rgb(208, 202, 17);
+}
+#dragdrop_container #drag4 {
+    background-color: rgb(208, 125, 17);
+}
+#dragdrop_container #drag5 {
+    background-color: rgb(208, 17, 189);
+}
+#dragdrop_container #drag6 {
+    background-color: rgb(132, 17, 208);
+}
