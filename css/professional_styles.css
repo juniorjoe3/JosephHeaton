@@ -1,6 +1,6 @@
-div {
-    /* border: 2px red solid; */
-}
+/* div { */
+     /* border: 2px red solid; */
+/* } */
 
 #main_content {
     position: absolute;
@@ -10,17 +10,18 @@ div {
     padding: 0px;
     bottom:50px;
     width: 100%;
+    height: fit-content;
     display: flex;
     justify-content: center;
     flex-direction: row;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     /* height:100vh; */
 
 }
 
 #dragdrop_container {
     position: relative;
-    height: 100%;
+    height: fit-content;
     width:100px;
     display: flex;
     flex-direction: column;
@@ -28,18 +29,23 @@ div {
 }
 
 #dragdrop_container .container {
-    height: 100px;
+    height:70px;
     width: 100px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #dragdrop_container .content {
-    height: 100px;
+    height: 70px;
     width: 100px;
     font-size:2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor:grab;
+    box-sizing: border-box;
 }
 
 #dragdrop_container .content:hover {
@@ -63,4 +69,7 @@ div {
 }
 #dragdrop_container #drag6 {
     background-color: rgb(132, 17, 208);
+}
+#dragdrop_container img {
+    height:90%;
 }

@@ -18,9 +18,50 @@
         function drop(ev) {
           ev.preventDefault();
           const data = ev.dataTransfer.getData("text").split(',');
-          
           ev.target.parentElement.appendChild(document.getElementById(data[0]));
           document.getElementById(data[1]).appendChild(ev.target);
+          console.log(data[1].substr(-1, 1));
+        }
+
+        function dropShift(ev) {
+          ev.preventDefault();
+          const data = ev.dataTransfer.getData("text").split(',');
+          ev.target.parentElement.appendChild(document.getElementById(data[0]));
+          const fromContainer = data[1].substr(-1, 1);
+          const toContainer = String(ev.target.parentElement.id).substr(-1,1);
+          if (fromContainer > toContainer) {
+            //shift down
+            for (let i = fromContainer; i > toContainer; i--) {
+                let container = document.getElementById("div" + i);
+                let contentAbove = document.getElementById("div" + (i-1)).firstElementChild;
+                container.appendChild(contentAbove);
+            }
+          } else {
+            //shift up
+            for (let i = fromContainer; i < toContainer; i++) {
+                let x = Number(i) + 1;
+                let container = document.getElementById("div" + i);
+                let contentBelow = document.getElementById("div" + (x)).firstElementChild;
+                container.appendChild(contentBelow);
+            }
+          }
+            
+        //   document.getElementById(data[1]).appendChild(ev.target);
+        }
+        function dropDelete(ev) {
+          ev.preventDefault();
+          const data = ev.dataTransfer.getData("text").split(',');
+          ev.target.appendChild(document.getElementById(data[0]));
+          ev.target.removeChild(ev.target.lastChild);
+          const fromContainer = data[1].substr(-1, 1);
+        //   fromContainer.removeChild(fromContainer.lastChild);
+          const numOfContainers = 6;
+          for (let i = fromContainer; i < numOfContainers; i++) {
+                let x = Number(i) + 1;
+                let container = document.getElementById("div" + i);
+                let contentBelow = document.getElementById("div" + (x)).firstElementChild;
+                container.appendChild(contentBelow);
+            }
         }
         </script>
     <title>Joseph Heaton - Professional</title>
@@ -42,23 +83,25 @@
     <div id="main_content">
         <div id="dragdrop_container">
             <div class="container" id="div1">
-                <div class="content" id="drag1" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">1</div>
+                <div class="content" id="drag1" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">1</div>
             </div>
             <div class="container" id="div2">
-                <div class="content" id="drag2" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">2</div>
+                <div class="content" id="drag2" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">2</div>
             </div>
             <div class="container" id="div3">
-                <div class="content" id="drag3" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">3</div>
+                <div class="content" id="drag3" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">3</div>
             </div>
             <div class="container" id="div4">
-                <div class="content" id="drag4" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">4</div>
+                <div class="content" id="drag4" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">4</div>
             </div>
             <div class="container" id="div5">
-                <div class="content" id="drag5" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">5</div>
+                <div class="content" id="drag5" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">5</div>
             </div>
             <div class="container" id="div6">
-                <div class="content" id="drag6" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">6</div>
+                <div class="content" id="drag6" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">6</div>
             </div>
+            <div class="container" id="div7" ondrop="dropDelete(event)" ondragover="allowDrop(event)"><img src="../images/garbage_icon.png" alt=""></div>
+
         </div>
     </div>
 </body>
