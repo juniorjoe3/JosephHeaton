@@ -70,6 +70,6 @@
 #dragdrop_container #drag6 {
     background-color: rgb(132, 17, 208);
 }
-#dragdrop_container img {
+#dragdrop_container .container img {
     height:90%;
 }
