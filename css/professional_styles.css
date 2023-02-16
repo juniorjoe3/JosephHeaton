@@ -10,66 +10,96 @@
     padding: 0px;
     bottom:50px;
     width: 100%;
-    height: fit-content;
+    height: auto;
+    display: flex;
+    justify-content:start;
+    /* align-items: center; */
+    flex-direction: row;
+
+}
+
+#left_side_panel {
+    margin: 20px;
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#dateFilter_container {
+    height: 80px;
+    width: 200px;
+    background-color: rgb(74, 74, 74);
     display: flex;
     justify-content: center;
-    flex-direction: row;
-    /* box-sizing: border-box; */
-    /* height:100vh; */
+    align-items: center;
+    margin-bottom: 40px;
+    border-radius: 10px;
+}
 
+#dateFilter_container label {
+    color:white;
+}
+
+#dateFilter_container label, select {
+    font-size: large;
 }
 
 #dragdrop_container {
     position: relative;
     height: fit-content;
-    width:100px;
+    width: fit-content;
     display: flex;
     flex-direction: column;
 
 }
 
 #dragdrop_container .container {
-    height:100px;
-    width: 100px;
+    height:40px;
+    width: 200px;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 5px;
 }
 
 #dragdrop_container .content {
-    height: 100px;
-    width: 100px;
-    font-size:2rem;
+    height: 90%;
+    width: 85%;
+    font-size:1.1rem;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor:grab;
     box-sizing: border-box;
+    background-color: rgb(99, 99, 99);
+    color: white;
 }
 
-#dragdrop_container .content:hover {
+#dragdrop_container .divider {
+    height: 100%;
+    width: 100%;
+    font-size:1.3rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background-color: rgb(55, 55, 55);
+    color: white;
+}
+
+#dragdrop_container #div7 {
+    cursor: grab;
+}
+
+#dragdrop_container .content:hover, #drag7:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
 }
 
-#dragdrop_container #drag1 {
-    background-color: green;
-}
-#dragdrop_container #drag2 {
-    background-color: rgb(7, 90, 214);
-}
-#dragdrop_container #drag3 {
-    background-color: rgb(208, 202, 17);
-}
-#dragdrop_container #drag4 {
-    background-color: rgb(208, 125, 17);
-}
-#dragdrop_container #drag5 {
-    background-color: rgb(208, 17, 189);
-}
-#dragdrop_container #drag6 {
-    background-color: rgb(132, 17, 208);
-}
 #garbage_div {
     height:100px;
     width: 80px;
@@ -82,3 +112,4 @@
 #garbage_div:hover {
     background-image: url('/images/garbage_touched.png');
 }
+
