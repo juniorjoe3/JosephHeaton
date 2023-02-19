@@ -6,7 +6,7 @@ async function fetchResume() {
     if (response.ok) {
       const data = await response.text();
       sessionStorage.setItem('resume', data);
-      
+      printResume();
     } else {
       console.log('!!!resume failed to load');
     }
@@ -179,7 +179,7 @@ function readOrder() {
 
 // load Order
 function loadOrder() {
-  if (localStorage.getItem('categories')) {
+  if (localStorage.getItem('categories') != null) {
     console.log('run load order');
     const categories = JSON.parse(localStorage.getItem('categories'));
     const numOfFields = 8
@@ -209,10 +209,12 @@ function saveDateFrom() {
 
 // load dateTo
 function loadDateFrom() {
-  const fromMonth = localStorage.getItem('month');
-  const fromYear = localStorage.getItem('year');
-  document.getElementById('fromMonth').value = fromMonth;
-  document.getElementById('fromYear').value = fromYear;
+  if (localStorage.getItem('month') != null) {
+    const fromMonth = localStorage.getItem('month');
+    const fromYear = localStorage.getItem('year');
+    document.getElementById('fromMonth').value = fromMonth;
+    document.getElementById('fromYear').value = fromYear;
+  }
 }
 
 // date from
