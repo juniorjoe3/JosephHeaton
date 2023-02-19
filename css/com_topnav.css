@@ -13,6 +13,7 @@ div {
     font-size: x-large;
     width: 100%;
     z-index: 1;
+    box-sizing: border-box;
 }
 
 #lang0 { 
@@ -45,8 +46,9 @@ div {
 
 #search_container:hover #topnav_links_container {
     right: 7px;
-    transition: .8s;
-    transition-delay: .1s;
+    color:white;
+    transition: .90s;
+    transition-delay: 0.1s;
 }
 
 #topnav_links_container {
@@ -57,6 +59,7 @@ div {
     position: absolute;
     height:200%;
 }
+
 
 
 .navlink:link, .navlink:visited {
@@ -75,5 +78,6 @@ div {
 
 .navlink:hover, .navlink:active {
     background-color: rgb(255, 255, 255);
-    color:rgb(0, 0, 0)
+    color:rgb(0, 0, 0);
+    z-index: 100;
 }

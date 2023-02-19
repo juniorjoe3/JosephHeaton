@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/com_topnav.css" />
     <link rel="stylesheet" type="text/css" href="../css/professional_styles.css" />
+    <link rel="stylesheet" type="text/css" href="../css/com_scrollbar.css" />
     <script type="text/javascript" src="../js/js_professional.js"></script>
     <title>Joseph Heaton - Professional</title>
 </head>
@@ -28,33 +29,33 @@
             <div id="dateFilter_container">
                 <div>
                     <label for="fromMonth">From:</label>
-                    <select name="fromMonth" id="fromMonth">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
+                    <select name="fromMonth" id="fromMonth" oninput="printResume()">
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">Mar</option>
+                        <option value="4">Apr</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">Jul</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sep</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
                     </select>
-                    <select name="fromYear" id="fromYear">
-                        <option value="1">2014</option>
-                        <option value="2">2015</option>
-                        <option value="3">2016</option>
-                        <option value="4">2017</option>
-                        <option value="5">2018</option>
-                        <option value="6">2019</option>
-                        <option value="7">2020</option>
-                        <option value="8">2021</option>
-                        <option value="9">2022</option>
-                        <option value="10">2023</option>
-                        <option value="11">2024</option>
-                        <option value="12">2025</option>
+                    <select name="fromYear" id="fromYear" oninput="printResume()">
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
                     </select>
                 </div>
                 <div>
@@ -66,29 +67,72 @@
                     <div class="divider" id="drag1"draggable="false">Visible Fields</div>
                 </div>
                 <div class="container" id="div2">
-                    <div class="content" id="drag2" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Highlights</div>
+                    <div class="content" id="drag2" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Education</div>
                 </div>
                 <div class="container" id="div3">
                     <div class="content" id="drag3" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Work Experience</div>
                 </div>
                 <div class="container" id="div4">
-                    <div class="content" id="drag4" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Education</div>
+                    <div class="content" id="drag4" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Hard Skills</div>
                 </div>
                 <div class="container" id="div5">
-                    <div class="content" id="drag5" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Community Service</div>
+                    <div class="content" id="drag5" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Soft Skills</div>
                 </div>
                 <div class="container" id="div6">
-                    <div class="content" id="drag6" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Hard Skills</div>
+                    <div class="divider_HF" id="drag6" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Hidden Fields</div>
                 </div>
                 <div class="container" id="div7">
-                    <div class="divider" id="drag7" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Hidden Fields</div>
+                    <div class="content" id="drag7" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Community Service</div>
                 </div>
                 <div class="container" id="div8">
                     <div class="content" id="drag8" ondrop="dropShift(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)">Interests</div>
                 </div>
             </div>
         </div>
-        <!-- <div id="garbage_div" ondrop="dropDelete(event)" ondragover="allowDropGarbage(event)"></div> -->
+        <div id="middle_container">
+            <div id="resume_container">
+
+            </div>
+        </div>
+        <div id="right_side_panel">
+            <div id="button_container">
+                <h3>Scale</h3>
+                <div class="slidecontainer">
+                    <input type="range" min="90" max="150" value="100" class="slider" id="myRange" orient="vertical" oninput="sliderUpdate()" onchange="sliderUpdate()">
+                </div>
+                <button id="expandAll_btn" onclick="toggleViewAll('expand')">Expand All</button>
+                <button id="expandNone_btn" onclick="toggleViewAll('close')">Expand None</button>
+            </div>
+            <div id="garbage_div" ondrop="dropDeleteEntry(event)" ondragover="allowDropGarbage(event)"></div>
+        </div>
+        
     </div>
+    <script type="text/javascript">
+        fetchResume();
+        loadOrder();
+        loadDateFrom();
+        printResume();
+        window.addEventListener("beforeunload", saveValues, false);
+    </script>
+
+
 </body>
 </html>
+
+
+
+<!-- <div class="field" id="Work Experience">Work Experience</div>
+                <div class="entry" id="entry_div_1">
+                    <div onclick="toggleView(this)"class="header" draggable="true" ondragend="dragEntryEnd()" ondragstart="dragEntryStart(event)">
+                        <div class="arrow"></div>
+                        <div class="title">Lifeguard</div>
+                        <div class="location">- Red Oaks Waterpark, Madison Heights, MI</div>
+                        <div class="date">Summers 2015 - 2019</div>
+                    </div>    
+                    <ul class="detail">
+                        <li class="bullet">Awarded by Ellis and Associates and Oakland County for my role in saving the life of an unconscious 11-year-old boy</li>
+                        <li class="bullet">Rescued numerous patrons in life threatening situations while collaborating with team members</li>
+                        <li class="bullet">Participated in rigorous training before and all throughout employment to maintain the highest level of lifeguard Hard Skills</li>
+                        <li class="bullet">Interacted regularly with kids, enforcing rules and maintaining peace</li>
+                    </ul>  
+                </div> -->

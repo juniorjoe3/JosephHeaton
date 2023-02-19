@@ -1,0 +1,332 @@
+
+[
+    {
+        "title":"Oakland University", 
+        "location":"- Rochester, MI",
+        "dateTo":"2019/12",
+        "dateString":"Fall 2017 - Fall 2019",
+        "category":"Education",
+        "detail": [
+                    "Bachelor of Science in Operations Management with a specialization in Project Management.",
+                    "GPA 3.74, Deans List.",
+                    "Collaborated with a group of classmates, presented a business case, supporting the use of Augmented Reality to help industries/communities become more sustainable.",
+                    "Prepared a 10-page business case for a company-wide ERP system to fix current accounting and operational processes."
+                ]
+    },
+    {
+        "title":"Roseville Highschool", 
+        "location":"- Roseville, MI",
+        "dateTo":"2015/5",
+        "dateString":"2011 - 2015",
+        "category":"Education",
+        "detail": [
+                    "Was a member of the swim and cross-country teams.",
+                    "Took three years of Building Trades, buidling a house off-campus.",
+                    "Was a member of our National Honor's Society."
+                ]
+    },
+    {
+        "title":"Macomb Community College", 
+        "location":"- Warren, MI",
+        "dateTo":"2017/4",
+        "dateString":"Fall 2015 - Spring 2017",
+        "category":"Education",
+        "detail": [
+                    "3.9 GPA",
+                    "President of Macomb Serve, a volunteer student club."
+                ]
+    },
+    {
+        "title":"English Teacher", 
+        "location":"- KNS, Kaohsiung, Taiwan",
+        "dateTo":"2023/3",
+        "dateString":"Spring 2020 - Spring 2023",
+        "category":"Work Experience",
+        "detail": [
+                    "Taught English as a forgein language to students from first to ninth grade.",
+                    "Was responsible for weekly lesson, homework, and test planning.",
+                    "Navigated the differences between American and Taiwanese teaching practices.",
+                    "Learned Taiwanese culture to better relate my lessons to the students."
+                ]
+    },
+    {
+        "title":"Cashier", 
+        "location":"- McDonald's, Roseville, MI",
+        "dateTo":"2015/4",
+        "dateString":"July 2013 - April 2015",
+        "category":"Work Experience",
+        "detail": [
+                    "Learned the basics of customer service.",
+                    "Trained new staff.",
+                    "Learned how to multitask and delegate tasks to coworkers."
+                ]
+    },
+    {
+        "title":"HU Control Analyst", 
+        "location":"- Central Transport, Warren, MI",
+        "dateTo":"2020/2",
+        "dateString":"May 2019 - February 2020",
+        "category":"Work Experience",
+        "detail": [
+                    "Collaborated with team members to ensure the safe and successful transportation of customer goods.",
+                    "Communicated regularly with terminal managers to investigate spill incidents and then advise my supervisors on best course of action.",
+                    "Monitored missing freight incidents and worked to correct the root causes.",
+                    "Brainstormed new ways to improve department efficiency and efficacy."
+                ]
+    },
+    {
+        "title":"Lifeguard", 
+        "location":"- Red Oaks Waterpark, Madison Heights, MI",
+        "dateTo":"2019/8",
+        "dateString":"Summers 2015 - 2019",
+        "category":"Work Experience",
+        "detail": [
+                    "Awarded by Ellis and Associates and Oakland County for my role in saving the life of an unconscious 11-year-old boy.",
+                    "Rescued numerous patrons in life threatening situations while collaborating with team members.",
+                    "Participated in rigorous training before and all throughout employment to maintain the highest level of lifeguard Hard Skills.",
+                    "Interacted regularly with kids, enforcing rules and maintaining peace."
+                ]
+    },
+    {
+        "title":"Police Service Aide", 
+        "location":"- RPD, Roseville, MI",
+        "dateTo":"2017/5",
+        "dateString":"March 2016 - May 2017",
+        "category":"Work Experience",
+        "detail": [
+                    "Interacted regularly with detainees, the public, and other agencies.",
+                    "Assisted police officers by running criminal history checks, handling bond payment and paperwork, taking police reports at front desk, and making routine checks on detainees.",
+                    "Responsible for the safety of all detainees and so made regular rounds through the detention facility."
+                ]
+    },
+    {
+        "title":"Missionary", 
+        "location":"- Havana, Cuba",
+        "dateTo":"2018/2",
+        "dateString":"February 2018",
+        "category":"Community Service",
+        "detail": [
+                    "Lived in Havana with a Cuban host family for a week with other Americans.",
+                    "Walked house to house in some of the most impoverished neighborhoods surrounding Havana, offering water filters to families in need of safe drinking water.",
+                    "Experienced Cuban culture in different lights: in the poor neighborhoods and affluent tourist areas."
+                ]
+    },
+    {
+        "title":"Macomb Serve", 
+        "location":"- Macomb Community College, Warren, MI",
+        "dateTo":"2017/5",
+        "dateString":"November 2016 - May 2017",
+        "category":"Community Service",
+        "detail": [
+                    "Served as treasurer and president, organizing volunteer events in the tri-county area for Macomb Community College students.",
+                    "Contacted charity organizations such as Gleaners Food bank to set up volunteer events.",
+                    "Participated and led volunteer events through various NGOs."
+                ]
+    },
+    {
+        "title":"Youth Group", 
+        "location":"- First Presbyterian Church of Mt.Clemens",
+        "dateTo":"2015/6",
+        "dateString":"September 2011 - June 2015",
+        "category":"Community Service",
+        "detail": [
+                    "Travelled to Nashville, Tennessee, Hagerstown, Maryland, and Kenosha, Wisconsin during week long volunteer service trips.",
+                    "Consisted of mainly manual labor: rough construction, landscaping, painting, and cleaning.",
+                    "Assisted YMCA summer camp counselors with activities and child supervision.",
+                    "Served as an advisor for the 2019-2020 school year."
+                ]
+    },
+    {
+        "title":"Sheriff Explorers Program", 
+        "location":"- Macomb County, MI",
+        "dateTo":"2014",
+        "dateString":"2012 - 2014",
+        "category":"Community Service",
+        "detail": [
+                    "Learned the major aspects of police work, including: handcuffing, domestic disputes, building entries, body and car searches, and much more, while in a “police academy” like environment."
+                ]
+    },
+    {
+        "title":"Warming Center & MCREST", 
+        "location":"- Macomb County, MI",
+        "dateTo":"2019/12",
+        "dateString":"2013 - 2020",
+        "category":"Community Service",
+        "detail": [
+                    "Checked in homeless men and women into overnight shelters.",
+                    "Performed body searches and checked bags for contraband.",
+                    "Prepared and served meals, washed dishes.",
+                    "Oversaw the safety of all guests and helped maintained peace."
+                ]
+    },
+    {
+        "title":"Avengers Tutoring", 
+        "location":"- Detroit, MI",
+        "dateTo":"2019/8",
+        "dateString":"February - August 2019",
+        "category":"",
+        "detail": [
+                    "~2-4 hours a week for ~ 18 weeks, 55 hours total.",
+                    "Assisted a middle school basketball team with their English and math homework assignments.",
+                    "Created unique algebra and geometry word problems to better visualize the concepts and increase student understanding."
+                ]
+    },
+    {
+        "title":"Bound Together", 
+        "location":"- Pontiac, MI",
+        "dateTo":"2018/2",
+        "dateString":"Winter 2018",
+        "category":"Community Service",
+        "detail": [
+                    "1 hour a week for 10 weeks, 10 hours total.",
+                    "Followed the set curriculum via their workbook to tutor Elementary level students.",
+                    "Tutored minority children both math and English."
+                ]
+    },
+    {
+        "title":"National Honors Society", 
+        "location":"- Roseville Highschool",
+        "dateTo":"2015/5",
+        "dateString":"2014 - 2015",
+        "category":"Community Service",
+        "detail": [
+                    "1-2 hours at a time throughout the two years, 20 hours total.",
+                    "Helped fellow underclassmen on their algebra, geometry, trigonometry, earth science and English assignments.",
+                    "Explained abstract math concepts by applying them to real world examples."
+                ]
+    },
+    {
+        "title":"Bus Driver", 
+        "location":"- Oakland University, MI",
+        "dateTo":"2018/5",
+        "dateString":"October 2017 - 2018",
+        "category":"Work Experience",
+        "detail": [
+                    "Transported Oakland University students on and off campus.",
+                    "Kept logs of ridership and maintained cleanliness of vehicle.",
+                    "Inspected vehicle before shift for any issues."
+                ]
+    },
+    {
+        "title":"Claims Coordinator", 
+        "location":"- Central Transport, Warren, MI",
+        "dateTo":"2019/5",
+        "dateString":"October 2018 - May 2019",
+        "category":"Work Experience",
+        "detail": [
+                    "Prepared all incoming Damage and Shortage claims for analysts.",
+                    "Performed clerical work for freight inspection coordinator.",
+                    "Maintained records."
+                ]
+    },
+    {
+        "title":"Certifications", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Hard Skills",
+        "detail": [
+                    "Ellis Lifeguard CPR & First Aid, American Red Cross CPR, Bleeding Control Certificate, Stop the Bleed. (mass blood loss, tourniquets)."
+                ]
+    },
+    {
+        "title":"Building Trades", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Hard Skills",
+        "detail": [
+                    "Experience in framing, electrical, drywall laying and finishing, siding, and molding."
+                ]
+    },
+    {
+        "title":"Licenses", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Hard Skills",
+        "detail": [
+                    "Commercial Driver's license"
+                ]
+    },
+    {
+        "title":"Computer Coding", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Hard Skills",
+        "detail": [
+                    "Excel VBA, Javascript, HTML, and CSS"
+                ]
+    },
+    {
+        "title":"Language", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Hard Skills",
+        "detail": [
+                    "Mandarin: three years of class, one-on-one, and independant study."
+                ]
+    },
+    {
+        "title":"Active", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Interests",
+        "detail": [
+                    "I like to keep active and in shape. My favorites are running and swimming."
+                ]
+    },
+    {
+        "title":"Creative", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Interests",
+        "detail": [
+                    "I love building, whether it be a house or a computer program."
+                ]
+    },
+    {
+        "title":"Musical", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Interests",
+        "detail": [
+                    "In school I played the clarinet and saxaphone. Now I am learning the trumpet."
+                ]
+    },
+    {
+        "title":"Creative Problem Solver", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Soft Skills",
+        "detail": [
+                    "I love figuring out new and original ways of solving a problem."
+                ]
+    },
+    {
+        "title":"Disciplined", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Soft Skills",
+        "detail": [
+                    "dabadabadoo"
+                ]
+    },
+    {
+        "title":"Self Learner", 
+        "location":"",
+        "dateTo":"",
+        "dateString":"",
+        "category":"Soft Skills",
+        "detail": [
+                    "Taught myself web development and Mandarin Chinese."
+                ]
+    }
+]
