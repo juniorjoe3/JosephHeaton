@@ -203,7 +203,7 @@ function imgFocus(imgTag) {
 }
 
 function imgClick(imgTag) {
-  const win = window.open('','Joseph Heaton - Full Image');
+  const win = window.open('',);
   const img = win.document.createElement('img')
   img.src = imgTag.src;
   const imgRatio = img.naturalWidth / img.naturalHeight;

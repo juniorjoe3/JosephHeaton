@@ -141,6 +141,25 @@
     
 }
 
+@media print {
+    body * {
+      visibility: hidden;
+    }
+    #resume_container, #resume_container * {
+      visibility: visible;
+      overflow: visible;
+    }
+    #resume_container {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    #main_content {
+       overflow: visible; 
+    }
+    
+  }
+
 .field {
     width: 100%;
     height: 30px;
@@ -285,13 +304,17 @@
     cursor: pointer;
   }
 
-#expandAll_btn, #expandNone_btn {
+#expandAll_btn, #expandNone_btn, #print_btn {
     margin: 0px 10px;
     margin-bottom: 10px;
     border-radius: 10px;
 }
 
-#expandAll_btn:hover, #expandNone_btn:hover {
+#print_btn {
+    margin-top:10px
+}
+
+#expandAll_btn:hover, #expandNone_btn:hover, #print_btn:hover {
     background-color: blue;
     color: white;
 }

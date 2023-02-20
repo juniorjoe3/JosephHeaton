@@ -333,6 +333,10 @@ function sliderUpdate() {
   middle_container.style.width = (val * 700) + 'px';
 }
 
+function printResume_div() {
+  window.print();
+}
+
 
 //drag and drop resume entries into garbage can -----------------------------------------------------------------------------------
 function allowDropGarbage(ev) {
