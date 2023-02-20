@@ -50,8 +50,10 @@ function printResume() {
         entrySet.add(entry_obj);
       }
     }
+
     // now print the field 
     if (entrySet.size > 0) {
+      entrySet_Sorted = sortEntries(entrySet);
       const field_div = document.createElement('div');
       const textNode = document.createTextNode(current_cat);
       field_div.appendChild(textNode);
@@ -59,22 +61,22 @@ function printResume() {
       resume_container.appendChild(field_div)
         switch (current_cat) {
           case "Education":
-            entrySet.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Work Experience":
-            entrySet.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Hard Skills":
-            entrySet.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Soft Skills":
-            entrySet.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Community Service":
-            entrySet.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Interests":
-            entrySet.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "":
 
@@ -143,18 +145,61 @@ function printEntry_Full(entry_obj) {
 
 }
 
+// sorting -------------------------------------------------------------------------------------------------------------------------
 
-// <div onclick="toggleView(this)" class="header" draggable="true" ondragend="dragEntryEnd()" ondragstart="dragEntryStart(event)">
+function sortEntries(entrySet) {
+  const sort_dropdown = document.getElementById('sort');
+  const sort_method = sort_dropdown.value;
+  switch (sort_method) {
+    case 'recent first':
+        return sort_recent_first(entrySet);
+    case 'recent last':
+        return sort_recent_last(entrySet);
+  }
+}
 
+function sort_recent_first(entrySet) {
+  const entryArray = Array.from(entrySet);
+  console.log(entryArray);
+  entryArray.sort(function(a, b){
+      const date_A = new Date(a.dateTo)
+      const date_B = new Date(b.dateTo)
+      if (date_A > date_B) {
+        return -1;
+      } else {
+        return 1;
+      }
+  });
+  console.log(entryArray);
+  const sortedSet = new Set(entryArray);
+  return sortedSet;
+}
+  
 
+function sort_recent_last(entrySet) {
+  const entryArray = Array.from(entrySet);
+  console.log(entryArray);
+  entryArray.sort(function(a, b){
+      const date_A = new Date(a.dateTo)
+      const date_B = new Date(b.dateTo)
+      if (date_A < date_B) {
+        return -1;
+      } else {
+        return 1;
+      }
+  });
+  console.log(entryArray);
+  const sortedSet = new Set(entryArray);
+  return sortedSet;
+}
 
-
-
+// loading of page ------------------------------------------------------------------------------------------------------------------
 
 // save values
 function saveValues() {
   saveOrder();
   saveDateFrom();
+  saveSort();
 }
 
 // save field order to local storage
@@ -199,6 +244,20 @@ function loadOrder() {
   }
 }
 
+// save sort
+function saveSort() {
+  const sort = document.getElementById('sort');
+  localStorage.setItem('sort', sort.value);
+}
+
+// load sort
+function loadSort() {
+  if(localStorage.getItem('sort') != null) {
+    const sort = document.getElementById('sort');
+    sort.value = localStorage.getItem('sort');
+  }
+}
+
 // save dateFrom
 function saveDateFrom() {
   const fromMonth = document.getElementById('fromMonth').value;
@@ -217,7 +276,7 @@ function loadDateFrom() {
   }
 }
 
-// date from
+// read date from
 function readDateFrom() {
   const fromMonth = document.getElementById('fromMonth').value;
   const fromYear = document.getElementById('fromYear').value;  
@@ -225,6 +284,8 @@ function readDateFrom() {
   console.log(fromDate);
   return fromDate;
 }
+
+// ---------- buttons ----------------------------------------------------------------------------------------------------------
 
 function toggleView(header_div) {
   console.log('toggle view');

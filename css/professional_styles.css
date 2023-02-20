@@ -38,17 +38,22 @@
     background-color: rgb(74, 74, 74);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     margin-bottom: 40px;
     border-radius: 10px;
 }
 
 #dateFilter_container label {
     color:white;
+    margin-left: 5px;
 }
 
 #dateFilter_container label, select {
     font-size: large;
+}
+
+#sort {
+    margin-top: 5px;
 }
 
 /* -----drag and drop ------------------------- */
@@ -115,6 +120,8 @@
     width: 700px;
     height: 100%;
     margin-left: 20px; 
+    padding-left: 0px 10px;
+    padding-right: 15px;
     margin-right: 20px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -124,7 +131,7 @@
 
 
 #resume_container {
-    width: 700px;
+    width: 680px;
     padding: 50px 10px;
     background-color: rgb(250, 244, 199);
     
@@ -240,6 +247,7 @@
 #button_container h3 {
     font-size:1.1rem;
     color: white;
+    margin: 5px;
 }
 
 .slider {
@@ -253,6 +261,8 @@
     transition: opacity .2s;
     writing-mode: bt-lr;
     -webkit-appearance: slider-vertical; 
+    margin-bottom: 15px;
+    margin-top: 0;
   }
   
   .slider:hover {
@@ -276,7 +286,8 @@
   }
 
 #expandAll_btn, #expandNone_btn {
-    margin: 10px 10px;
+    margin: 0px 10px;
+    margin-bottom: 10px;
     border-radius: 10px;
 }
 
