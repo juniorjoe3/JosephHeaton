@@ -154,7 +154,7 @@ function printEntry_sm(entry_obj) {
     resume_container.appendChild(div_entry_sm);
     //create header div
     const div_header_sm = document.createElement('div');
-    div_header_sm.className = "header"
+    div_header_sm.className = "header_sm"
     div_header_sm.setAttribute("draggable","true")
     div_header_sm.setAttribute("ondragend","dragEntryEnd()")
     div_header_sm.setAttribute("ondragstart","dragEntryStart(event)")

@@ -242,17 +242,17 @@
 /* --------------------------small entry ----------------- */
 
 .entry_sm {
-    margin-bottom: 1px;
+    padding:0px;
+    margin:0;
 }
 
 .header_sm {
     display: flex;
     flex-direction: row;
-    padding: 10px 1px;
+    padding: 5px 5px;
     cursor: grab;
     border-radius: 20px;
-    
-    
+    margin: 0;
 }
 
 .header_sm:hover {
@@ -271,19 +271,17 @@
 }
 
 .title_sm {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 10px;
     font-size: 1rem;
     white-space: nowrap;
     align-self: flex-start;
-    font-weight:bold
+    font-weight: bold;
 }
 
 .detail_sm {
     margin:0;
     cursor:default;
     cursor: grab;
-    
 }
 
 
