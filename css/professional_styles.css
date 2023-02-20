@@ -153,6 +153,7 @@
       position: absolute;
       left: 0;
       top: 0;
+      background-color: white;
     }
     #main_content {
        overflow: visible; 
@@ -176,7 +177,7 @@
     background-color: rgba(255, 255, 255, 0.5);
 }
 
-.entry {
+.entry_full {
     margin-bottom: 10px;
 }
 
@@ -237,6 +238,55 @@
   padding-left: 10px;
   padding-top:3px;
 }
+
+/* --------------------------small entry ----------------- */
+
+.entry_sm {
+    margin-bottom: 1px;
+}
+
+.header_sm {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 1px;
+    cursor: grab;
+    border-radius: 20px;
+    
+    
+}
+
+.header_sm:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dot_sm {
+    background-image: url('/images/blackDot.png');
+    height:10px;
+    width: 10px;
+    margin-top: 3px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    align-self: start;
+    flex-shrink: 0;
+}
+
+.title_sm {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1rem;
+    white-space: nowrap;
+    align-self: flex-start;
+    font-weight:bold
+}
+
+.detail_sm {
+    margin:0;
+    cursor:default;
+    cursor: grab;
+    
+}
+
+
 
 /* right side panel ------------------------------------------------------------------------------ */
 

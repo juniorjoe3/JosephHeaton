@@ -67,16 +67,16 @@ function printResume() {
             entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Hard Skills":
-            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_sm(value)});
             break;
           case "Soft Skills":
-            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_sm(value)});
             break;
           case "Community Service":
             entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
             break;
           case "Interests":
-            entrySet_Sorted.forEach(function(value) {printEntry_Full(value)});
+            entrySet_Sorted.forEach(function(value) {printEntry_sm(value)});
             break;
           case "":
 
@@ -92,7 +92,7 @@ function printEntry_Full(entry_obj) {
   const resume_container = document.getElementById('resume_container');
     //create entry div
     const div_entry = document.createElement('div');
-    div_entry.className = "entry";
+    div_entry.className = "entry_full";
     div_entry.id = "entry_div_" + entry_obj.title;
     resume_container.appendChild(div_entry);
     //create header div
@@ -145,6 +145,42 @@ function printEntry_Full(entry_obj) {
 
 }
 
+function printEntry_sm(entry_obj) {
+  const resume_container = document.getElementById('resume_container');
+    //create entry div
+    const div_entry_sm = document.createElement('div');
+    div_entry_sm.className = "entry_sm";
+    div_entry_sm.id = "entry_div_" + entry_obj.title;
+    resume_container.appendChild(div_entry_sm);
+    //create header div
+    const div_header_sm = document.createElement('div');
+    div_header_sm.className = "header"
+    div_header_sm.setAttribute("draggable","true")
+    div_header_sm.setAttribute("ondragend","dragEntryEnd()")
+    div_header_sm.setAttribute("ondragstart","dragEntryStart(event)")
+    div_header_sm.id = "header_" + entry_obj.title;
+    div_entry_sm.appendChild(div_header_sm)
+    //create header interior
+      // dot
+      const div_dot_sm = document.createElement('div');
+      div_dot_sm.className = 'dot_sm';
+      div_header_sm.appendChild(div_dot_sm);
+      //title
+      const div_title_sm = document.createElement('div');
+      div_title_sm.className = 'title_sm';
+      const textNode1 = document.createTextNode(entry_obj.title);
+      div_title_sm.appendChild(textNode1);
+      div_header_sm.appendChild(div_title_sm);
+    // create detail div
+      const div_detail_sm = document.createElement('div');
+      div_detail_sm.className = 'detail_sm';
+      const textNode2 = document.createTextNode(entry_obj.detail[0]);
+      div_detail_sm.appendChild(textNode2);
+      div_header_sm.appendChild(div_detail_sm);
+
+
+}
+
 // sorting -------------------------------------------------------------------------------------------------------------------------
 
 function sortEntries(entrySet) {
@@ -160,7 +196,6 @@ function sortEntries(entrySet) {
 
 function sort_recent_first(entrySet) {
   const entryArray = Array.from(entrySet);
-  console.log(entryArray);
   entryArray.sort(function(a, b){
       const date_A = new Date(a.dateTo)
       const date_B = new Date(b.dateTo)
@@ -170,7 +205,6 @@ function sort_recent_first(entrySet) {
         return 1;
       }
   });
-  console.log(entryArray);
   const sortedSet = new Set(entryArray);
   return sortedSet;
 }
@@ -178,7 +212,6 @@ function sort_recent_first(entrySet) {
 
 function sort_recent_last(entrySet) {
   const entryArray = Array.from(entrySet);
-  console.log(entryArray);
   entryArray.sort(function(a, b){
       const date_A = new Date(a.dateTo)
       const date_B = new Date(b.dateTo)
@@ -188,7 +221,6 @@ function sort_recent_last(entrySet) {
         return 1;
       }
   });
-  console.log(entryArray);
   const sortedSet = new Set(entryArray);
   return sortedSet;
 }
@@ -347,8 +379,10 @@ function dragEntryStart(ev) { //attaches data to the drag event
   ev.dataTransfer.setData("text", ev.target.parentElement.id);
   console.log(ev.dataTransfer.getData('text'));
   const entry_div = ev.target.parentElement;
-  const detail_div = entry_div.lastElementChild;
-  detail_div.style.display = 'none';
+  if (entry_div.className == 'entry_full') {
+    const detail_div = entry_div.lastElementChild;
+    detail_div.style.display = 'none';
+  }
   const garbage_div = document.getElementById("garbage_div");
   garbage_div.style.backgroundImage = "url('/images/garbage_open.png')"; //opens the garbage can
 }

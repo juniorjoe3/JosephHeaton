@@ -220,7 +220,7 @@
                 ]
     },
     {
-        "title":"Certifications", 
+        "title":"Certifications:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -230,7 +230,7 @@
                 ]
     },
     {
-        "title":"Building Trades", 
+        "title":"Building Trades:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -240,7 +240,7 @@
                 ]
     },
     {
-        "title":"Licenses", 
+        "title":"Licenses:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -250,7 +250,7 @@
                 ]
     },
     {
-        "title":"Computer Coding", 
+        "title":"Computer Coding:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -260,7 +260,7 @@
                 ]
     },
     {
-        "title":"Language", 
+        "title":"Language:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -270,7 +270,7 @@
                 ]
     },
     {
-        "title":"Active", 
+        "title":"Active:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -280,7 +280,7 @@
                 ]
     },
     {
-        "title":"Creative", 
+        "title":"Creative:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -290,7 +290,7 @@
                 ]
     },
     {
-        "title":"Musical", 
+        "title":"Musical:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -300,7 +300,7 @@
                 ]
     },
     {
-        "title":"Creative Problem Solver", 
+        "title":"Creative Problem Solver:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -310,7 +310,7 @@
                 ]
     },
     {
-        "title":"Disciplined", 
+        "title":"Disciplined:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
@@ -320,7 +320,7 @@
                 ]
     },
     {
-        "title":"Self Learner", 
+        "title":"Self Learner:", 
         "location":"",
         "dateTo":"",
         "dateString":"",
