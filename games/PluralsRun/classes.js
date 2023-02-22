@@ -228,19 +228,19 @@ export class gridObj {
       if (xCollision && yCollision) {
         switch (direction) {
           case 'up':
-            this.upStop();
+            // this.upStop();
             this.checkyPos(this.yPos + this.speed)
             break;
           case 'down':
-            this.downStop();
+            // this.downStop();
             this.checkyPos(this.yPos - this.speed)
             break;
           case 'right':
-            this.rightStop();
+            // this.rightStop();
             this.checkxPos(this.xPos - this.speed)
             break;
           case 'left':
-            this.leftStop();
+            // this.leftStop();
             this.checkxPos(this.xPos + this.speed)
             break;
         }
