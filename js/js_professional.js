@@ -1,3 +1,6 @@
+console.log('run js');
+
+
 
 // get resume.json 
 async function fetchResume() {
