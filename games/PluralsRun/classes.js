@@ -61,7 +61,7 @@ export class gridObj {
       this.#grid = grid //circular ref :(
       this.#html_id = html_id;
       this.#width = width;
-      this.#tickSpeed = 20;
+      this.#tickSpeed = 10;
       this.#height = height;
       this.#speed = speed;
       this.#xPos = xPos;
@@ -206,7 +206,6 @@ export class gridObj {
       this.#downInt = null;
     }
     #checkCollision(direction) {
-      console.log('check collision')
       let yCollision = false;
       let xCollision = false;
       const objArray = Array.from(this.#grid.gridObjs);
@@ -227,7 +226,6 @@ export class gridObj {
         }
         index -= 1; //return to last obj
       if (xCollision && yCollision) {
-        console.log("collision!!!")
         switch (direction) {
           case 'up':
             this.upStop();
@@ -262,5 +260,6 @@ export class gridObj {
             break;
         }
       }
+      
     }
 }
