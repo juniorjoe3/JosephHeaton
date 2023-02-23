@@ -79,11 +79,11 @@ export class Grid {
 
 export class gridObj {
     //properties
-    #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel = 0; #yVel = 0; #moveInt;
-    #leftKey; #rightKey; #upKey; #downKey; #grid; #edge; #tickSpeed; #objType;
+    #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel; #yVel;
+    #leftInt; #rightInt; #upInt; #downInt; #grid; #edge; #tickSpeed; #objType;
     // init
     constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, grid) {
-      this.#grid = grid 
+      this.#grid = grid //circular ref :(
       this.#html_id = html_id;
       this.#width = width;
       this.#tickSpeed = 10;
@@ -91,11 +91,10 @@ export class gridObj {
       this.#speed = speed;
       this.#xPos = xPos;
       this.#yPos = yPos;
-      this.#leftKey = false;
-      this.#rightKey = false;
-      this.#downKey = false;
-      this.#upKey = false;
-      this.#moveInt = null;
+      this.#leftInt = null;
+      this.#rightInt = null;
+      this.#upInt = null;
+      this.#downInt = null;
       this.#edge = 10;
       this.#objType = 'dynamic'
       const parent = document.getElementById(parent_id);
@@ -106,6 +105,7 @@ export class gridObj {
       ele.style.width = this.#width + 'px';
       ele.className = 'dynamic'
       ele.style.top = (yPos + grid.yCam) + 'px';
+      console.log(ele.style.top);
       ele.style.left = (xPos + grid.xCam) + 'px';
       parent.appendChild(ele);
       this.#html_ele = ele;
@@ -113,9 +113,6 @@ export class gridObj {
     // getters and setters
     get id() {
       return this.#html_id;
-    }
-    get objType() {
-      return this.#objType;
     }
     get ele() {
       return this.#html_ele;
@@ -191,105 +188,125 @@ export class gridObj {
       this.#html_ele.className = c;
     }
     // methods
-    changeVelocity(x,y) { //change velocity and/or update the move interval
+    changeVelocity(x,y) {
       this.#xVel += (x);
       this.#yVel += (y);
-      if (this.#xVel != 0 || this.#yVel != 0) {
-        if (this.#moveInt == null) { 
-          this.#setMoveInt(); // run if the move int is not currently active
-        }
+      if (x != 0 || y != 0) {
+
       } else {
-        clearInterval(this.#moveInt); // if velocity is 0, then stop the move interval
-        this.#moveInt = null;
+        
       }
     }
-    #setMoveInt() { //start the move interval
-      this.#moveInt = setInterval(()=> {
-        // to run at tickspeed
-        this.checkxPos((this.xPos + this.#xVel)); // test this new position
-        this.#checkCollision('x'); // if no collision, position is updated
-        this.checkyPos((this.yPos + this.#yVel)); // test this new position
-        this.#checkCollision('y'); // if no collision, position is updated
-      },this.#tickSpeed)
-    }
-    checkxPos(x) { //to test a new position without actually showing on screen
+    checkxPos(x) {
       this.#xPos = x;
     }
-    checkyPos(y) { //to test a new position without actually showing on screen
+    checkyPos(y) {
       this.#yPos = y;
     }
-    leftGo() { // left key is pressed
-      if (this.#leftKey == false) {
-        this.#leftKey = true;
-        this.changeVelocity(-(this.speed),0);
+    leftGo() {
+      if (this.#leftInt == null) {
+        this.rightStop();
+        this.ele.style.backgroundImage = "url('/images/garbage_open.png')"
+        this.#leftInt = setInterval(()=>{this.checkxPos((this.xPos - this.speed)); this.#checkCollision('left');},this.#tickSpeed)
       }
     }
-    leftStop() { // left key is released
-      this.#leftKey = false;
-      this.changeVelocity(this.speed,0)
+    leftStop() {
+      clearInterval(this.#leftInt);
+      this.#leftInt = null;
+      this.ele.style.backgroundImage = "url('/images/garbage_closed.png')"
     }
-    rightGo() { // right key is pressed
-      if (this.#rightKey == false) {
-        this.#rightKey = true;
-        this.changeVelocity((this.speed),0);
+    rightGo() {
+      if (this.#rightInt == null) {
+        this.leftStop();
+        this.ele.style.backgroundImage = "url('/images/garbage_open.png')"
+        this.#rightInt = setInterval(()=>{this.checkxPos((this.xPos + this.speed)); this.#checkCollision('right');},this.#tickSpeed)
       }
     }
-    rightStop() { //right key is released
-      this.#rightKey = false;
-      this.changeVelocity(-(this.speed),0)
+    rightStop() {
+      clearInterval(this.#rightInt);
+      this.#rightInt = null;
+      this.ele.style.backgroundImage = "url('/images/garbage_closed.png')"
     }
-    downGo() { //down key is pressed
-      if (this.#downKey == false) {
-        this.#downKey = true;
-        this.changeVelocity(0,(this.speed));
+    upGo() {
+      if (this.#upInt == null) {
+        this.downStop();
+        this.ele.style.backgroundImage = "url('/images/garbage_open.png')"
+        this.#upInt = setInterval(()=>{this.checkyPos((this.yPos - this.speed)); this.#checkCollision('up');},this.#tickSpeed)
       }
     }
-    downStop() { // down key is released
-      this.#downKey = false;
-      this.changeVelocity(0,-(this.speed))
+    upStop() {
+      clearInterval(this.#upInt);
+      this.#upInt = null;
+      this.ele.style.backgroundImage = "url('/images/garbage_closed.png')"
     }
-    upGo() { //up key is pressed
-      if (this.#upKey == false) {
-        this.#upKey = true;
-        this.changeVelocity(0,-(this.speed));
+    downGo() {
+      if (this.#downInt == null) {
+        this.upStop();
+        this.ele.style.backgroundImage = "url('/images/garbage_open.png')"
+        this.#downInt = setInterval(()=>{this.checkyPos((this.yPos + this.speed)); this.#checkCollision('down');},this.#tickSpeed)
       }
     }
-    upStop() { // up key is released
-      this.#upKey = false;
-      this.changeVelocity(0,(this.speed))
+    downStop() {
+      clearInterval(this.#downInt);
+      this.#downInt = null;
+      this.ele.style.backgroundImage = "url('/images/garbage_closed.png')"
     }
-   
-    #checkCollision(axis) { //check for collision, can only check one axis at a time
-      let yOverlap = false;
-      let xOverlap = false;
-      let obj;
+    #checkCollision(direction) {
+      let yCollision = false;
+      let xCollision = false;
       const objArray = this.#grid.gridObjs;
       let index = 0;
-        while (!(yOverlap && xOverlap) && index < objArray.length) {
-          yOverlap = false;
-          xOverlap = false;
-          obj = objArray[index];
+        while (!(yCollision && xCollision) && index < objArray.length) {
+          yCollision = false;
+          xCollision = false;
+          const obj = objArray[index];
           if (obj.id != this.id) {
             if (!(this.topHitBox >= obj.bottomHitBox || this.bottomHitBox <= obj.topHitBox)) {
-              yOverlap = true;  
+              yCollision = true;  
             }
             if (!(this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)) {
-              xOverlap = true; 
+              xCollision = true; 
             }
           }
           index += 1;
         }
-      if (xOverlap && yOverlap) {
-        console.log('collision')
-        if (axis == 'x') {
-          this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
-        } else {
-          this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
+        index -= 1; //return to last obj
+      if (xCollision && yCollision) {
+        switch (direction) {
+          case 'up':
+            // this.upStop();
+            this.checkyPos(this.yPos + this.speed)
+            break;
+          case 'down':
+            // this.downStop();
+            this.checkyPos(this.yPos - this.speed)
+            break;
+          case 'right':
+            // this.rightStop();
+            this.checkxPos(this.xPos - this.speed)
+            break;
+          case 'left':
+            // this.leftStop();
+            this.checkxPos(this.xPos + this.speed)
+            break;
         }
       } else {
-        this.xPos = this.xPos; // update real position with new position
-        this.yPos = this.yPos;
+        switch (direction) {
+          case 'up':
+            this.yPos = this.yPos
+            break;
+          case 'down':
+            this.yPos = this.yPos 
+            break;
+          case 'right':
+            this.xPos = this.xPos
+            break;
+          case 'left':
+            this.xPos = this.xPos
+            break;
+        }
       }
+      
     }
 }
 
