@@ -6,12 +6,17 @@ console.log('run main.js')
 // testing ------------------------------------------------------------------------------------
 import {gridObj,Grid} from './classes.js';
 
-const grid = new Grid(1000,1000,0,0,900,500,'game_camera');
+const grid = new Grid(1000,600,0,0,1000,600,'game_camera');
 
-const garbageCan = grid.createGridObj('garbageCan','/images/garbage_closed.png',200,200,100,100,3, 'dynamic');
-const garbageOpen = grid.createGridObj('garbageOpen','/images/garbage_open.png',100,100,100,100,3, 'dynamic');
-const garbageOpen2 = grid.createGridObj('garbageOpen2','/images/garbage_open.png',0,0,100,100,5, 'dynamic');
-const garbageOpen3 = grid.createGridObj('garbageOpen3','/images/garbage_open.png',300,300,100,100,5, 'dynamic');
+const garbageCan = grid.createGridObj('garbageCan','/images/garbage_closed.png',200,200,70,100,5);
+const garbageOpen = grid.createGridObj('garbageOpen','/images/garbage_closed.png',100,100,70,100,5);
+const garbageOpen2 = grid.createGridObj('garbageOpen2','/images/garbage_closed.png',0,0,70,100,5);
+const garbageOpen3 = grid.createGridObj('garbageOpen3','/images/garbage_closed.png',300,300,70,100,5);
+const garbageOpen4 = grid.createGridObj('garbageOpen4','/images/garbage_closed.png',400,500,70,100,5);
+const garbageOpen5 = grid.createGridObj('garbageOpen5','/images/garbage_closed.png',10,300,70,100,5);
+const garbageOpen6 = grid.createGridObj('garbageOpen6','/images/garbage_closed.png',700,300,70,100,5);
+
+grid.createHardBoundry();
 
 
 
