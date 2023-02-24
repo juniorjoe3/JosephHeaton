@@ -16,8 +16,8 @@ export class Grid {
     this.#cam_ele.style.height = this.#hCam + 'px';
   // methods
   }
-  createGridObj(html_id, imgPath, xPos, yPos, width, height, speed) {
-    const newObj = new gridObj(this.#cam_ele.id, html_id,imgPath, xPos, yPos, width, height, speed, this);
+  createGridObj(html_id, imgPath, xPos, yPos, width, height, speed, weight) {
+    const newObj = new gridObj(this.#cam_ele.id, html_id,imgPath, xPos, yPos, width, height, speed,weight, this);
     this.#gridObjs.push(newObj);
     return newObj;
   }
@@ -80,15 +80,16 @@ export class Grid {
 export class gridObj {
     //properties
     #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel = 0; #yVel = 0; #moveInt;
-    #leftKey; #rightKey; #upKey; #downKey; #grid; #edge; #tickSpeed; #objType;
+    #leftKey; #rightKey; #upKey; #downKey; #grid; #edge; #tickSpeed; #objType; #colType; #weight;
     // init
-    constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, grid) {
+    constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, weight, grid) {
       this.#grid = grid 
       this.#html_id = html_id;
       this.#width = width;
       this.#tickSpeed = 10;
       this.#height = height;
       this.#speed = speed;
+      this.#weight = weight;
       this.#xPos = xPos;
       this.#yPos = yPos;
       this.#leftKey = false;
@@ -96,7 +97,8 @@ export class gridObj {
       this.#downKey = false;
       this.#upKey = false;
       this.#moveInt = null;
-      this.#edge = 10;
+      this.#edge = 5;
+      this.#colType = 'block'
       this.#objType = 'dynamic'
       const parent = document.getElementById(parent_id);
       const ele = document.createElement('div');
@@ -117,6 +119,12 @@ export class gridObj {
     get objType() {
       return this.#objType;
     }
+    get colType() {
+      return this.#colType;
+    }
+    set colType(ct) {
+      this.#colType = ct;
+    }
     get ele() {
       return this.#html_ele;
     }
@@ -125,6 +133,18 @@ export class gridObj {
     }
     set speed(s) {
       this.#speed = s;
+    }
+    get xVel() {
+      return this.#xVel;
+    }
+    set xVel(x) {
+      this.#xVel = x
+    }
+    get yVel() {
+      return this.#yVel;
+    }
+    set yVel(y) {
+      this.#yVel = y;
     }
     get tickSpeed() {
       return this.#tickSpeed;
@@ -183,6 +203,12 @@ export class gridObj {
     set height(h) {
       this.#height = w;
       this.#html_ele.style.height = h + 'px';
+    }
+    get weight() {
+      return this.#weight;
+    }
+    set weight(w) {
+      this.#weight = w;
     }
     get styleClass() {
       return this.#html_ele.className;
@@ -280,16 +306,57 @@ export class gridObj {
           index += 1;
         }
       if (xOverlap && yOverlap) {
-        console.log('collision')
-        if (axis == 'x') {
-          this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
-        } else {
-          this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
-        }
+        this.#handleCollision(axis,obj);
       } else {
         this.xPos = this.xPos; // update real position with new position
         this.yPos = this.yPos;
       }
+    }
+    #handleCollision(axis,obj) {
+      console.log('collision')
+      if (axis == 'x') {
+        this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
+      } else {
+        this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
+      }
+      switch (this.#colType) {
+        case 'block':
+          
+          break;
+        case 'empty':
+      
+          break;
+        case 'stop':
+          this.changeVelocity(-(this.#xVel),-(this.#yVel));
+          break;
+        case "bounce":
+          if (obj.weight < 1000) {
+            if (axis == 'x') {
+              // (this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)
+              let m1 = this.weight;
+              let m2 = obj.weight
+              let u1 = this.xVel;
+              let u2 = obj.xVel;
+              this.#xVel = (((m1-m2)*u1) + (2*m2*u2)) / (m1+m2)
+              obj.xVel = (((m2-m1)*u2) + (2*m1*u1)) / (m1+m2)
+            } else {
+              let m1 = this.weight;
+              let m2 = obj.weight
+              let u1 = this.yVel;
+              let u2 = obj.yVel;
+              this.#yVel = (((m1-m2)*u1) + (2*m2*u2)) / (m1+m2)
+              obj.yVel = (((m2-m1)*u2) + (2*m1*u1)) / (m1+m2)
+            }
+          } else {
+            if (axis == 'x') {
+              this.#xVel = -(this.#xVel);
+            } else {
+              this.#yVel = -(this.#yVel);
+            }    
+          }
+          break;
+      }
+      
     }
 }
 
@@ -298,11 +365,12 @@ export class gridObj {
 
 export class gridBarrier {
   //properties
-  #barrier_id; #width; #height; #xPos; #yPos; #edge; #objType
+  #barrier_id; #width; #height; #xPos; #yPos; #edge; #objType; #weight;
   // init
   constructor(barrier_id, xPos, yPos, width, height) {
     this.#width = width;
     this.#height = height;
+    this.#weight = 1000;
     this.#xPos = xPos;
     this.#yPos = yPos;
     this.#edge = 5;
@@ -351,6 +419,9 @@ export class gridBarrier {
   }
   set height(h) {
     this.#height = w;
+  }
+  get weight() {
+    return this.#weight;
   }
   // methods
   
