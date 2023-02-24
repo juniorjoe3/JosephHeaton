@@ -248,41 +248,61 @@ export class gridObj {
       if (this.#leftKey == false) {
         this.#leftKey = true;
         this.changeVelocity(-(this.speed),0);
+        // if (this.#rightKey == true) {
+        //   this.#rightKey = false
+        //   this.changeVelocity(-(this.speed),0);
+        // }
       }
     }
     leftStop() { // left key is released
       this.#leftKey = false;
       this.changeVelocity(this.speed,0)
+      if(this.#rightKey == false) {
+        this.#xVel = 0
+        
+      }
     }
     rightGo() { // right key is pressed
       if (this.#rightKey == false) {
         this.#rightKey = true;
         this.changeVelocity((this.speed),0);
+        // if (this.#leftKey == true) {
+        //   this.#leftKey = false
+        //   this.changeVelocity((this.speed),0);
+        // }
       }
     }
     rightStop() { //right key is released
       this.#rightKey = false;
       this.changeVelocity(-(this.speed),0)
+      if(this.#leftKey == false) {
+        this.#xVel = 0
+        
+      }
     }
     downGo() { //down key is pressed
       if (this.#downKey == false) {
         this.#downKey = true;
         this.changeVelocity(0,(this.speed));
+        // this.upStop();
       }
     }
     downStop() { // down key is released
       this.#downKey = false;
       this.changeVelocity(0,-(this.speed))
+      this.#yVel = 0
     }
     upGo() { //up key is pressed
       if (this.#upKey == false) {
         this.#upKey = true;
         this.changeVelocity(0,-(this.speed));
+        // this.downStop();
       }
     }
     upStop() { // up key is released
       this.#upKey = false;
       this.changeVelocity(0,(this.speed))
+      this.#yVel = 0
     }
    
     #checkCollision(axis) { //check for collision, can only check one axis at a time
@@ -356,7 +376,7 @@ export class gridObj {
           }
           break;
       }
-      
+      obj.changeVelocity(0,0);
     }
 }
 

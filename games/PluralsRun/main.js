@@ -8,9 +8,7 @@ import {gridObj,Grid} from './classes.js';
 
 const grid = new Grid(1000,600,0,0,1000,600,'game_camera');
 
-// const garbageCan = grid.createGridObj('garbageCan','/images/garbage_closed.png',200,200,75,100,5,50);
-// const garbageOpen = grid.createGridObj('garbageOpen','/images/garbage_closed.png',100,100,75,100,5,50);
-
+const garbageCan = grid.createGridObj('garbageCan','/images/garbage_closed.png',200,200,75,100,5,400);
 const garbageOpen5 = grid.createGridObj('garbageOpen5','/images/garbage_closed.png',300,50,50,70,5,200);
 const garbageOpen6 = grid.createGridObj('garbageOpen6','/images/garbage_closed.png',300,500,75,100,5,900);
 const garbageOpen7 = grid.createGridObj('garbageOpen7','/images/garbage_closed.png',100,50,50,70,5,200);
@@ -18,6 +16,7 @@ const garbageOpen8 = grid.createGridObj('garbageOpen8','/images/garbage_closed.p
 
 grid.createHardBoundry();
 
+garbageCan.colType = 'bounce'
 garbageOpen5.colType = "bounce";
 garbageOpen5.changeVelocity(4,-6);
 garbageOpen6.colType = "bounce";
@@ -28,13 +27,6 @@ garbageOpen8.colType = "bounce";
 garbageOpen8.changeVelocity(2,3);
 
 
-
-// garbageOpen2.colType = "combine";
-// garbageOpen2.changeVelocity(1,1);
-// garbageOpen3.colType = "combine";
-// garbageOpen3.changeVelocity(1,1);
-// garbageOpen4.colType = "combine";
-// garbageOpen4.changeVelocity(1,1);
 
 // player controls ---------------------------------------------------------------------------
 document.addEventListener("keydown", (e) => {keysDown(e)});
