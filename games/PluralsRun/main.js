@@ -54,9 +54,9 @@ const grid = new Grid(1300,600,0,0,1300,600,'game_camera');
 
 const garbageCan = grid.createGridObj('garbageCan','/images/red_barrier.png',200,200,25,200,10,1000);
 const garbageOpen5 = grid.createGridObj('garbageOpen5','/images/garbage_closed.png',300,50,50,70,5,50);
-const garbageOpen6 = grid.createGridObj('garbageOpen6','/images/garbage_closed.png',300,500,75,100,5,50);
+const garbageOpen6 = grid.createGridObj('garbageOpen6','/images/garbage_closed.png',300,500,75,100,5,400);
 const garbageOpen7 = grid.createGridObj('garbageOpen7','/images/garbage_closed.png',100,50,50,70,5,50);
-const garbageOpen8 = grid.createGridObj('garbageOpen8','/images/garbage_closed.png',50,300,75,100,5,50);
+const garbageOpen8 = grid.createGridObj('garbageOpen8','/images/garbage_closed.png',50,300,75,100,5,400);
 
 grid.createHardBoundry();
 
