@@ -1,0 +1,42 @@
+[
+    {
+        "word":"shelf",
+        "suffix":"ves"
+    },
+    {
+        "word":"bench",
+        "suffix":"es"
+    },
+    {
+        "word":"pencil",
+        "suffix": "s"
+    },
+    {
+        "word":"pupppy",
+        "suffix": "ies"
+    },
+    {
+        "word":"toy",
+        "suffix": "s"
+    },
+    {
+        "word":"box",
+        "suffix": "es"
+    },
+    {
+        "word":"leaf",
+        "suffix": "ves"
+    },
+    {
+        "word":"story",
+        "suffix": "ies"
+    },
+    {
+        "word":"wife",
+        "suffix": "ves"
+    },
+    {
+        "word":"potato",
+        "suffix": "es"
+    }
+]

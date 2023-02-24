@@ -22,10 +22,10 @@ export class Grid {
     return newObj;
   }
   createHardBoundry() {
-    this.createGridBarrier(0,-10,this.gridWidth,10); //top
-    this.createGridBarrier(0,this.gridHeight,this.gridWidth,10); //bottom
-    this.createGridBarrier(-10,0,10,this.gridHeight); //left
-    this.createGridBarrier(this.gridWidth,0,10,this.gridHeight); //right
+    this.createGridBarrier(0,-100,this.gridWidth,100); //top
+    this.createGridBarrier(0,this.gridHeight,this.gridWidth,100); //bottom
+    this.createGridBarrier(-100,0,100,this.gridHeight); //left
+    this.createGridBarrier(this.gridWidth,0,100,this.gridHeight); //right
   }
   createGridBarrier(xPos,yPos,width,height) {
     const id = "barrier_" + this.gridBarriers.length;
@@ -79,29 +79,28 @@ export class Grid {
 
 export class gridObj {
     //properties
-    #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel = 0; #yVel = 0; #moveInt;
-    #leftKey; #rightKey; #upKey; #downKey; #grid; #edge; #tickSpeed; #objType; #colType; #weight;
+    #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel = 0; #yVel = 0; 
+    #moveInt = null; #leftKey = false; #rightKey = false; #upKey = false; #downKey = false; 
+    #grid; #edge; #tickSpeed; #objType; #colType; #weight;
     // init
     constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, weight, grid) {
       this.#grid = grid 
       this.#html_id = html_id;
       this.#width = width;
-      this.#tickSpeed = 10;
+      this.#tickSpeed = 15;
       this.#height = height;
       this.#speed = speed;
       this.#weight = weight;
       this.#xPos = xPos;
       this.#yPos = yPos;
-      this.#leftKey = false;
-      this.#rightKey = false;
-      this.#downKey = false;
-      this.#upKey = false;
-      this.#moveInt = null;
       this.#edge = 5;
       this.#colType = 'block'
       this.#objType = 'dynamic'
       const parent = document.getElementById(parent_id);
       const ele = document.createElement('div');
+      ele.style.display = 'flex';
+      ele.style.justifyContent = 'center';
+      ele.style.alignItems = 'center';
       ele.id = html_id;
       ele.style.backgroundImage = "url('" + imgPath + "')";
       ele.style.height = this.#height + 'px';
@@ -113,110 +112,119 @@ export class gridObj {
       this.#html_ele = ele;
     }
     // getters and setters
-    get id() {
-      return this.#html_id;
-    }
-    get objType() {
-      return this.#objType;
-    }
-    get colType() {
-      return this.#colType;
-    }
-    set colType(ct) {
-      this.#colType = ct;
-    }
-    get ele() {
-      return this.#html_ele;
-    }
-    get speed() {
-      return this.#speed;
-    }
-    set speed(s) {
-      this.#speed = s;
-    }
-    get xVel() {
-      return this.#xVel;
-    }
-    set xVel(x) {
-      this.#xVel = x
-    }
-    get yVel() {
-      return this.#yVel;
-    }
-    set yVel(y) {
-      this.#yVel = y;
-    }
-    get tickSpeed() {
-      return this.#tickSpeed;
-    }
-    set tickSpeed(s) {
-      this.#tickSpeed = s;
-    }
-    get topHitBox() {
-      return this.#yPos + this.#edge;
-    }
-    get bottomHitBox() {
-      return this.#yPos + this.#height - this.#edge;
-    }
-    get leftHitBox() {
-      return this.#xPos + this.#edge;
-    }
-    get rightHitBox() {
-      return this.#xPos + this.#width - this.#edge;
-    }
-    get top() {
-      return this.#html_ele.offsetTop;
-    }
-    set top(y) {
-      this.#html_ele.style.top = y + "px";
-    }
-    get left() {
-      return this.#html_ele.offsetLeft;
-    }
-    set left(x) {
-      this.#html_ele.style.left = x + 'px';
-    }
-    get xPos() {
-      return this.#xPos;
-    }
-    set xPos(x) {
-      this.#xPos = x;
-      this.left = (x - this.#grid.xCam);
-    }
-    get yPos() {
-      return this.#yPos;
-    }
-    set yPos(y) {
-      this.#yPos = y;
-      this.top = (y - this.#grid.yCam);
-    }
-    get width() {
-      return this.#width;
-    }
-    set width(w) {
-      this.#width = w;
-      this.#html_ele.style.width = w + 'px';
-    }
-    get height() {
-      return this.#height;
-    }
-    set height(h) {
-      this.#height = w;
-      this.#html_ele.style.height = h + 'px';
-    }
-    get weight() {
-      return this.#weight;
-    }
-    set weight(w) {
-      this.#weight = w;
-    }
-    get styleClass() {
-      return this.#html_ele.className;
-    }
-    set styleClass(c) {
-      this.#html_ele.className = c;
-    }
+        get id() {
+          return this.#html_id;
+        }
+        get objType() {
+          return this.#objType;
+        }
+        get colType() {
+          return this.#colType;
+        }
+        set colType(ct) {
+          this.#colType = ct;
+        }
+        get ele() {
+          return this.#html_ele;
+        }
+        get speed() {
+          return this.#speed;
+        }
+        set speed(s) {
+          this.#speed = s;
+        }
+        get xVel() {
+          return this.#xVel;
+        }
+        set xVel(x) {
+          this.#xVel = x
+        }
+        get yVel() {
+          return this.#yVel;
+        }
+        set yVel(y) {
+          this.#yVel = y;
+        }
+        get tickSpeed() {
+          return this.#tickSpeed;
+        }
+        set tickSpeed(s) {
+          this.#tickSpeed = s;
+        }
+        get topHitBox() {
+          return this.#yPos + this.#edge;
+        }
+        get bottomHitBox() {
+          return this.#yPos + this.#height - this.#edge;
+        }
+        get leftHitBox() {
+          return this.#xPos + this.#edge;
+        }
+        get rightHitBox() {
+          return this.#xPos + this.#width - this.#edge;
+        }
+        get top() {
+          return this.#html_ele.offsetTop;
+        }
+        set top(y) {
+          this.#html_ele.style.top = y + "px";
+        }
+        get left() {
+          return this.#html_ele.offsetLeft;
+        }
+        set left(x) {
+          this.#html_ele.style.left = x + 'px';
+        }
+        get xPos() {
+          return this.#xPos;
+        }
+        set xPos(x) {
+          this.#xPos = x;
+          this.left = (x - this.#grid.xCam);
+        }
+        get yPos() {
+          return this.#yPos;
+        }
+        set yPos(y) {
+          this.#yPos = y;
+          this.top = (y - this.#grid.yCam);
+        }
+        get width() {
+          return this.#width;
+        }
+        set width(w) {
+          this.#width = w;
+          this.#html_ele.style.width = w + 'px';
+        }
+        get height() {
+          return this.#height;
+        }
+        set height(h) {
+          this.#height = w;
+          this.#html_ele.style.height = h + 'px';
+        }
+        get weight() {
+          return this.#weight;
+        }
+        set weight(w) {
+          this.#weight = w;
+        }
+        get styleClass() {
+          return this.#html_ele.className;
+        }
+        set styleClass(c) {
+          this.#html_ele.className = c;
+        }
     // methods
+    addTextBox(text) {
+      const textBox = document.createElement('div');
+      const textNode = document.createTextNode(text);
+      textBox.appendChild(textNode);
+      textBox.style.backgroundColor = "yellow";
+      textBox.style.padding = "5px";
+      textBox.style.fontSize = "1.3rem";
+      this.ele.appendChild(textBox); 
+    }
     changeVelocity(x,y) { //change velocity and/or update the move interval
       this.#xVel += (x);
       this.#yVel += (y);
@@ -248,10 +256,7 @@ export class gridObj {
       if (this.#leftKey == false) {
         this.#leftKey = true;
         this.changeVelocity(-(this.speed),0);
-        // if (this.#rightKey == true) {
-        //   this.#rightKey = false
-        //   this.changeVelocity(-(this.speed),0);
-        // }
+   
       }
     }
     leftStop() { // left key is released
@@ -259,17 +264,12 @@ export class gridObj {
       this.changeVelocity(this.speed,0)
       if(this.#rightKey == false) {
         this.#xVel = 0
-        
       }
     }
     rightGo() { // right key is pressed
       if (this.#rightKey == false) {
         this.#rightKey = true;
         this.changeVelocity((this.speed),0);
-        // if (this.#leftKey == true) {
-        //   this.#leftKey = false
-        //   this.changeVelocity((this.speed),0);
-        // }
       }
     }
     rightStop() { //right key is released
@@ -277,14 +277,12 @@ export class gridObj {
       this.changeVelocity(-(this.speed),0)
       if(this.#leftKey == false) {
         this.#xVel = 0
-        
       }
     }
     downGo() { //down key is pressed
       if (this.#downKey == false) {
         this.#downKey = true;
         this.changeVelocity(0,(this.speed));
-        // this.upStop();
       }
     }
     downStop() { // down key is released
@@ -296,7 +294,6 @@ export class gridObj {
       if (this.#upKey == false) {
         this.#upKey = true;
         this.changeVelocity(0,-(this.speed));
-        // this.downStop();
       }
     }
     upStop() { // up key is released
@@ -315,14 +312,14 @@ export class gridObj {
           yOverlap = false;
           xOverlap = false;
           obj = objArray[index];
-          if (obj.id != this.id) {
-            if (!(this.topHitBox >= obj.bottomHitBox || this.bottomHitBox <= obj.topHitBox)) {
-              yOverlap = true;  
-            }
-            if (!(this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)) {
-              xOverlap = true; 
-            }
-          }
+              if (obj.id != this.id) {
+                if (!(this.topHitBox >= obj.bottomHitBox || this.bottomHitBox <= obj.topHitBox)) {
+                  yOverlap = true;  
+                }
+                if (!(this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)) {
+                  xOverlap = true; 
+                }
+              }
           index += 1;
         }
       if (xOverlap && yOverlap) {
@@ -341,42 +338,42 @@ export class gridObj {
       }
       switch (this.#colType) {
         case 'block':
-          
-          break;
-        case 'empty':
-      
+            // do nothing
           break;
         case 'stop':
           this.changeVelocity(-(this.#xVel),-(this.#yVel));
           break;
         case "bounce":
-          if (obj.weight < 1000) {
-            if (axis == 'x') {
-              // (this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)
-              let m1 = this.weight;
-              let m2 = obj.weight
-              let u1 = this.xVel;
-              let u2 = obj.xVel;
-              this.#xVel = (((m1-m2)*u1) + (2*m2*u2)) / (m1+m2)
-              obj.xVel = (((m2-m1)*u2) + (2*m1*u1)) / (m1+m2)
-            } else {
-              let m1 = this.weight;
-              let m2 = obj.weight
-              let u1 = this.yVel;
-              let u2 = obj.yVel;
-              this.#yVel = (((m1-m2)*u1) + (2*m2*u2)) / (m1+m2)
-              obj.yVel = (((m2-m1)*u2) + (2*m1*u1)) / (m1+m2)
-            }
-          } else {
-            if (axis == 'x') {
-              this.#xVel = -(this.#xVel);
-            } else {
-              this.#yVel = -(this.#yVel);
-            }    
-          }
+          this.#colBounce(axis,obj);
           break;
       }
-      obj.changeVelocity(0,0);
+      if (obj.objType == 'dynamic') {obj.changeVelocity(0,0);} //start move int if not moving}
+    }
+    #colBounce(axis, obj) {
+      if (obj.weight < 1000) {
+        if (axis == 'x') {
+          // (this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)
+          let m1 = this.weight;
+          let m2 = obj.weight
+          let u1 = this.xVel;
+          let u2 = obj.xVel;
+          this.#xVel = (((m1-m2)*u1) + (2*m2*u2)) / (m1+m2)
+          obj.xVel = (((m2-m1)*u2) + (2*m1*u1)) / (m1+m2)
+        } else {
+          let m1 = this.weight;
+          let m2 = obj.weight
+          let u1 = this.yVel;
+          let u2 = obj.yVel;
+          this.#yVel = (((m1-m2)*u1) + (2*m2*u2)) / (m1+m2)
+          obj.yVel = (((m2-m1)*u2) + (2*m1*u1)) / (m1+m2)
+        }
+      } else {
+        if (axis == 'x') {
+          this.#xVel = -(this.#xVel);
+        } else {
+          this.#yVel = -(this.#yVel);
+        }    
+      }
     }
 }
 

@@ -24,7 +24,7 @@
 
 .dynamic {
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size:cover;
     background-position: center;
     position: absolute;
     margin: 0;
