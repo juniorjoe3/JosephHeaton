@@ -34,6 +34,22 @@ export class Grid {
     this.gridObjs.push(newBarrier);
     return newBarrier;
   }
+  pauseObjs() {
+    console.log('pause');
+    this.gridObjs.forEach( obj => {
+      if (obj.objType == 'dynamic') {
+        obj.stopMoveInt();
+      }
+    })
+  }
+  unPauseObjs() {
+    console.log('unpause');
+    this.gridObjs.forEach( obj => {
+      if (obj.objType == 'dynamic') {
+        obj.changeVelocity(0,0);
+      }
+    })
+  }
   // getters and setters
   get gridHeight() {
     return this.#height;
@@ -93,7 +109,7 @@ export class gridObj {
       this.#weight = weight;
       this.#xPos = xPos;
       this.#yPos = yPos;
-      this.#edge = 5;
+      this.#edge = 2;
       this.#colType = 'block'
       this.#objType = 'dynamic'
       const parent = document.getElementById(parent_id);
@@ -225,6 +241,10 @@ export class gridObj {
       textBox.style.fontSize = "1.3rem";
       this.ele.appendChild(textBox); 
     }
+    stopMoveInt() {
+      clearInterval(this.#moveInt);
+      this.#moveInt = null;
+    }
     changeVelocity(x,y) { //change velocity and/or update the move interval
       this.#xVel += (x);
       this.#yVel += (y);
@@ -313,10 +333,10 @@ export class gridObj {
           xOverlap = false;
           obj = objArray[index];
               if (obj.id != this.id) {
-                if (!(this.topHitBox >= obj.bottomHitBox || this.bottomHitBox <= obj.topHitBox)) {
+                if (!(this.topHitBox > obj.bottomHitBox || this.bottomHitBox < obj.topHitBox)) {
                   yOverlap = true;  
                 }
-                if (!(this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)) {
+                if (!(this.leftHitBox > obj.rightHitBox || this.rightHitBox < obj.leftHitBox)) {
                   xOverlap = true; 
                 }
               }
@@ -330,7 +350,7 @@ export class gridObj {
       }
     }
     #handleCollision(axis,obj) {
-      console.log('collision')
+      // console.log('! collision !')
       if (axis == 'x') {
         this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
       } else {

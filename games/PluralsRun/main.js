@@ -3,8 +3,13 @@
 // load -----------------------------------------------------
 console.log('main.js loaded')
 import {gridObj,Grid} from './classes.js';
-
 fetchWordList();
+const grid = new Grid(1100,500,0,0,1100,500,'game_camera');
+grid.createHardBoundry();
+const player = grid.createGridObj('player','/images/red_barrier.png',800,200,50,50,5,1000);
+player.colType = 'bounce'
+player.addTextBox('me')
+
 async function fetchWordList() {
     try {
       const response = await fetch('./pluralsList.json');
@@ -22,11 +27,15 @@ async function fetchWordList() {
     }
   }
 
+  // main -------------------------------------------------------
 function createWordArray() {
     const wordArray = JSON.parse(sessionStorage.getItem('wordList'));
-    // create array of same length with random numbers
+    return randomizeArray(wordArray);
+}
+
+function randomizeArray(array) {
     const randomArray = [];
-    const length = 10;
+    const length = array.length;
     for (let i = 0; i < length; i++) {
         const pair = [i,(Math.random())];
         randomArray[i] = pair;
@@ -38,102 +47,89 @@ function createWordArray() {
             return 1;
           }
     });
-    console.log(randomArray);
-    const wordArrayRND = [];
+    const outputArray = [];
     for (let i = 0; i < length; i++) {
-        wordArrayRND.push(wordArray[randomArray[i][0]]);
+        outputArray.push(array[randomArray[i][0]]);
     }
-    console.log(wordArrayRND);
+    return outputArray;
+}
+
+function startGame() {
+    document.addEventListener("keydown", keysDown);
+    document.addEventListener("keyup", keysUp);
+    document.getElementById('pause_btn').addEventListener('click', pauseGame)
+    document.getElementById('pauseMenu').style.top = "-200px";
+
+    for (let i = 1; i < 10; i++) {
+       let obj = grid.createGridObj(('bot' + i),'/images/red_barrier.png',(50*i),(50*i),40,40,5,500);
+       obj.colType = 'bounce';
+       obj.changeVelocity(Math.random()*6,Math.random()*6);
+    }
+
+}
+
+function pauseGame() {
+    grid.pauseObjs();
+    document.removeEventListener("keydown", keysDown);
+    document.removeEventListener("keyup", keysUp);
+    document.getElementById('pause_btn').removeEventListener('click', pauseGame)
+    document.getElementById('pauseMenu').style.top = "45%";
+}
+
+function unPauseGame() {
+    document.addEventListener("keydown", keysDown);
+    document.addEventListener("keyup", keysUp);
+    document.getElementById('pause_btn').addEventListener('click', pauseGame)
+    document.getElementById('pauseMenu').style.top = "-200px";
+    grid.unPauseObjs();
 }
 
 
+// event listeners ----------------------------------------------------
+document.getElementById('resume_btn').addEventListener('click', unPauseGame)
 
-
-// testing ------------------------------
-const grid = new Grid(1300,600,0,0,1300,600,'game_camera');
-
-const garbageCan = grid.createGridObj('garbageCan','/images/red_barrier.png',200,200,25,200,10,1000);
-const garbageOpen5 = grid.createGridObj('garbageOpen5','/images/garbage_closed.png',300,50,50,70,5,50);
-const garbageOpen6 = grid.createGridObj('garbageOpen6','/images/garbage_closed.png',300,500,75,100,5,400);
-const garbageOpen7 = grid.createGridObj('garbageOpen7','/images/garbage_closed.png',100,50,50,70,5,50);
-const garbageOpen8 = grid.createGridObj('garbageOpen8','/images/garbage_closed.png',50,300,75,100,5,400);
-
-grid.createHardBoundry();
-
-garbageCan.colType = 'bounce'
-garbageCan.addTextBox('Me');
-garbageOpen5.colType = "bounce";
-garbageOpen5.changeVelocity(4,-5);
-garbageOpen6.colType = "bounce";
-garbageOpen6.changeVelocity(3,-1);
-garbageOpen7.colType = "bounce";
-garbageOpen7.changeVelocity(1,4);
-garbageOpen8.colType = "bounce";
-garbageOpen8.changeVelocity(2,3);
-
-
-
-// player controls ---------------------------------------------------------------------------
-document.addEventListener("keydown", (e) => {keysDown(e)});
-document.addEventListener("keyup", (e) => {keysUp(e)});
-
-
-function keysDown(e) {
+var keysDown = function(e) {
     e = e || window.event;
     switch (e.key) {
         case 'ArrowUp':
-            garbageCan.upGo();
+            player.upGo();
             break;
         case 'ArrowDown':
-            garbageCan.downGo();
+            player.downGo();
             break;
         case 'ArrowLeft':
-            garbageCan.leftGo();
+            player.leftGo();
             break;
         case 'ArrowRight':
-            garbageCan.rightGo();
+            player.rightGo();
             break;
-        case 'w':
-            garbageOpen.upGo();
-            break;
-        case 's':
-            garbageOpen.downGo();
-            break;
-        case 'a':
-            garbageOpen.leftGo();
-            break;
-        case 'd':
-            garbageOpen.rightGo();
     }
 }
 
-function keysUp(e) {
+var keysUp = function(e) {
     e = e || window.event;
     switch (e.key) {
         case 'ArrowUp':
-            garbageCan.upStop();
+            player.upStop();
             break;
         case 'ArrowDown':
-            garbageCan.downStop();
+            player.downStop();
             break;
         case 'ArrowLeft':
-            garbageCan.leftStop();
+            player.leftStop();
             break;
         case 'ArrowRight':
-            garbageCan.rightStop();
+            player.rightStop();
             break;
-        case 'w':
-            garbageOpen.upStop();
+        case 'Escape':
+            pauseGame();
             break;
-        case 's':
-            garbageOpen.downStop();
-            break;
-        case 'a':
-            garbageOpen.leftStop();
-            break;
-        case 'd':
-            garbageOpen.rightStop();
-            break;      
     }
 }
+
+
+startGame();
+
+
+
 
