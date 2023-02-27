@@ -1,6 +1,34 @@
+// audio --------------------
+export function playAudio(audio,volume) {
+  volume = volume / 100;
+  switch (audio) {
+    case "bounce":
+      let audio_bounce = new Audio('./bounce.mp3');
+      audio_bounce.volume = volume;
+      audio_bounce.play();
+      break;
+    case 'explode':
+      let audio_explode = new Audio('./explode.mp3');
+      audio_explode.volume = volume;
+      audio_explode.play();
+      break;
+    case 'pop':
+      let audio_pop = new Audio('./pop.mp3');
+      audio_pop.volume = volume * (.5);
+      audio_pop.play();
+      break;
+    case 'click':
+      let click = new Audio('./click.mp3');
+      click.volume = volume;
+      click.play();
+      break;
+  }
+}
+
+
 export class Grid {
   //properties
-  #width; #height; #yCam; #xCam; #wCam; #hCam; #cam_ele;
+  #width; #height; #yCam; #xCam; #wCam; #hCam; #cam_ele; #volume;
   #gridObjs = []; //all objs in the grid 
   #gridBarriers = []; // only barriers
   // init
@@ -14,6 +42,7 @@ export class Grid {
     this.#cam_ele = document.getElementById(cam_container_id);
     this.#cam_ele.style.width = this.#wCam + 'px';
     this.#cam_ele.style.height = this.#hCam + 'px';
+    this.#volume = 100;
   // methods
   }
   createGridObj(html_id, imgPath, xPos, yPos, width, height, speed, weight) {
@@ -87,10 +116,13 @@ export class Grid {
   get gridBarriers() {
     return this.#gridBarriers;
   }
+  get volume() {
+    return this.#volume;
+  }
+  set volume(volume) {
+    this.#volume = volume;
+  }
 }
-
-
-
 
 
 export class gridObj {
@@ -356,7 +388,7 @@ export class gridObj {
       } else {
         this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
       }
-      switch (this.#colType) {
+      switch (obj.colType) {
         case 'block':
             // do nothing
           break;
@@ -370,6 +402,7 @@ export class gridObj {
       if (obj.objType == 'dynamic') {obj.changeVelocity(0,0);} //start move int if not moving}
     }
     #colBounce(axis, obj) {
+      playAudio('pop',this.#grid.volume);
       if (obj.weight < 1000) {
         if (axis == 'x') {
           // (this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)
@@ -398,11 +431,9 @@ export class gridObj {
 }
 
 
-
-
 export class gridBarrier {
   //properties
-  #barrier_id; #width; #height; #xPos; #yPos; #edge; #objType; #weight;
+  #barrier_id; #width; #height; #xPos; #yPos; #edge; #objType; #weight; #colType;
   // init
   constructor(barrier_id, xPos, yPos, width, height) {
     this.#width = width;
@@ -412,7 +443,8 @@ export class gridBarrier {
     this.#yPos = yPos;
     this.#edge = 5;
     this.#barrier_id = barrier_id;
-    this.#objType = 'barrier'
+    this.#objType = 'barrier';
+    this.#colType = 'bounce';
   }
   // getters and setters
   get id() {
@@ -460,6 +492,15 @@ export class gridBarrier {
   get weight() {
     return this.#weight;
   }
+  get colType() {
+    return this.#colType;
+  }
+  set colType(type) {
+    this.#colType = type;
+  }
   // methods
   
 }
+
+
+

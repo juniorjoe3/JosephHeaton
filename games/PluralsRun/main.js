@@ -2,13 +2,18 @@
 
 // load -----------------------------------------------------
 console.log('main.js loaded')
-import {gridObj,Grid} from './classes.js';
+import {gridObj,Grid,playAudio} from './classes.js';
 fetchWordList();
 const grid = new Grid(1100,500,0,0,1100,500,'game_camera');
 grid.createHardBoundry();
-const player = grid.createGridObj('player','/images/red_barrier.png',800,200,50,50,5,1000);
+const player = grid.createGridObj('player','/images/red_barrier.png',800,200,50,50,15,1000);
 player.colType = 'bounce'
 player.addTextBox('me')
+
+
+
+
+
 
 async function fetchWordList() {
     try {
@@ -55,10 +60,10 @@ function randomizeArray(array) {
 }
 
 function startGame() {
-    document.addEventListener("keydown", keysDown);
-    document.addEventListener("keyup", keysUp);
-    document.getElementById('pause_btn').addEventListener('click', pauseGame)
+    eventListeners('add');
     document.getElementById('pauseMenu').style.top = "-200px";
+
+    grid.volume = 50;
 
     for (let i = 1; i < 10; i++) {
        let obj = grid.createGridObj(('bot' + i),'/images/red_barrier.png',(50*i),(50*i),40,40,5,500);
@@ -68,20 +73,30 @@ function startGame() {
 
 }
 
+function eventListeners(call) {
+    if (call == 'add') {
+        document.addEventListener("keydown", keysDown);
+        document.addEventListener("keyup", keysUp);
+        document.getElementById('pause_btn').addEventListener('click', pauseGame)
+    }   else {
+        document.removeEventListener("keydown", keysDown);
+        document.removeEventListener("keyup", keysUp);
+        document.getElementById('pause_btn').removeEventListener('click', pauseGame)
+    }
+}
+
 function pauseGame() {
     grid.pauseObjs();
-    document.removeEventListener("keydown", keysDown);
-    document.removeEventListener("keyup", keysUp);
-    document.getElementById('pause_btn').removeEventListener('click', pauseGame)
-    document.getElementById('pauseMenu').style.top = "45%";
+    eventListeners('remove')
+    document.getElementById('pauseMenu').style.top = "40%";
+    playAudio('click',grid.volume);
 }
 
 function unPauseGame() {
-    document.addEventListener("keydown", keysDown);
-    document.addEventListener("keyup", keysUp);
-    document.getElementById('pause_btn').addEventListener('click', pauseGame)
+    eventListeners('add');
     document.getElementById('pauseMenu').style.top = "-200px";
     grid.unPauseObjs();
+    playAudio('click',grid.volume);
 }
 
 
@@ -127,6 +142,7 @@ var keysUp = function(e) {
     }
 }
 
+// ---- testing -----------------
 
 startGame();
 
