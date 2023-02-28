@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/com_topnav.css" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/com_scrollbar.css" />
+    <title>Joseph Heaton - Plural Run</title>
+</head>
+<body>
+    <div id="topnav_container">
+        <a href="/index.html" class="navlink" id="lang0">Home</a>
+        <div id="search_container">
+            <label id="lang2">Search</label>
+            <div id="topnav_links_container">
+                <a href="/" id="lang22" class="navlink">About</a>
+                <a href="/pages/gallery.html" id="lang4" class="navlink">Photos</a>
+                <a href="/pages/professional.html" id="lang6" class="navlink">Professional</a>
+                <a href="/pages/projects.html" id="lang8" class="navlink">Projects</a>
+                <a href="/" id="lang10" class="navlink">Misc</a>
+            </div>
+        </div>
+    </div>
+    <div id="main_content">
+        <div id="game_container">
+            <div id="floatingMenu">
+                <div id="mainMenu">
+                    <h1>Game Name</h1>
+                    <div>
+                        <label for="wordList">Word List:</label>
+                        <select class="input" name="wordList" id="wordList">
+                            <option value="plurals" selected>Plurals</option>
+                            <option value="animals">Animals</option>
+                            <option value="transportation">Transportation</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="playerName">Player Name:</label>
+                        <input class="input" name="playerName" id="playerName" type="text" value="player1">
+                    </div>
+                    <button id="play_btn">Play</button>
+                    <button id="main_settings_btn">Settings</button>
+                    
+                </div>
+                <div id="pauseMenu">
+                    <button id="resume_btn">Resume</button>
+                    <button id="pause_settings_btn">Settings</button>
+                    <button id="restart_btn">Restart</button>
+                    <button id="quit_btn">Quit</button>
+                </div>
+                <div id="settingsMenu">
+                    <h1>Settings</h1>
+                    <label>Game Window</label>
+                    <input class="input" type="range" min="50" max="150" value="100" class="slider" id="windowRange">
+                    <label>Volume</label>
+                    <input class="input" type="range" min="0" max="100" value="100" class="slider" id="volumeRange">
+                    <button id="clearScores_btn">Clear Highscores</button>
+                    <button id="settingsBack_btn">Save & Exit</button>
+                </div>
+            </div>
+            <div id="header">
+                <div id="highscore">highscore</div>
+                <div id="modeName">modename</div>
+                <button id="pause_btn">Pause</button>
+            </div>
+            <div id="game_camera">
+                <!-- game objects -->
+            </div> 
+            <div id="footer">
+                <div id="currentWord">current word</div>
+            </div>
+        </div>
+        <!-- <div>Image by <a href="https://www.freepik.com/free-vector/hand-drawn-animation-frames-element-collection_33591451.htm#query=animal%20sprite%20sheet&position=0&from_view=keyword&track=ais">Freepik</a></div> -->
+    </div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

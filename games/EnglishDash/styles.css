@@ -1,0 +1,170 @@
+/* div {
+    border: 2px solid rgb(60, 0, 255);
+    box-sizing: border-box;
+} */
+
+
+
+
+/* by element type -------------------------------------------------------------------- */
+
+button {
+    font-size: 1.4rem;
+    margin: 7px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    background-color:rgb(26, 71, 127);    
+}
+button:hover {
+    background-color: blue;
+}
+
+label {
+    font-size: 1.4rem;
+}
+
+#settingsMenu button, #pauseMenu button, #mainMenu button {
+    width: 200px;
+}
+
+.input {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 15px;
+    width:200px;
+}
+
+
+/* by section ------------------------------------------------------ */
+
+#main_content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 0;
+    padding-top: 50px;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-direction: column;
+    box-sizing: border-box;
+    background-color: rgb(88, 88, 88);
+}
+
+#game_container {
+    border: 3px solid rgb(1, 1, 1);
+    display:flex;
+    flex-direction: column;
+    position: absolute;
+
+}
+
+#mainMenu {
+    width:100%;
+    height: 100%;
+    display: flex;
+    /* display: none; */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    z-index:3;
+}
+
+#mainMenu h1 {
+    font-size: 3rem;
+}
+
+
+#mainMenu #playerName {
+    width: 150px;
+}
+
+#floatingMenu {
+    position: absolute;
+    width:100%;
+    height: 100%;
+    display: flex; /* to be changed by js to none*/
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(102, 166, 206);
+    z-index: 2;
+}
+
+#pauseMenu, #settingsMenu {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    display: none; /* to be changed by js to flex*/
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 10px;
+    background-color: rgb(102, 166, 206,.649);
+    z-index: 3;
+    border-radius: 10px;
+}
+
+#settingsMenu h1{
+    margin-top: 0px;
+}
+
+#header {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 30px;
+    align-items: center;
+    background-color: rgb(102, 166, 206);
+    box-sizing: border-box;
+}
+
+#highscore {
+    font-size: 1.4rem;
+}
+
+#modeName {
+    font-size: 1.4rem;
+}
+
+#footer {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(102, 166, 206);
+}
+
+#currentWord {
+    font-size: 1.5rem;
+}
+
+#game_camera {
+    position: relative;
+    overflow: hidden;
+    background-color:blanchedalmond;
+}
+
+.dynamic {
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+    position: absolute;
+    margin: 0;
+    padding: 0;    
+}
+
+#barrier {
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+    position: absolute;
+    margin: 0;
+    padding: 0;    
+}

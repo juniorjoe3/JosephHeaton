@@ -22,15 +22,23 @@ export function playAudio(audio,volume) {
       click.volume = volume;
       click.play();
       break;
+    case 'ohno':
+      let ohno = new Audio('./ohno.mp3');
+      ohno.volume = volume;
+      ohno.play();
+      break;
   }
 }
 
 
-export class Grid {
+export class Game {
   //properties
-  #width; #height; #yCam; #xCam; #wCam; #hCam; #cam_ele; #volume;
-  #gridObjs = []; //all objs in the grid 
-  #gridBarriers = []; // only barriers
+  #width; #height; #yCam; #xCam; #wCam; #hCam; #cam_ele; #volume; #mainInt; #tickSpeed; #ticker;
+  #loopTriggers = [];// main loop triggers
+  #loopDelays = [];
+  #loopCounters = [];
+  #gameObjs = []; //all objs in the game 
+  #gameBarriers = []; // only barriers
   // init
   constructor(width, height, yCam, xCam, wCam, hCam, cam_container_id) {
     this.#height = height;
@@ -39,51 +47,131 @@ export class Grid {
     this.#xCam = xCam;
     this.#wCam = wCam;
     this.#hCam = hCam;
+    this.#tickSpeed = 15;
+    this.#ticker = 10000;
     this.#cam_ele = document.getElementById(cam_container_id);
     this.#cam_ele.style.width = this.#wCam + 'px';
     this.#cam_ele.style.height = this.#hCam + 'px';
     this.#volume = 100;
-  // methods
+    for (let i = 0; i < 10;i++) {
+      this.#loopDelays[i] = 0;
+      this.#loopTriggers[i] = false;
+      this.#loopCounters[i] = 0;
+    }
   }
-  createGridObj(html_id, imgPath, xPos, yPos, width, height, speed, weight) {
-    const newObj = new gridObj(this.#cam_ele.id, html_id,imgPath, xPos, yPos, width, height, speed,weight, this);
-    this.#gridObjs.push(newObj);
+  // methods
+  setMainInt() {
+    console.log(this);
+    this.#mainInt = setInterval(()=>{this.mainLoop();},this.#tickSpeed);
+  }
+  stopMainInt() {
+    clearInterval(this.#mainInt);
+  }
+  mainLoop() {
+    this.#ticker +=1;  
+    // console.log(this.#ticker);
+    // block
+    if (this.#loopTriggers[0] == true && this.#ticker > (this.#loopDelays[0] + this.seconds(1))) { // <-- delay
+      this.startNormalMode(); //code to be run
+      this.#loopDelays[0] = this.#ticker
+      this.#loopCounters[0] += 1;
+      console.log(this.#loopCounters[0]);
+      if(this.#loopCounters[0] >= (10) ) { // <--- number of times to run
+        this.#loopTriggers[0] = false;
+        this.#loopCounters[0] = 0;
+      }
+    }
+    // block
+    if (this.#loopTriggers[1] == true && this.#ticker > (this.#loopDelays[1] + this.seconds(5))) { // <-- delay
+      this.flyInNewObjRight(); //code to be run
+      this.#loopDelays[1] = this.#ticker
+      this.#loopCounters[1] += 1;
+      console.log(this.#loopCounters[1]);
+      if(this.#loopCounters[1] >= (2) ) { // <--- number of times to run
+        this.#loopTriggers[1] = false;
+      }
+    }
+  }
+  seconds(seconds) {
+    return (seconds * 1000) / this.#tickSpeed;
+  }
+  createGameObj(html_id, imgPath, xPos, yPos, width, height, speed, weight, isPlayer) {
+    const newObj = new gameObj(this.#cam_ele.id, html_id,imgPath, xPos, yPos, width, height, speed,weight, this, isPlayer);
+    this.#gameObjs.push(newObj);
     return newObj;
   }
   createHardBoundry() {
-    this.createGridBarrier(0,-100,this.gridWidth,100); //top
-    this.createGridBarrier(0,this.gridHeight,this.gridWidth,100); //bottom
-    this.createGridBarrier(-100,0,100,this.gridHeight); //left
-    this.createGridBarrier(this.gridWidth,0,100,this.gridHeight); //right
+    this.createGameBarrier(0,-100,this.gameWidth,100); //top
+    this.createGameBarrier(0,this.gameHeight,this.gameWidth,100); //bottom
+    this.createGameBarrier(-100,0,100,this.gameHeight); //left
+    this.createGameBarrier(this.gameWidth,0,100,this.gameHeight); //right
   }
-  createGridBarrier(xPos,yPos,width,height) {
-    const id = "barrier_" + this.gridBarriers.length;
-    const newBarrier = new gridBarrier(id,xPos,yPos,width,height);
-    this.gridBarriers.push(newBarrier);
-    this.gridObjs.push(newBarrier);
+  createGameBarrier(xPos,yPos,width,height) {
+    const id = "barrier_" + this.gameBarriers.length;
+    const newBarrier = new gameBarrier(id,xPos,yPos,width,height,this);
+    this.gameBarriers.push(newBarrier);
+    this.gameObjs.push(newBarrier);
     return newBarrier;
   }
-  pauseObjs() {
+  pauseGame() {
     console.log('pause');
-    this.gridObjs.forEach( obj => {
+    this.stopMainInt();
+    this.gameObjs.forEach( obj => {
       if (obj.objType == 'dynamic') {
         obj.stopMoveInt();
       }
     })
   }
-  unPauseObjs() {
+  unPauseGame() {
     console.log('unpause');
-    this.gridObjs.forEach( obj => {
+    this.setMainInt();
+    this.gameObjs.forEach( obj => {
       if (obj.objType == 'dynamic') {
         obj.changeVelocity(0,0);
       }
     })
   }
+  deleteNonPlayerObjs() {
+    console.log('delete all non player objects');
+    let obj = this.gameObjs[(this.gameObjs.length - 1)]
+    while (obj.isPlayer == false) {
+      obj.deleteHTML();
+      this.gameObjs.pop();
+
+      obj = this.gameObjs[(this.gameObjs.length - 1)]
+    }
+  }
+  deleteAllObjs() {
+    this.gameObjs.forEach( (obj) => {
+      if (obj.objType == 'dynamic') {
+        obj.deleteHTML();
+      }
+    })
+    this.gameObjs.length = 0;
+    this.gameBarriers.length = 0;
+  }
+  startNormalMode() {
+    let name = 'bot ' + this.#gameObjs.length;
+    const obj = this.createGameObj(name,'/images/red_barrier.png', 1000, 200,40,40,5,500,false)
+    obj.colType = 'bounce';
+    obj.changeVelocity(3-(Math.random()*7), 3-(Math.random()*7));
+    // this.flyInNewObjRight(name,'/images/red_barrier.png',40,40,5,500,false)   
+  }
+
+  flyInNewObjRight(html_id, imgPath, width, height, speed, weight, isPlayer) {
+    // const xPos = (this.gameWidth + 10) 
+    // const yPos = (this.gameHeight / 2) - (height/2);
+    // let obj = this.createGameObj(html_id, imgPath, xPos, yPos, width, height, speed, weight, isPlayer);
+    // obj.colType = 'ghost';
+    // obj.changeVelocity(-5, 0)
+    // obj.colType = 'bounce';
+    // obj.changeVelocity(2-(Math.random()*5), 3-(Math.random()*7));
+  }
   // getters and setters
-  get gridHeight() {
+  get gameHeight() {
     return this.#height;
   }
-  get gridWidth() {
+  get gameWidth() {
     return this.#width;
   }
   get yCam() {
@@ -110,11 +198,17 @@ export class Grid {
   set hCam(h) {
     this.#hCam = h;
   }
-  get gridObjs() {
-    return this.#gridObjs;
+  get gameObjs() {
+    return this.#gameObjs;
   }
-  get gridBarriers() {
-    return this.#gridBarriers;
+  set gameObjs(array) {
+    this.#gameObjs = array;
+  }
+  get gameBarriers() {
+    return this.#gameBarriers;
+  }
+  set gameBarriers(array) {
+    this.#gameBarriers = array;
   }
   get volume() {
     return this.#volume;
@@ -122,17 +216,23 @@ export class Grid {
   set volume(volume) {
     this.#volume = volume;
   }
+  get cam_ele() {
+    return this.#cam_ele;
+  }
+  get loopTriggers() {
+    return this.#loopTriggers;
+  }
 }
 
 
-export class gridObj {
+export class gameObj {
     //properties
     #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel = 0; #yVel = 0; 
     #moveInt = null; #leftKey = false; #rightKey = false; #upKey = false; #downKey = false; 
-    #grid; #edge; #tickSpeed; #objType; #colType; #weight;
+    #game; #edge; #tickSpeed; #objType; #colType; #weight; #isPlayer; #isSpawnMode;
     // init
-    constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, weight, grid) {
-      this.#grid = grid 
+    constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, weight, game, isPlayer) {
+      this.#game = game 
       this.#html_id = html_id;
       this.#width = width;
       this.#tickSpeed = 15;
@@ -144,6 +244,8 @@ export class gridObj {
       this.#edge = 2;
       this.#colType = 'block'
       this.#objType = 'dynamic'
+      this.#isPlayer = isPlayer;
+      this.#isSpawnMode = true;
       const parent = document.getElementById(parent_id);
       const ele = document.createElement('div');
       ele.style.display = 'flex';
@@ -154,12 +256,15 @@ export class gridObj {
       ele.style.height = this.#height + 'px';
       ele.style.width = this.#width + 'px';
       ele.className = 'dynamic'
-      ele.style.top = (yPos + grid.yCam) + 'px';
-      ele.style.left = (xPos + grid.xCam) + 'px';
+      ele.style.top = (yPos + game.yCam) + 'px';
+      ele.style.left = (xPos + game.xCam) + 'px';
       parent.appendChild(ele);
       this.#html_ele = ele;
     }
     // getters and setters
+        get isPlayer() {
+          return this.#isPlayer;
+        }
         get id() {
           return this.#html_id;
         }
@@ -228,14 +333,14 @@ export class gridObj {
         }
         set xPos(x) {
           this.#xPos = x;
-          this.left = (x - this.#grid.xCam);
+          this.left = (x - this.#game.xCam);
         }
         get yPos() {
           return this.#yPos;
         }
         set yPos(y) {
           this.#yPos = y;
-          this.top = (y - this.#grid.yCam);
+          this.top = (y - this.#game.yCam);
         }
         get width() {
           return this.#width;
@@ -263,7 +368,22 @@ export class gridObj {
         set styleClass(c) {
           this.#html_ele.className = c;
         }
+        get textValue() {
+          return this.ele.lastElementChild.innerHTML;
+        }
+        set textValue(text) {
+          this.ele.lastElementChild.innerHTML = text;
+        }
+        get isSpawnMode() {
+          return this.#isSpawnMode;
+        }
+        set isSpawnMode(val) {
+          this.#isSpawnMode = val;
+        }
     // methods
+    deleteHTML() {
+      this.#game.cam_ele.removeChild(this.ele);
+    }
     addTextBox(text) {
       const textBox = document.createElement('div');
       const textNode = document.createTextNode(text);
@@ -358,7 +478,7 @@ export class gridObj {
       let yOverlap = false;
       let xOverlap = false;
       let obj;
-      const objArray = this.#grid.gridObjs;
+      const objArray = this.#game.gameObjs;
       let index = 0;
         while (!(yOverlap && xOverlap) && index < objArray.length) {
           yOverlap = false;
@@ -375,34 +495,53 @@ export class gridObj {
           index += 1;
         }
       if (xOverlap && yOverlap) {
-        this.#handleCollision(axis,obj);
+        if (!this.isSpawnMode) {
+          this.#handleCollision(axis,obj);
+        } else {
+          this.xPos = this.xPos; // update real position with new position
+          this.yPos = this.yPos;
+        }
       } else {
+        this.isSpawnMode = false;
         this.xPos = this.xPos; // update real position with new position
         this.yPos = this.yPos;
       }
     }
     #handleCollision(axis,obj) {
       // console.log('! collision !')
+      if (!obj.isSpawnMode) {
+        switch (this.colType) {
+          case 'block':
+            this.#colBlock(axis);
+            break;
+          case 'stop':
+            this.#colStop();
+            break;
+          case "bounce":
+            this.#colBounce(axis,obj);
+            break;
+          case 'ghost':
+            this.#colGhost();
+            break;
+          case "explode":
+            this.#colExplode(axis);
+            break;
+        }
+        if (obj.objType == 'dynamic') {obj.changeVelocity(0,0);} //start move int if not moving}
+      }
+      
+    }
+    #colGhost() {
+      this.xPos = this.xPos; // update real position with new position
+      this.yPos = this.yPos;  
+    }
+    #colBounce(axis, obj) {
+      playAudio('pop',this.#game.volume);
       if (axis == 'x') {
         this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
       } else {
         this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
-      }
-      switch (obj.colType) {
-        case 'block':
-            // do nothing
-          break;
-        case 'stop':
-          this.changeVelocity(-(this.#xVel),-(this.#yVel));
-          break;
-        case "bounce":
-          this.#colBounce(axis,obj);
-          break;
-      }
-      if (obj.objType == 'dynamic') {obj.changeVelocity(0,0);} //start move int if not moving}
-    }
-    #colBounce(axis, obj) {
-      playAudio('pop',this.#grid.volume);
+      }  
       if (obj.weight < 1000) {
         if (axis == 'x') {
           // (this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)
@@ -428,20 +567,43 @@ export class gridObj {
         }    
       }
     }
+    #colBlock(axis) {
+      if (axis == 'x') {
+        this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
+      } else {
+        this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
+      }  
+    }
+    #colStop() {
+      if (axis == 'x') {
+        this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
+      } else {
+        this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
+      }  
+      this.changeVelocity(-(this.#xVel),-(this.#yVel));  
+    }
+    #colExplode(axis) {
+      if (axis == 'x') {
+        this.checkxPos((this.xPos - this.#xVel)); // return values to before collision
+      } else {
+        this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
+      }  
+    }
 }
 
 
-export class gridBarrier {
+export class gameBarrier {
   //properties
-  #barrier_id; #width; #height; #xPos; #yPos; #edge; #objType; #weight; #colType;
+  #barrier_id; #width; #height; #xPos; #yPos; #edge; #objType; #weight; #colType; #game; 
   // init
-  constructor(barrier_id, xPos, yPos, width, height) {
+  constructor(barrier_id, xPos, yPos, width, height, game) {
     this.#width = width;
     this.#height = height;
     this.#weight = 1000;
     this.#xPos = xPos;
     this.#yPos = yPos;
     this.#edge = 5;
+    this.#game = game
     this.#barrier_id = barrier_id;
     this.#objType = 'barrier';
     this.#colType = 'bounce';
