@@ -39,6 +39,10 @@ export class Game {
   #loopCounters = [];
   #gameObjs = []; //all objs in the game 
   #gameBarriers = []; // only barriers
+  #wordList = [];
+  #answerSet = new Set();
+  #gameRound = 0;
+  #gameScore = 0;
   // init
   constructor(width, height, yCam, xCam, wCam, hCam, cam_container_id) {
     this.#height = height;
@@ -61,7 +65,6 @@ export class Game {
   }
   // methods
   setMainInt() {
-    console.log(this);
     this.#mainInt = setInterval(()=>{this.mainLoop();},this.#tickSpeed);
   }
   stopMainInt() {
@@ -69,28 +72,19 @@ export class Game {
   }
   mainLoop() {
     this.#ticker +=1;  
-    // console.log(this.#ticker);
-    // block
-    if (this.#loopTriggers[0] == true && this.#ticker > (this.#loopDelays[0] + this.seconds(1))) { // <-- delay
-      this.startNormalMode(); //code to be run
-      this.#loopDelays[0] = this.#ticker
-      this.#loopCounters[0] += 1;
-      console.log(this.#loopCounters[0]);
-      if(this.#loopCounters[0] >= (10) ) { // <--- number of times to run
-        this.#loopTriggers[0] = false;
-        this.#loopCounters[0] = 0;
+    this.loopGate(0,0.5,4, ()=>{this.normal_flyInNewObjs()});
+  }
+  loopGate(index,delay,count,callBack) {
+    if (this.#loopTriggers[index] == true && this.#ticker > (this.#loopDelays[index] + this.seconds(delay))) { // <-- delay
+      callBack();
+      this.#loopDelays[index] = this.#ticker
+      this.#loopCounters[index] += 1;
+      console.log(this.#loopCounters[index]);
+      if(this.#loopCounters[index] >= (count) ) { // <--- number of times to run
+        this.#loopTriggers[index] = false;
+        this.#loopCounters[index] = 0;
       }
-    }
-    // block
-    if (this.#loopTriggers[1] == true && this.#ticker > (this.#loopDelays[1] + this.seconds(5))) { // <-- delay
-      this.flyInNewObjRight(); //code to be run
-      this.#loopDelays[1] = this.#ticker
-      this.#loopCounters[1] += 1;
-      console.log(this.#loopCounters[1]);
-      if(this.#loopCounters[1] >= (2) ) { // <--- number of times to run
-        this.#loopTriggers[1] = false;
-      }
-    }
+   }  
   }
   seconds(seconds) {
     return (seconds * 1000) / this.#tickSpeed;
@@ -150,23 +144,87 @@ export class Game {
     this.gameObjs.length = 0;
     this.gameBarriers.length = 0;
   }
-  startNormalMode() {
+  normal_flyInNewObjs() {
     let name = 'bot ' + this.#gameObjs.length;
-    const obj = this.createGameObj(name,'/images/red_barrier.png', 1000, 200,40,40,5,500,false)
+    const xPos = (this.#width + 10) 
+    const yPos = (this.#height / 2) - (40/2);
+    const obj = this.createGameObj(name,'/images/red_barrier.png', xPos, yPos,40,40,5,500,false)
     obj.colType = 'bounce';
-    obj.changeVelocity(3-(Math.random()*7), 3-(Math.random()*7));
-    // this.flyInNewObjRight(name,'/images/red_barrier.png',40,40,5,500,false)   
+    obj.addTextBox('hello');
+    obj.changeVelocity(-3,0);
   }
-
-  flyInNewObjRight(html_id, imgPath, width, height, speed, weight, isPlayer) {
-    // const xPos = (this.gameWidth + 10) 
-    // const yPos = (this.gameHeight / 2) - (height/2);
-    // let obj = this.createGameObj(html_id, imgPath, xPos, yPos, width, height, speed, weight, isPlayer);
-    // obj.colType = 'ghost';
-    // obj.changeVelocity(-5, 0)
-    // obj.colType = 'bounce';
-    // obj.changeVelocity(2-(Math.random()*5), 3-(Math.random()*7));
+  normal_startGame() {
+    this.createHardBoundry();
+    this.setMainInt();
+    this.loopTriggers[0] = true; // startNormalMode
+      setTimeout(()=>{
+        this.normal_newRound();
+        this.gameObjs[5].changeVelocity(2-(Math.random()*5), 2-(Math.random()*5));
+        this.gameObjs[6].changeVelocity(2-(Math.random()*5), 2-(Math.random()*5));
+        this.gameObjs[7].changeVelocity(2-(Math.random()*5), 2-(Math.random()*5));
+        this.gameObjs[8].changeVelocity(2-(Math.random()*5), 2-(Math.random()*5));
+        this.gameObjs[5].colType = 'normalMode';
+        this.gameObjs[6].colType = 'normalMode';
+        this.gameObjs[7].colType = 'normalMode';
+        this.gameObjs[8].colType = 'normalMode';
+        this.gameObjs[0].colType = 'normalMode';
+      },2000)
   }
+  normal_newRound() {
+    if (this.gameRound > (this.wordList.length - 1)) {
+      this.gameRound = 0
+    }
+    // const q_div = document.getElementById('currentWord')
+    const question = this.wordList[this.gameRound].question;
+    const answer = this.wordList[this.gameRound].answer;
+    // q_div.innerHTML = question;
+    const answerArray = this.randomizeArray(this.filterOut(Array.from(this.answerSet),answer));
+    const order = this.randomizeArray([5,6,7,8]);
+    this.#gameObjs[0].textValue = question;
+    this.#gameObjs[order[0]].textValue = answer;
+    this.#gameObjs[order[1]].textValue = answerArray[0];
+    this.#gameObjs[order[2]].textValue = answerArray[1];
+    this.#gameObjs[order[3]].textValue = answerArray[2];
+  }
+changeWordList(array) {
+    this.#wordList.length = 0;
+    for (let i = 0; i < array.length; i++) {
+      this.#wordList[i] = array[i];
+      this.answerSet.add(array[i].answer)
+    }
+    console.log(this.answerSet)
+  }
+randomizeArray(array) {
+    const randomArray = [];
+    const length = array.length;
+    for (let i = 0; i < length; i++) {
+        const pair = [i,(Math.random())];
+        randomArray[i] = pair;
+    }
+    randomArray.sort(function(a,b){
+        if (a[1] > b[1]) {
+            return -1;
+          } else {
+            return 1;
+          }
+    });
+    const outputArray = [];
+    for (let i = 0; i < length; i++) {
+        outputArray.push(array[randomArray[i][0]]);
+    }
+    return outputArray;
+}
+filterOut(array,value) {
+  const newArray = []
+  let x = 0;
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] != value) {
+      newArray[x] = array[i];
+      x +=1;
+    }
+  }
+  return newArray;
+}
   // getters and setters
   get gameHeight() {
     return this.#height;
@@ -221,6 +279,26 @@ export class Game {
   }
   get loopTriggers() {
     return this.#loopTriggers;
+  }
+  get wordList() {
+    return this.#wordList;
+  }
+  get answerSet() {
+    return this.#answerSet;
+  }
+  get gameRound() {
+    return this.#gameRound;
+  }
+  set gameRound(number) {
+    this.#gameRound = number;
+  }
+  get gameScore() {
+    return this.#gameScore;
+  }
+  set gameScore(value) {
+    const score_div = document.getElementById('score');
+    score_div.innerHTML = value;
+    this.#gameScore = value;
   }
 }
 
@@ -473,7 +551,6 @@ export class gameObj {
       this.changeVelocity(0,(this.speed))
       this.#yVel = 0
     }
-   
     #checkCollision(axis) { //check for collision, can only check one axis at a time
       let yOverlap = false;
       let xOverlap = false;
@@ -494,7 +571,7 @@ export class gameObj {
               }
           index += 1;
         }
-      if (xOverlap && yOverlap) {
+      if (xOverlap && yOverlap && (!obj.isSpawnMode)) {
         if (!this.isSpawnMode) {
           this.#handleCollision(axis,obj);
         } else {
@@ -526,10 +603,12 @@ export class gameObj {
           case "explode":
             this.#colExplode(axis);
             break;
+          case 'normalMode':
+            this.#colNormalMode(axis,obj);
+            break;
         }
         if (obj.objType == 'dynamic') {obj.changeVelocity(0,0);} //start move int if not moving}
       }
-      
     }
     #colGhost() {
       this.xPos = this.xPos; // update real position with new position
@@ -544,7 +623,6 @@ export class gameObj {
       }  
       if (obj.weight < 1000) {
         if (axis == 'x') {
-          // (this.leftHitBox >= obj.rightHitBox || this.rightHitBox <= obj.leftHitBox)
           let m1 = this.weight;
           let m2 = obj.weight
           let u1 = this.xVel;
@@ -588,6 +666,24 @@ export class gameObj {
       } else {
         this.checkyPos((this.yPos - this.#yVel));  // return values to before collision
       }  
+    }
+    #colNormalMode(axis,obj) {
+      this.#colBounce(axis,obj);
+      if ((this.isPlayer && obj.objType != 'barrier') || obj.isPlayer) {
+        let answer;
+        if (this.isPlayer) {
+          answer = obj.textValue;
+        } else {
+          answer = this.textValue;
+        }
+        if (answer == this.#game.wordList[this.#game.gameRound].answer) {
+          this.#game.gameScore +=1;
+        } else {
+          this.#game.gameScore -=1;
+        }
+        this.#game.gameRound +=1;
+        this.#game.normal_newRound();
+      } 
     }
 }
 

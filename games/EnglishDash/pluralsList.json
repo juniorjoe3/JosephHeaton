@@ -1,42 +1,42 @@
 [
     {
-        "word":"shelf",
-        "suffix":"ves"
+        "question":"shelf",
+        "answer":"ves"
     },
     {
-        "word":"bench",
-        "suffix":"es"
+        "question":"bench",
+        "answer":"es"
     },
     {
-        "word":"pencil",
-        "suffix": "s"
+        "question":"pencil",
+        "answer": "s"
     },
     {
-        "word":"pupppy",
-        "suffix": "ies"
+        "question":"pupppy",
+        "answer": "ies"
     },
     {
-        "word":"toy",
-        "suffix": "s"
+        "question":"toy",
+        "answer": "s"
     },
     {
-        "word":"box",
-        "suffix": "es"
+        "question":"box",
+        "answer": "es"
     },
     {
-        "word":"leaf",
-        "suffix": "ves"
+        "question":"leaf",
+        "answer": "ves"
     },
     {
-        "word":"story",
-        "suffix": "ies"
+        "question":"story",
+        "answer": "ies"
     },
     {
-        "word":"wife",
-        "suffix": "ves"
+        "question":"wife",
+        "answer": "ves"
     },
     {
-        "word":"potato",
-        "suffix": "es"
+        "question":"potato",
+        "answer": "es"
     }
 ]

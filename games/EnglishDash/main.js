@@ -115,13 +115,16 @@ function startGame() {
     eventListeners('add');
     menuHandler('mainMenu','')
 
-    player = game.createGameObj('player','/images/red_barrier.png',800,200,50,50,15,1000,true);
+    const wordList = createWordArray();
+    game.changeWordList(wordList);
+
+    player = game.createGameObj('player','/images/blue_barrier.png',200,230,50,50,10,500,true);
     player.colType = 'bounce';
     player.addTextBox('me')
-    game.createHardBoundry();
-    game.setMainInt();
-    game.loopTriggers[0] = true; // startNormalMode
-
+    
+    game.gameRound = 0;
+    game.gameScore = 0;
+    game.normal_startGame();
 }
 
 function quitGame() {
