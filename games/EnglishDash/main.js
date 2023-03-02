@@ -53,6 +53,7 @@ async function fetchFilePath(filePath) {
 // load data from local storage ----------------------------------------
 function loadGameData() {
     loadSettings();
+    checkForHighScore();
 }
 
 function loadSettings() {
@@ -65,6 +66,13 @@ function loadSettings() {
         playerInput.value = localStorage.getItem('playerName');
     }
     updateSettings();  
+}
+
+function checkForHighScore() {
+    if (localStorage.getItem('highScore') == null) {
+        localStorage.setItem('highScore', 0);
+        localStorage.setItem('hsName','');
+    }
 }
 
 // save data to local storage -------------------------------------------
@@ -118,18 +126,25 @@ function startGame() {
     const wordList = createWordArray();
     game.changeWordList(wordList);
 
-    player = game.createGameObj('player','/images/blue_barrier.png',200,230,50,50,10,500,true);
+    player = game.createGameObj('player','',200,230,50,50,10,500,true);
     player.colType = 'bounce';
-    player.addTextBox('me')
+    player.addTextBox('you')
+    player.textBox.style.backgroundColor = "rgb(174, 240, 181)";
     
-    game.gameRound = 0;
-    game.gameScore = 0;
+    game.round = 0;
+    game.score = 0;
+    game.health = 3;
+    game.resetLoop();
     game.normal_startGame();
 }
 
 function quitGame() {
+    if (localStorage.getItem('highScore') < game.score) {
+        localStorage.setItem('highScore', game.score)
+        localStorage.setItem('hsName', ("(" + document.getElementById('playerName').value + ")"));
+    }
     document.getElementById('floatingMenu').style.backgroundColor = null;
-    game.deleteAllObjs();
+    game.endGame();
 }
 
 
@@ -181,12 +196,12 @@ function openMainMenu() {
 function restartGame() {
     playAudio('click',game.volume);
     quitGame();
-    menuHandler('pauseMenu','');
+    menuHandler(currentMenu,'');
     startGame();
 }
 
 
-function menuHandler(from_id,to_id) {
+export function menuHandler(from_id,to_id) {
     if (from_id != '') {
         previousMenu = from_id;
         const from = document.getElementById(from_id);
@@ -198,6 +213,9 @@ function menuHandler(from_id,to_id) {
                 from.style.display = 'none';
                 break;
             case 'mainMenu':
+                from.style.display = 'none';
+                break;
+            case 'gameOverMenu':
                 from.style.display = 'none';
                 break;
         }
@@ -217,6 +235,13 @@ function menuHandler(from_id,to_id) {
                 break;
             case 'mainMenu':
                 to.style.display = 'flex';
+                break;
+            case 'gameOverMenu':
+                to.style.display = 'flex';
+                document.getElementById('go_playerName').innerHTML = document.getElementById('playerName').value;
+                document.getElementById('go_score').innerHTML = "Score: " + game.score;
+                const text = "Highscore: " + localStorage.getItem('highScore') + " " + localStorage.getItem('hsName');
+                document.getElementById('go_highScore').innerHTML = text;
                 break;
         }
     } else {
@@ -245,8 +270,10 @@ document.getElementById('settingsBack_btn').addEventListener('click', back)
 document.getElementById('main_settings_btn').addEventListener('click', openSettingsMenu)
 document.getElementById('pause_settings_btn').addEventListener('click', openSettingsMenu)
 document.getElementById('play_btn').addEventListener('click', startGame)
-document.getElementById('quit_btn').addEventListener('click', openMainMenu)
-document.getElementById('restart_btn').addEventListener('click', restartGame)
+document.getElementById('pause_quit_btn').addEventListener('click', openMainMenu)
+document.getElementById('pause_restart_btn').addEventListener('click', restartGame)
+document.getElementById('go_quit_btn').addEventListener('click', openMainMenu)
+document.getElementById('go_restart_btn').addEventListener('click', restartGame)
 window.addEventListener("beforeunload", saveGameData, false);
 
 

@@ -24,7 +24,7 @@ label {
     font-size: 1.4rem;
 }
 
-#settingsMenu button, #pauseMenu button, #mainMenu button {
+#settingsMenu button, #pauseMenu button, #mainMenu button, #gameOverMenu button {
     width: 200px;
 }
 
@@ -53,6 +53,7 @@ label {
     flex-direction: column;
     box-sizing: border-box;
     background-color: rgb(88, 88, 88);
+    /* background-color: rgb(174, 240, 181); */
 }
 
 #game_container {
@@ -95,7 +96,7 @@ label {
     z-index: 2;
 }
 
-#pauseMenu, #settingsMenu {
+#pauseMenu, #settingsMenu, #gameOverMenu {
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -111,6 +112,10 @@ label {
 
 #settingsMenu h1{
     margin-top: 0px;
+}
+
+#gameOverMenu h1, #gameOverMenu h2{
+    margin:5px;
 }
 
 #header {
@@ -129,7 +134,7 @@ label {
 }
 
 #modeName {
-    font-size: 1.4rem;
+    font-size: 2rem;
 }
 
 #footer {
@@ -139,10 +144,11 @@ label {
     justify-content: center;
     align-items: center;
     background-color: rgb(102, 166, 206);
+    /* background-color: rgb(241, 192, 192) */
 }
 
 #currentWord {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 #game_camera {
@@ -157,7 +163,8 @@ label {
     background-position: center;
     position: absolute;
     margin: 0;
-    padding: 0;    
+    padding: 0;   
+    overflow: visible; 
 }
 
 #barrier {

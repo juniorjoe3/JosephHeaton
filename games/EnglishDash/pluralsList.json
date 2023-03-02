@@ -38,5 +38,109 @@
     {
         "question":"potato",
         "answer": "es"
+    },
+    {
+        "question":"witch",
+        "answer": "es"
+    },
+    {
+        "question":"fox",
+        "answer": "es"
+    },
+    {
+        "question":"house",
+        "answer": "s"
+    },
+    {
+        "question":"horse",
+        "answer": "s"
+    },
+    {
+        "question":"knife",
+        "answer": "ves"
+    },
+    {
+        "question":"wolf",
+        "answer": "ves"
+    },
+    {
+        "question":"baby",
+        "answer": "ies"
+    },
+    {
+        "question":"cherry",
+        "answer": "ies"
+    },
+    {
+        "question":"life",
+        "answer": "ves"
+    },
+    {
+        "question":"calf",
+        "answer": "ves"
+    },
+    {
+        "question":"bunny",
+        "answer": "ies"
+    },
+    {
+        "question":"country",
+        "answer": "ies"
+    },
+    {
+        "question":"lorry",
+        "answer": "ies"
+    },
+    {
+        "question":"family",
+        "answer": "ies"
+    },
+    {
+        "question":"dish",
+        "answer": "es"
+    },
+    {
+        "question":"book",
+        "answer": "s"
+    },
+    {
+        "question":"pen",
+        "answer": "s"
+    },
+    {
+        "question":"cat",
+        "answer": "s"
+    },
+    {
+        "question":"dog",
+        "answer": "s"
+    },
+    {
+        "question":"bus",
+        "answer": "es"
+    },
+    {
+        "question":"class",
+        "answer": "es"
+    },
+    {
+        "question":"kiss",
+        "answer": "es"
+    },
+    {
+        "question":"gas",
+        "answer": "es"
+    },
+    {
+        "question":"tree",
+        "answer": "s"
+    },
+    {
+        "question":"goat",
+        "answer": "s"
+    },
+    {
+        "question":"stick",
+        "answer": "s"
     }
 ]
