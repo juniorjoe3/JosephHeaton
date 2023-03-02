@@ -33,7 +33,6 @@
                         <select class="input" name="wordList" id="wordList">
                             <option value="plurals" selected>Plurals</option>
                             <option value="animals">Animals</option>
-                            <option value="transportation">Transportation</option>
                         </select>
                     </div>
                     <div>
@@ -59,6 +58,13 @@
                     <button id="clearScores_btn">Clear Highscores</button>
                     <button id="settingsBack_btn">Save & Exit</button>
                 </div>
+                <div id="yesNoMenu">
+                    <h1>Are you sure you want to clear the highscore?</h1>
+                    <div>
+                        <button id="yes_btn">Yes</button>
+                        <button id="no_btn">No</button>
+                    </div>    
+                </div>
                 <div id="gameOverMenu">
                     <h1>GAME OVER!</h1>
                     <h2 id="go_playerName">playerName</h2>
@@ -69,7 +75,7 @@
                 </div>
             </div>
             <div id="header">
-                <div id="score">0</div>
+                <div id="score">Score: 0</div>
                 <div id="modeName">English Dash</div>
                 <button id="pause_btn">Pause</button>
             </div>

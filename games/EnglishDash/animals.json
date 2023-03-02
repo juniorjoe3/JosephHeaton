@@ -1,0 +1,146 @@
+[
+    {
+        "question":"bear",
+        "answer":"熊"
+    },
+    {
+        "question":"bird",
+        "answer":"鳥"
+    },
+    {
+        "question":"elephant",
+        "answer": "大象"
+    },
+    {
+        "question":"penguin",
+        "answer": "企鵝"
+    },
+    {
+        "question":"crocodile",
+        "answer": "鰐魚"
+    },
+    {
+        "question":"jellyfish",
+        "answer": "水母"
+    },
+    {
+        "question":"donkey",
+        "answer": "毛驢"
+    },
+    {
+        "question":"zebra",
+        "answer": "班嗎"
+    },
+    {
+        "question":"horse",
+        "answer": "馬"
+    },
+    {
+        "question":"monkey",
+        "answer": "猴子"
+    },
+    {
+        "question":"sloth",
+        "answer": "樹懶"
+    },
+    {
+        "question":"eagle",
+        "answer": "飛鷹"
+    },
+    {
+        "question":"beaver",
+        "answer": "河狸"
+    },
+    {
+        "question":"dinosaur",
+        "answer": "恐龍"
+    },
+    {
+        "question":"snake",
+        "answer": "蛇"
+    },
+    {
+        "question":"dog",
+        "answer": "狗"
+    },
+    {
+        "question":"cat",
+        "answer": "貓"
+    },
+    {
+        "question":"tiger",
+        "answer": "老虎"
+    },
+    {
+        "question":"lion",
+        "answer": "獅子"
+    },
+    {
+        "question":"parrot",
+        "answer": "鸚鵡"
+    },
+    {
+        "question":"bee",
+        "answer": "蜜蜂"
+    },
+    {
+        "question":"ant",
+        "answer": "螞蟻"
+    },
+    {
+        "question":"lizard",
+        "answer": "蜥蜴"
+    },
+    {
+        "question":"pig",
+        "answer": "豬"
+    },
+    {
+        "question":"sheep",
+        "answer": "羊"
+    },
+    {
+        "question":"goat",
+        "answer": "山羊"
+    },
+    {
+        "question":"fish",
+        "answer": "魚"
+    },
+    {
+        "question":"shark",
+        "answer": "鯊魚"
+    },
+    {
+        "question":"mouse",
+        "answer": "老鼠"
+    },
+    {
+        "question":"spider",
+        "answer": "蜘蛛"
+    },
+    {
+        "question":"cockroach",
+        "answer": "蟑螂"
+    },
+    {
+        "question":"turtle",
+        "answer": "烏龜"
+    },
+    {
+        "question":"giraffe",
+        "answer": "長頸鹿"
+    },
+    {
+        "question":"worm",
+        "answer": "蟲子"
+    },
+    {
+        "question":"deer",
+        "answer": "鹿"
+    },
+    {
+        "question":"snail",
+        "answer": "蝸牛"
+    }
+]

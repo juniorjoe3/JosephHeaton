@@ -25,7 +25,7 @@ function updateWordList() {
             filePath = './pluralsList.json'
             break;
         case 'animals':
-            filePath = './pluralsList.json'
+            filePath = './animals.json'
             break;
         case 'transportation':
             filePath = './pluralsList.json'
@@ -54,6 +54,7 @@ async function fetchFilePath(filePath) {
 function loadGameData() {
     loadSettings();
     checkForHighScore();
+    preLoadAudio();
 }
 
 function loadSettings() {
@@ -73,6 +74,18 @@ function checkForHighScore() {
         localStorage.setItem('highScore', 0);
         localStorage.setItem('hsName','');
     }
+}
+
+function preLoadAudio() {
+    playAudio('click',0);
+    playAudio('bounce',0);;
+    playAudio('pop',0);
+    playAudio('ohno',0);
+    playAudio('coin',0);
+    playAudio('wrong',0);
+    playAudio('delete',0);
+    playAudio('sadtrumpet',0);
+    playAudio('update',0);
 }
 
 // save data to local storage -------------------------------------------
@@ -119,6 +132,7 @@ function randomizeArray(array) {
 }
 
 function startGame() {
+    playAudio('update', game.volume);
     document.getElementById('floatingMenu').style.backgroundColor = 'transparent';
     eventListeners('add');
     menuHandler('mainMenu','')
@@ -139,10 +153,6 @@ function startGame() {
 }
 
 function quitGame() {
-    if (localStorage.getItem('highScore') < game.score) {
-        localStorage.setItem('highScore', game.score)
-        localStorage.setItem('hsName', ("(" + document.getElementById('playerName').value + ")"));
-    }
     document.getElementById('floatingMenu').style.backgroundColor = null;
     game.endGame();
 }
@@ -190,7 +200,12 @@ function openSettingsMenu() {
 function openMainMenu() {
     playAudio('click',game.volume);
     quitGame();
-    menuHandler(currentMenu,'mainMenu')
+    menuHandler(currentMenu,'mainMenu');
+}
+
+function openPauseMenu() {
+    playAudio('click',game.volume);
+    menuHandler(currentMenu,'pauseMenu');
 }
 
 function restartGame() {
@@ -200,10 +215,37 @@ function restartGame() {
     startGame();
 }
 
+function clearScores() {
+    playAudio('childgoodbye',game.volume);
+    localStorage.setItem('highScore', 0);
+    localStorage.setItem('hsName','');
+    menuHandler(currentMenu,'settingsMenu');
+}
+
+function clickClearScores() {
+    playAudio('click',game.volume); 
+    menuHandler(currentMenu, 'yesNoMenu')   
+}
+
+export function gameOver() {
+    document.getElementById('go_playerName').innerHTML = document.getElementById('playerName').value;
+    document.getElementById('go_score').innerHTML = "Score: " + game.score;
+    const text = "Highscore: " + localStorage.getItem('highScore') + " " + localStorage.getItem('hsName');
+    document.getElementById('go_highScore').innerHTML = text;
+    menuHandler('','gameOverMenu');
+    if (localStorage.getItem('highScore') < game.score) {
+        localStorage.setItem('highScore', game.score)
+        localStorage.setItem('hsName', ("(" + document.getElementById('playerName').value + ")"));
+        setTimeout(()=>{playAudio('wow',game.volume);},200);
+    } else {
+        setTimeout(()=>{playAudio('childuhoh',game.volume);},200);
+    }
+}
+
+
 
 export function menuHandler(from_id,to_id) {
     if (from_id != '') {
-        previousMenu = from_id;
         const from = document.getElementById(from_id);
         switch (from_id) {
             case 'settingsMenu':
@@ -211,11 +253,17 @@ export function menuHandler(from_id,to_id) {
                 break;
             case 'pauseMenu':
                 from.style.display = 'none';
+                previousMenu = from_id;
                 break;
             case 'mainMenu':
                 from.style.display = 'none';
+                previousMenu = from_id;
                 break;
             case 'gameOverMenu':
+                from.style.display = 'none';
+                previousMenu = from_id;
+                break;
+            case 'yesNoMenu':
                 from.style.display = 'none';
                 break;
         }
@@ -238,10 +286,9 @@ export function menuHandler(from_id,to_id) {
                 break;
             case 'gameOverMenu':
                 to.style.display = 'flex';
-                document.getElementById('go_playerName').innerHTML = document.getElementById('playerName').value;
-                document.getElementById('go_score').innerHTML = "Score: " + game.score;
-                const text = "Highscore: " + localStorage.getItem('highScore') + " " + localStorage.getItem('hsName');
-                document.getElementById('go_highScore').innerHTML = text;
+                break;
+            case 'yesNoMenu':
+                to.style.display = 'flex';
                 break;
         }
     } else {
@@ -265,15 +312,19 @@ function eventListeners(call) {
 }
 
 // permanent event listeners ----------------------------------------------------
-document.getElementById('resume_btn').addEventListener('click', unPauseGame)
-document.getElementById('settingsBack_btn').addEventListener('click', back)
-document.getElementById('main_settings_btn').addEventListener('click', openSettingsMenu)
-document.getElementById('pause_settings_btn').addEventListener('click', openSettingsMenu)
-document.getElementById('play_btn').addEventListener('click', startGame)
-document.getElementById('pause_quit_btn').addEventListener('click', openMainMenu)
-document.getElementById('pause_restart_btn').addEventListener('click', restartGame)
-document.getElementById('go_quit_btn').addEventListener('click', openMainMenu)
-document.getElementById('go_restart_btn').addEventListener('click', restartGame)
+document.getElementById('resume_btn').addEventListener('click', unPauseGame);
+document.getElementById('settingsBack_btn').addEventListener('click', back);
+document.getElementById('main_settings_btn').addEventListener('click', openSettingsMenu);
+document.getElementById('pause_settings_btn').addEventListener('click', openSettingsMenu);
+document.getElementById('play_btn').addEventListener('click', startGame);
+document.getElementById('pause_quit_btn').addEventListener('click', openMainMenu);
+document.getElementById('pause_restart_btn').addEventListener('click', restartGame);
+document.getElementById('go_quit_btn').addEventListener('click', openMainMenu);
+document.getElementById('go_restart_btn').addEventListener('click', restartGame);
+document.getElementById('clearScores_btn').addEventListener('click', clickClearScores);
+document.getElementById('yes_btn').addEventListener('click', clearScores);
+document.getElementById('no_btn').addEventListener('click', openSettingsMenu);
+document.getElementById('wordList').addEventListener('input', updateWordList);
 window.addEventListener("beforeunload", saveGameData, false);
 
 
@@ -293,6 +344,18 @@ var keysDown = function(e) {
         case 'ArrowRight':
             player.rightGo();
             break;
+        case 'w':
+            player.upGo();
+            break;
+        case 's':
+            player.downGo();
+            break;
+        case 'a':
+            player.leftGo();
+            break;
+        case 'd':
+            player.rightGo();
+            break;    
     }
 }
 
@@ -309,6 +372,18 @@ var keysUp = function(e) {
             player.leftStop();
             break;
         case 'ArrowRight':
+            player.rightStop();
+            break;
+        case 'w':
+            player.upStop();
+            break;
+        case 's':
+            player.downStop();
+            break;
+        case 'a':
+            player.leftStop();
+            break;
+        case 'd':
             player.rightStop();
             break;
         case 'Escape':

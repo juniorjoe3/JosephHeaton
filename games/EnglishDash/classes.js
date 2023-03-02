@@ -1,4 +1,4 @@
-import {menuHandler} from './main.js';
+import {menuHandler, gameOver} from './main.js';
 
 
 // audio --------------------
@@ -6,44 +6,79 @@ export function playAudio(audio,volume) {
   volume = volume / 100;
   switch (audio) {
     case "bounce":
-      let audio_bounce = new Audio('./bounce.mp3');
+      let audio_bounce = new Audio('./audio/bounce.mp3');
       audio_bounce.volume = volume;
       audio_bounce.play();
       break;
-    case 'explode':
-      let audio_explode = new Audio('./explode.mp3');
-      audio_explode.volume = volume;
-      audio_explode.play();
-      break;
     case 'pop':
-      let audio_pop = new Audio('./pop.mp3');
+      let audio_pop = new Audio('./audio/pop.mp3');
       audio_pop.volume = volume * (.5);
       audio_pop.play();
       break;
     case 'click':
-      let click = new Audio('./click.mp3');
+      let click = new Audio('./audio/click.mp3');
       click.volume = volume;
       click.play();
       break;
     case 'ohno':
-      let ohno = new Audio('./ohno.mp3');
+      let ohno = new Audio('./audio/ohno.mp3');
       ohno.volume = volume;
       ohno.play();
       break;
     case 'coin':
-      let coin = new Audio('./coin.mp3');
+      let coin = new Audio('./audio/coin.mp3');
       coin.volume = volume;
       coin.play();
       break;
     case 'wrong':
-      let wrong = new Audio('./wrong.mp3');
+      let wrong = new Audio('./audio/wrong.mp3');
       wrong.volume = volume;
       wrong.play();
       break;
     case 'sadtrumpet':
-      let sadtrumpet = new Audio('./sadtrumpet.mp3');
+      let sadtrumpet = new Audio('./audio/sadtrumpet.mp3');
       sadtrumpet.volume = volume;
       sadtrumpet.play();
+      break;
+    case 'delete':
+      let delete_mp3 = new Audio('./audio/delete.mp3');
+      delete_mp3.volume = volume;
+      delete_mp3.play();
+      break;
+    case 'update':
+      let update = new Audio('./audio/update.mp3');
+      update.volume = volume;
+      update.play();
+      break;
+    case 'wow':
+      let wow = new Audio('./audio/wow.mp3');
+      wow.volume = volume;
+      wow.play();
+      break;
+    case 'childyes':
+      let childyes = new Audio('./audio/childyes.mp3');
+      childyes.volume = volume;
+      childyes.play();
+      break;
+    case 'childno':
+      let childno = new Audio('./audio/childno.mp3');
+      childno.volume = volume;
+      childno.play();
+      break;
+    case 'childgoodbye':
+      let childgoodbye = new Audio('./audio/childgoodbye.mp3');
+      childgoodbye.volume = volume;
+      childgoodbye.play();
+      break;
+    case 'childok':
+      let childok = new Audio('./audio/childok.mp3');
+      childok.volume = volume;
+      childok.play();
+      break;
+    case 'childuhoh':
+      let childuhoh = new Audio('./audio/childuhoh.mp3');
+      childuhoh.volume = volume;
+      childuhoh.play();
       break;
   }
 }
@@ -229,7 +264,7 @@ export class Game {
     let name = 'bot ' + this.gameObjs.length;
     const xPos = (this.#width + 10) 
     const yPos = (this.#height / 2) - (40/2);
-    const obj = this.createGameObj(name,'', xPos, yPos,40,40,3,500,false)
+    const obj = this.createGameObj(name,'', xPos, yPos,40,40,1,500,false)
     obj.colType = 'bounce';
     obj.addTextBox('hello');
     obj.changeVelocity(-3,0);
@@ -242,10 +277,10 @@ export class Game {
   }
   normal_changeDirection() {
         this.normal_newRound();
-        this.gameObjs[5].changeVelocity(rndBetween(-3,3), rndBetween(-3,3));
-        this.gameObjs[6].changeVelocity(rndBetween(-3,3), rndBetween(-3,3));
-        this.gameObjs[7].changeVelocity(rndBetween(-3,3), rndBetween(-3,3));
-        this.gameObjs[8].changeVelocity(rndBetween(-3,3), rndBetween(-3,3));
+        this.gameObjs[5].changeVelocity(rndBetween(-1,1), rndBetween(-1,1));
+        this.gameObjs[6].changeVelocity(rndBetween(-1,1), rndBetween(-1,1));
+        this.gameObjs[7].changeVelocity(rndBetween(-1,1), rndBetween(-1,1));
+        this.gameObjs[8].changeVelocity(rndBetween(-1,1), rndBetween(-1,1));
         this.gameObjs[5].colType = 'normalMode';
         this.gameObjs[6].colType = 'normalMode';
         this.gameObjs[7].colType = 'normalMode';
@@ -272,13 +307,14 @@ export class Game {
     this.gameObjs[order[1]].textValue = answerArray[0];
     this.gameObjs[order[2]].textValue = answerArray[1];
     this.gameObjs[order[3]].textValue = answerArray[2];
-    this.gameObjs[5].speed += 0.2;
-    this.gameObjs[6].speed += 0.2;
-    this.gameObjs[7].speed += 0.2;
-    this.gameObjs[8].speed += 0.2;
+    this.gameObjs[5].speed += 0.1;
+    this.gameObjs[6].speed += 0.1;
+    this.gameObjs[7].speed += 0.1;
+    this.gameObjs[8].speed += 0.1;
   }
-changeWordList(array) {
+  changeWordList(array) {
     this.#wordList.length = 0;
+    this.#answerSet.clear();
     for (let i = 0; i < array.length; i++) {
       this.#wordList[i] = array[i];
       this.answerSet.add(array[i].answer)
@@ -344,7 +380,7 @@ changeWordList(array) {
   }
   set score(value) {
     const score_div = document.getElementById('score');
-    score_div.innerHTML = value;
+    score_div.innerHTML = "Score: " + value;
     this.#score = value;
   }
   get health() {
@@ -526,6 +562,7 @@ export class gameObj {
       const textBox = document.createElement('div');
       const textNode = document.createTextNode(text);
       textBox.appendChild(textNode);
+      textBox.className = 'textBox';
       textBox.style.backgroundColor = "rgb(241, 192, 192)"; 
       textBox.style.color = "black";
       textBox.style.fontWeight = 'bold';
@@ -773,11 +810,6 @@ export class gameObj {
         if (answer == this.game.wordList[this.game.round].answer) {
           playAudio('coin',this.game.volume);
           this.game.score +=1;
-          if (this.isPlayer) {
-            
-          } else {
-            
-          }
           this.game.round +=1;
           this.game.normal_newRound();
         } else {
@@ -785,10 +817,9 @@ export class gameObj {
           this.game.health -= 1;
           this.game.loopTriggers[2] = true; //trigger hurt animation;
           if (this.game.health == 0) {
-            setTimeout(()=>{playAudio('sadtrumpet',this.game.volume);},500);
             this.game.deleteAllObjs();
             document.getElementById('currentWord').innerHTML = '';
-            menuHandler('','gameOverMenu')
+            gameOver();
           } 
         }
       } else {

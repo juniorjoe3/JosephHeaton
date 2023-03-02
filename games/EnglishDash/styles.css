@@ -14,18 +14,19 @@ button {
     border-radius: 10px;
     cursor: pointer;
     color: white;
-    background-color:rgb(26, 71, 127);    
+    background-color:rgb(26, 71, 127); 
+    width: 200px;   
 }
 button:hover {
     background-color: blue;
 }
 
-label {
-    font-size: 1.4rem;
+button:active {
+    border: solid yellow 2px;
 }
 
-#settingsMenu button, #pauseMenu button, #mainMenu button, #gameOverMenu button {
-    width: 200px;
+label {
+    font-size: 1.4rem;
 }
 
 .input {
@@ -34,6 +35,7 @@ label {
     margin-bottom: 15px;
     width:200px;
 }
+
 
 
 /* by section ------------------------------------------------------ */
@@ -96,7 +98,7 @@ label {
     z-index: 2;
 }
 
-#pauseMenu, #settingsMenu, #gameOverMenu {
+#pauseMenu, #settingsMenu, #gameOverMenu, #yesNoMenu {
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -108,6 +110,14 @@ label {
     background-color: rgb(102, 166, 206,.649);
     z-index: 3;
     border-radius: 10px;
+}
+
+#yes_btn, #no_btn{
+    width: 75px;
+}
+
+#yesNoMenu h1 {
+    font-size: 1.4rem;
 }
 
 #settingsMenu h1{
@@ -122,7 +132,7 @@ label {
     height: 50px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0px 30px;
     align-items: center;
     background-color: rgb(102, 166, 206);
@@ -131,10 +141,19 @@ label {
 
 #score {
     font-size: 1.4rem;
+    position: absolute;
+    left: 20px;
 }
 
 #modeName {
     font-size: 2rem;
+}
+
+#pause_btn {
+    position:absolute;
+    width: 90px;   
+    margin:0;
+    right:20px; 
 }
 
 #footer {
@@ -174,4 +193,8 @@ label {
     position: absolute;
     margin: 0;
     padding: 0;    
+}
+
+#textBox {
+    text-orientation: landscape;
 }
