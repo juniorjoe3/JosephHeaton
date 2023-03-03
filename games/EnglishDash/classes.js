@@ -83,6 +83,27 @@ export function playAudio(audio,volume) {
   }
 }
 
+// --- sprite handlers ------------------------------------
+
+export function getSpriteObj(spriteName) {
+  const sprite = {};
+  switch(spriteName) {
+    case "bird":
+      sprite.frameWidth = 690; sprite.frameHeight = 690; 
+      sprite.sheetWidth = 2988; sprite.sheetHeight = 1536;
+      sprite.xBetween = 0.2; sprite.yBetween = 15.5;
+      sprite.xZero = 9; sprite.yZero = 5;
+      sprite.rows = 2; sprite.columns = 4;
+      sprite.framesPerAni = 8;
+      sprite.numOfAnimations = 1; sprite.ticker = 0;
+      // to be calculate later;
+      sprite.frameArray = [];
+      sprite.imgWidth = 0; sprite.imgHeight = 0;
+      sprite.divHeight = 0; sprite.divWidth = 0;
+      break;
+  }
+  return sprite;
+}
 
 // misc functions ------------------------------------
 function randomizeArray(array) {
@@ -136,7 +157,7 @@ export class Game {
   #score = 0;
   #health = 0;
   // init
-  constructor(width, height, yCam, xCam, wCam, hCam, cam_container_id) {
+  constructor(width, height, xCam, yCam, wCam, hCam, cam_container_id) {
     this.#height = height;
     this.#width = width;
     this.#yCam = yCam;
@@ -161,6 +182,24 @@ export class Game {
     this.deleteAllObjs();
     this.resetLoop();
   }
+  spriteHandler(obj) {
+    const sprite = obj.sprite;
+    if (sprite.ticker > (sprite.framesPerAni - 1)) {
+      obj.sprite.ticker = 0
+    }
+    if (obj.xVel > 0) {
+      obj.image.style.transform = "scaleX(1)";
+    } else if ( obj.xVel < 0 )  {
+      obj.image.style.transform = "scaleX(-1)";
+    }
+    let x = -(sprite.frameArray[0][sprite.ticker][0]);
+    let y = -(sprite.frameArray[0][sprite.ticker][1]);
+    // console.log("x: " + x + "  " + "y: " + y);
+    obj.image.style.top = y + 'px';
+    obj.image.style.left = x + 'px';
+    obj.sprite.ticker +=1;
+
+  }
   resetLoop() {
     for (let i = 0; i < 10;i++) {
       this.#loopDelays[i] = 0;
@@ -177,17 +216,22 @@ export class Game {
   mainLoop() {
     this.#ticker +=1;  
     this.loopGate(0,0.5,4, ()=>{this.normal_flyInNewObjs()},()=>{});
-    this.loopGate(1,2,2,()=>{},()=>{this.normal_changeDirection()});
+    this.loopGate(1,3,2,()=>{},()=>{this.normal_changeDirection()});
     this.loopGate(2,.4,3,()=>{this.normal_hurtAnimation();},()=>{});
+    this.loopGate(3,0.03,0,()=>{this.spriteHandler(this.gameObjs[0])},()=>{})
+    this.loopGate(6,0.03,0,()=>{this.spriteHandler(this.gameObjs[5])},()=>{})
+    this.loopGate(7,0.03,0,()=>{this.spriteHandler(this.gameObjs[6])},()=>{})
+    this.loopGate(8,0.03,0,()=>{this.spriteHandler(this.gameObjs[7])},()=>{})
+    this.loopGate(9,0.03,0,()=>{this.spriteHandler(this.gameObjs[8])},()=>{})
 
-    this.loopGate(3,0,0,()=>{},()=>{});
+    // this.loopGate(0,0,0,()=>{},()=>{});
   }
   loopGate(index,delay,count,eachFunc,endFunc) {
     if (this.#loopTriggers[index] == true && this.#ticker > (this.#loopDelays[index] + this.seconds(delay))) { // <-- delay
       eachFunc();
       this.#loopDelays[index] = this.#ticker
       this.#loopCounters[index] += 1;
-      if(this.#loopCounters[index] >= (count) ) { // <--- number of times to run
+      if((this.#loopCounters[index] >= count) && (count != 0)) { // <--- number of times to run
         this.#loopTriggers[index] = false;
         this.#loopCounters[index] = 0;
         endFunc();
@@ -261,10 +305,12 @@ export class Game {
     }
   }
   normal_flyInNewObjs() {
-    let name = 'bot ' + this.gameObjs.length;
+    let name = 'bot_' + this.gameObjs.length;
     const xPos = (this.#width + 10) 
     const yPos = (this.#height / 2) - (40/2);
-    const obj = this.createGameObj(name,'', xPos, yPos,40,40,1,500,false)
+    const obj = this.createGameObj(name,'/images/spr_bird.png', xPos, yPos,50,50,1,500,false)
+    obj.addSprite(getSpriteObj('bird'));
+    this.#loopTriggers[this.gameObjs.length] = true;
     obj.colType = 'bounce';
     obj.addTextBox('hello');
     obj.changeVelocity(-3,0);
@@ -274,6 +320,7 @@ export class Game {
     this.setMainInt();
     this.loopTriggers[0] = true; // startNormalMode
     this.loopTriggers[1] = true; // after two seconds change their direction and coltype
+    this.loopTriggers[3] = true; // start sprite animation;
   }
   normal_changeDirection() {
         this.normal_newRound();
@@ -288,8 +335,9 @@ export class Game {
         this.gameObjs[0].colType = 'normalMode';
   }
   normal_hurtAnimation() {
-    this.#cam_ele.style.backgroundColor = "rgb(238, 153, 153)";
-    setTimeout(()=>{this.#cam_ele.style.backgroundColor = null;},200)
+    // this.#cam_ele.style.backgroundColor = "rgb(238, 153, 153)";
+    this.#cam_ele.style.backgroundBlendMode = 'overlay';
+    setTimeout(()=>{this.#cam_ele.style.backgroundBlendMode = null;},200)
   }
   normal_newRound() {
     if (this.round > (this.wordList.length - 1)) {
@@ -307,10 +355,10 @@ export class Game {
     this.gameObjs[order[1]].textValue = answerArray[0];
     this.gameObjs[order[2]].textValue = answerArray[1];
     this.gameObjs[order[3]].textValue = answerArray[2];
-    this.gameObjs[5].speed += 0.1;
-    this.gameObjs[6].speed += 0.1;
-    this.gameObjs[7].speed += 0.1;
-    this.gameObjs[8].speed += 0.1;
+    this.gameObjs[5].speed += 0.15;
+    this.gameObjs[6].speed += 0.15;
+    this.gameObjs[7].speed += 0.15;
+    this.gameObjs[8].speed += 0.15;
   }
   changeWordList(array) {
     this.#wordList.length = 0;
@@ -397,7 +445,7 @@ export class gameObj {
     #html_id; #width; #height; #html_ele; #speed; #xPos; #yPos; #xVel = 0; #yVel = 0; 
     #moveInt = null; #leftKey = false; #rightKey = false; #upKey = false; #downKey = false; 
     #game; #edge; #tickSpeed; #objType; #colType; #weight; #isPlayer; #isSpawnMode;
-    isDead = false;
+    isDead = false; #sprite;
     // init
     constructor(parent_id, html_id, imgPath, xPos, yPos, width, height, speed, weight, game, isPlayer) {
       this.#game = game 
@@ -416,20 +464,33 @@ export class gameObj {
       this.#isSpawnMode = true;
       const parent = document.getElementById(parent_id);
       const ele = document.createElement('div');
+      const imgCont = document.createElement('div');
+      const img = document.createElement('img');
+      imgCont.className = 'imgCont';
+      img.className = 'objImg';
+      img.src = imgPath
       ele.style.display = 'flex';
       ele.style.justifyContent = 'center';
       ele.style.alignItems = 'center';
       ele.id = html_id;
-      ele.style.backgroundImage = "url('" + imgPath + "')";
+      // ele.style.backgroundImage = "url('" + imgPath + "')";
       ele.style.height = this.#height + 'px';
       ele.style.width = this.#width + 'px';
       ele.className = 'dynamic'
       ele.style.top = (yPos + game.yCam) + 'px';
       ele.style.left = (xPos + game.xCam) + 'px';
       parent.appendChild(ele);
+      ele.appendChild(imgCont);
+      imgCont.appendChild(img);
       this.#html_ele = ele;
     }
     // getters and setters
+        get sprite() {
+          return this.#sprite;
+        }
+        set sprite(obj) {
+          this.#sprite = obj;
+        }
         get isPlayer() {
           return this.#isPlayer;
         }
@@ -501,14 +562,14 @@ export class gameObj {
         }
         set xPos(x) {
           this.#xPos = x;
-          this.left = (x - this.game.xCam);
+          this.left = (x + this.game.xCam);
         }
         get yPos() {
           return this.#yPos;
         }
         set yPos(y) {
           this.#yPos = y;
-          this.top = (y - this.game.yCam);
+          this.top = (y + this.game.yCam);
         }
         get width() {
           return this.#width;
@@ -552,21 +613,35 @@ export class gameObj {
           return this.#game;
         }
         get textBox() {
-          return this.ele.lastElementChild;
+          return this.ele.querySelector('div');
+        }
+        get image() {
+          return this.ele.querySelector('img');
         }
     // methods
     deleteHTML() {
       this.game.cam_ele.removeChild(this.ele);
+    }
+    addSprite(spriteObj) {
+      this.sprite = spriteObj;
+      const sprite = this.sprite;
+      sprite.divHeight = this.height;
+      sprite.divWidth = this.width;
+      sprite.imgWidth = calcSpriteImgWidth(sprite);
+      sprite.imgHeight = calcSpriteImgHeight(sprite);
+      sprite.frameArray = calcSpriteFrameArray(sprite);
+      this.image.style.height = sprite.imgHeight + "px";
+      this.image.style.width = sprite.imgWidth + "px";
     }
     addTextBox(text) {
       const textBox = document.createElement('div');
       const textNode = document.createTextNode(text);
       textBox.appendChild(textNode);
       textBox.className = 'textBox';
-      textBox.style.backgroundColor = "rgb(241, 192, 192)"; 
-      textBox.style.color = "black";
+      // textBox.style.backgroundColor = "rgb(241, 192, 192)"; 
+      // textBox.style.color = "black";
       textBox.style.fontWeight = 'bold';
-      textBox.style.border = "1px solid black";
+      // textBox.style.border = "1px solid black";
       textBox.style.padding = "5px";
       textBox.style.fontSize = "1.5rem";
       this.ele.appendChild(textBox); 
@@ -623,7 +698,6 @@ export class gameObj {
       if (this.#leftKey == false) {
         this.#leftKey = true;
         this.changeVelocity(-(this.speed),0);
-   
       }
     }
     leftStop() { // left key is released
@@ -823,7 +897,12 @@ export class gameObj {
           } 
         }
       } else {
-        this.#colBounce(axis,obj);
+        if (this.isPlayer == false) {
+          this.#colBounce(axis,obj);
+        } else {
+          this.#colBlock(axis);
+        }
+        
       }
     }
 }
@@ -906,4 +985,40 @@ export class gameBarrier {
 }
 
 
+
+
+
+
+function calcSpriteImgWidth(sprite) {
+  return sprite.divWidth * (sprite.sheetWidth / sprite.frameWidth);
+}
+function calcSpriteImgHeight(sprite) {
+  return sprite.divHeight * (sprite.sheetHeight / sprite.frameHeight);
+}
+
+function calcSpriteFrameArray(sprite) {
+  let framesPerAni = sprite.framesPerAni;
+  const aniArray = [];
+  for (let aniIndex = 1; aniIndex <= sprite.numOfAnimations; aniIndex++) {
+    const frameArr = [];
+    let x = sprite.xZero;
+    let y = sprite.yZero;
+    let columnNum = 1;
+    for (let frameIndex = 1; frameIndex <= framesPerAni; frameIndex++ ) {
+      let xyArr = [];
+      if (columnNum > sprite.columns ) {
+        x = sprite.xZero;
+        y = sprite.divHeight + sprite.yBetween;
+        columnNum = 1;
+      }
+      xyArr[0] = x;
+      xyArr[1] = y
+      frameArr[frameIndex-1] = xyArr;
+      x += sprite.xBetween + sprite.divWidth;
+      columnNum += 1;
+    }
+    aniArray[aniIndex-1] = frameArr;
+  }
+    return aniArray;
+}
 

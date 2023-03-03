@@ -5,10 +5,10 @@
 // load game -----------------------------------------------------
 console.log('begin main.js load')
 
-import {gameObj,Game,playAudio} from './classes.js';
+import {gameObj,Game,playAudio,getSpriteObj} from './classes.js';
 
 //global objects, variables
-const game = new Game(1200,500,0,0,1200,500,'game_camera');
+const game = new Game(1200,475,0,25,1200,500,'game_camera');
 let player = '';
 let previousMenu = '';
 let currentMenu = 'mainMenu';
@@ -55,7 +55,20 @@ function loadGameData() {
     loadSettings();
     checkForHighScore();
     preLoadAudio();
+    // preLoadSprites();
 }
+
+// function preLoadSprites() {
+//     sprBird = getSpriteObj('bird')
+//     sprBird.divHeight = 75;
+//     sprBird.divWidth = 75;
+//     sprBird.imgWidth = calcSpriteImgWidth(sprBird);
+//     console.log(sprBird.imgWidth);
+//     sprBird.imgHeight = calcSpriteImgHeight(sprBird);
+//     console.log(sprBird.imgHeight);
+//     sprBird.frameArray = calcSpriteFrameArray(sprBird);
+//     console.log(sprBird.frameArray);
+// }
 
 function loadSettings() {
     const windowRange = document.getElementById('windowRange');
@@ -134,16 +147,21 @@ function randomizeArray(array) {
 function startGame() {
     playAudio('update', game.volume);
     document.getElementById('floatingMenu').style.backgroundColor = 'transparent';
+    document.getElementById('currentWord').innerHTML = "Use WASD or the arrow keys to move!"
     eventListeners('add');
     menuHandler('mainMenu','')
 
     const wordList = createWordArray();
     game.changeWordList(wordList);
 
-    player = game.createGameObj('player','',200,230,50,50,10,500,true);
-    player.colType = 'bounce';
+    player = game.createGameObj('player','/images/spr_bird.png',200,230,75,75,10,500,true);
+    player.colType = 'block';
     player.addTextBox('you')
-    player.textBox.style.backgroundColor = "rgb(174, 240, 181)";
+    player.addSprite(getSpriteObj('bird'));
+    // player.textBox.style.backgroundColor = "white";
+    
+    player.edge = 10;
+    game.loopTriggers[3] = true;
     
     game.round = 0;
     game.score = 0;
@@ -240,6 +258,7 @@ export function gameOver() {
     } else {
         setTimeout(()=>{playAudio('childuhoh',game.volume);},200);
     }
+    setTimeout(()=>{game.pauseGame();},500)
 }
 
 
@@ -392,9 +411,41 @@ var keysUp = function(e) {
     }
 }
 
-// ---- testing -----------------
+// ---- sprites -----------------
 
-
+function calcSpriteImgWidth(sprite) {
+    return sprite.divWidth * (sprite.sheetWidth / sprite.frameWidth);
+  }
+  function calcSpriteImgHeight(sprite) {
+    return sprite.divHeight * (sprite.sheetHeight / sprite.frameHeight);
+  }
+  
+  function calcSpriteFrameArray(sprite) {
+    let framesPerAni = sprite.framesPerAni;
+    const aniArray = [];
+    for (let aniIndex = 1; aniIndex <= sprite.numOfAnimations; aniIndex++) {
+      const frameArr = [];
+      let x = sprite.xZero;
+      let y = sprite.yZero;
+      let columnNum = 1;
+      for (let frameIndex = 1; frameIndex <= framesPerAni; frameIndex++ ) {
+        let xyArr = [];
+        if (columnNum > sprite.columns ) {
+          x = sprite.xZero;
+          y = sprite.divHeight + sprite.yBetween;
+          columnNum = 1;
+        }
+        xyArr[0] = x;
+        xyArr[1] = y
+        frameArr[frameIndex-1] = xyArr;
+        x += sprite.xBetween + sprite.divWidth;
+        columnNum += 1;
+      }
+      aniArray[aniIndex-1] = frameArr;
+    }
+      return aniArray;
+  }
+  
 
 
 

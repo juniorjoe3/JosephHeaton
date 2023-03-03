@@ -135,7 +135,8 @@ label {
     justify-content: center;
     padding: 0px 30px;
     align-items: center;
-    background-color: rgb(102, 166, 206);
+    background-color: blanchedalmond;
+    
     box-sizing: border-box;
 }
 
@@ -162,7 +163,7 @@ label {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(102, 166, 206);
+    background-color: blanchedalmond;
     /* background-color: rgb(241, 192, 192) */
 }
 
@@ -173,17 +174,47 @@ label {
 #game_camera {
     position: relative;
     overflow: hidden;
-    background-color:blanchedalmond;
+    background-color:rgb(252, 112, 112);
+    background-image: url('/images/sky.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .dynamic {
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position: center;
+    
     position: absolute;
     margin: 0;
     padding: 0;   
     overflow: visible; 
+    /* border: red solid 1px; */
+}
+
+
+.textBox {
+    height: fit-content;
+    /* width:fit-content; */
+    width: 75px;
+    text-align:center;
+    position: absolute;
+    top: -30px;
+}
+
+.imgCont {
+    position: absolute;
+    margin: 0;
+    top: 0px;
+    left:0px;
+    height:100%;
+    width:100%;
+    padding: 0; 
+    overflow: hidden;  
+}
+
+.objImg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }
 
 #barrier {
@@ -195,6 +226,3 @@ label {
     padding: 0;    
 }
 
-#textBox {
-    text-orientation: landscape;
-}
