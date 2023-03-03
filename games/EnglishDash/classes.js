@@ -867,18 +867,28 @@ export class gameObj {
           obj.isSpawnMode = true;
           obj.xPos = this.game.width + 10;
           obj.yPos = this.game.height / 2;
-          const xVal = rndBetween(-(obj.speed),-1);
-          const yVal = rndBetween(-(obj.speed),obj.speed)
+          let xVal = rndBetween(-(obj.speed),-1);
+          let yVal = rndBetween(-(obj.speed),obj.speed)
           console.log(xVal + " " + yVal);
+          if (Math.abs(xVal / yVal) < 0.38) {
+            xVal = -5;
+            yVal = 0;
+            console.log('ahhh')
+          }
           obj.setVelocity(xVal,yVal )
         } else {
           answer = this.textValue;
           this.isSpawnMode = true;
           this.xPos = this.game.width + 10;
           this.yPos = this.game.height / 2;
-          const xVal = rndBetween(-(this.speed),-1);
-          const yVal = rndBetween(-(this.speed),this.speed)
+          let xVal = rndBetween(-(this.speed),-1);
+          let yVal = rndBetween(-(this.speed),this.speed)
           console.log(xVal + " " + yVal);
+          if (Math.abs(xVal / yVal) < 0.38) {
+            xVal = -5;
+            yVal = 0;
+            console.log('ahhh')
+          }
           this.setVelocity(xVal, yVal);
         }
         if (answer == this.game.wordList[this.game.round].answer) {

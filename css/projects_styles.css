@@ -13,24 +13,3 @@
     font-size: 2rem;
 }
 
-#testDiv {
-    position: absolute;
-    left: 200px;
-    margin: 0;
-    padding: 0;   
-    overflow: visible; 
-    height: 100px;
-    width: 100px;
-    border: solid red 1px;
-    /* overflow: hidden; */
-}
-
-img {
-    /* w 2988    h 1536 */
-    position: relative;
-    height: 223px;
-    width: 433px;
-    top: -10px;
-    left: -15px;
-    left: -315px;
-}
