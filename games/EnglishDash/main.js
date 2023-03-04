@@ -27,8 +27,8 @@ function updateWordList() {
         case 'animals':
             filePath = './animals.json'
             break;
-        case 'transportation':
-            filePath = './pluralsList.json'
+        case 'flyers':
+            filePath = './flyers.json'
             break;
     }
     fetchFilePath(filePath);
@@ -160,7 +160,6 @@ function startGame() {
     player.addSprite(getSpriteObj('bird'));
     // player.textBox.style.backgroundColor = "white";
     
-    player.edge = 10;
     game.loopTriggers[3] = true;
     
     game.round = 0;

@@ -308,11 +308,11 @@ export class Game {
     let name = 'bot_' + this.gameObjs.length;
     const xPos = (this.#width + 10) 
     const yPos = (this.#height / 2) - (40/2);
-    const obj = this.createGameObj(name,'/images/spr_bird.png', xPos, yPos,50,50,1,500,false)
+    const obj = this.createGameObj(name,'/images/bird2.png', xPos, yPos,50,50,1,500,false)
     obj.addSprite(getSpriteObj('bird'));
     this.#loopTriggers[this.gameObjs.length] = true;
     obj.colType = 'bounce';
-    obj.addTextBox('hello');
+    obj.addTextBox('');
     obj.changeVelocity(-3,0);
   }
   normal_startGame() {
@@ -457,7 +457,7 @@ export class gameObj {
       this.#weight = weight;
       this.#xPos = xPos;
       this.#yPos = yPos;
-      this.#edge = 2;
+      this.#edge = 10;
       this.#colType = 'block'
       this.#objType = 'dynamic'
       this.#isPlayer = isPlayer;
@@ -638,10 +638,7 @@ export class gameObj {
       const textNode = document.createTextNode(text);
       textBox.appendChild(textNode);
       textBox.className = 'textBox';
-      // textBox.style.backgroundColor = "rgb(241, 192, 192)"; 
-      // textBox.style.color = "black";
       textBox.style.fontWeight = 'bold';
-      // textBox.style.border = "1px solid black";
       textBox.style.padding = "5px";
       textBox.style.fontSize = "1.5rem";
       this.ele.appendChild(textBox); 
@@ -870,7 +867,7 @@ export class gameObj {
           let xVal = rndBetween(-(obj.speed),-1);
           let yVal = rndBetween(-(obj.speed),obj.speed)
           console.log(xVal + " " + yVal);
-          if (Math.abs(xVal / yVal) < 0.38) {
+          if (Math.abs(xVal / yVal) < 0.30) {
             xVal = -5;
             yVal = 0;
             console.log('ahhh')
@@ -884,7 +881,7 @@ export class gameObj {
           let xVal = rndBetween(-(this.speed),-1);
           let yVal = rndBetween(-(this.speed),this.speed)
           console.log(xVal + " " + yVal);
-          if (Math.abs(xVal / yVal) < 0.38) {
+          if (Math.abs(xVal / yVal) < 0.30) {
             xVal = -5;
             yVal = 0;
             console.log('ahhh')
