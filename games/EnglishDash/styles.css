@@ -62,11 +62,11 @@ label {
     border: 3px solid rgb(1, 1, 1);
     display:flex;
     flex-direction: column;
-    position: absolute;
+    /* position: absolute; */
 
 }
 
-#mainMenu {
+#main {
     width:100%;
     height: 100%;
     display: flex;
@@ -78,16 +78,16 @@ label {
     z-index:3;
 }
 
-#mainMenu h1 {
-    font-size: 3rem;
+#main h1 {
+    font-size: 6rem;
 }
 
 
-#mainMenu #playerName {
+#main #playerName {
     width: 150px;
 }
 
-#floatingMenu {
+#menus_container {
     position: absolute;
     width:100%;
     height: 100%;
@@ -98,7 +98,7 @@ label {
     z-index: 2;
 }
 
-#pauseMenu, #settingsMenu, #gameOverMenu, #yesNoMenu {
+#pause, #settings, #gameOver, #yesNo {
     position: absolute;
     width: fit-content;
     height: fit-content;
@@ -116,15 +116,15 @@ label {
     width: 75px;
 }
 
-#yesNoMenu h1 {
+#yesNo h1 {
     font-size: 1.4rem;
 }
 
-#settingsMenu h1{
+#settings h1{
     margin-top: 0px;
 }
 
-#gameOverMenu h1, #gameOverMenu h2{
+#gameOver h1, #gameOver h2{
     margin:5px;
 }
 
@@ -146,7 +146,7 @@ label {
     left: 20px;
 }
 
-#modeName {
+#title {
     font-size: 2rem;
 }
 
@@ -167,7 +167,7 @@ label {
     /* background-color: rgb(241, 192, 192) */
 }
 
-#currentWord {
+#bottomText_div {
     font-size: 2rem;
 }
 
@@ -181,7 +181,7 @@ label {
     background-position: center;
 }
 
-.dynamic {
+.player, .bot {
     
     position: absolute;
     margin: 0;
@@ -189,6 +189,8 @@ label {
     overflow: visible; 
     /* border: red solid 1px; */
 }
+
+
 
 
 .textBox {
@@ -209,6 +211,7 @@ label {
     width:100%;
     padding: 0; 
     overflow: hidden;  
+    /* border: red solid 1px; */
 }
 
 .objImg {
@@ -217,12 +220,5 @@ label {
     left: 0px;
 }
 
-#barrier {
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position: center;
-    position: absolute;
-    margin: 0;
-    padding: 0;    
-}
+
 

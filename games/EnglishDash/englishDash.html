@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="/css/com_topnav.css" />
     <link rel="stylesheet" type="text/css" href="./styles.css" />
     <link rel="stylesheet" type="text/css" href="/css/com_scrollbar.css" />
+    <script type="module" src="./main.js"></script>
+    <script type="module" src="./controls.js"></script>
+    <script type="module" src="./menus.js"></script>
     <title>Joseph Heaton - Plural Run</title>
 </head>
 <body>
@@ -25,15 +28,22 @@
     </div>
     <div id="main_content">
         <div id="game_container">
-            <div id="floatingMenu">
-                <div id="mainMenu">
+            <div id="menus_container">
+                <div id="main">
                     <h1>English Dash</h1>
                     <div>
                         <label for="wordList">Word List:</label>
                         <select class="input" name="wordList" id="wordList">
-                            <option value="plurals" selected>Plurals</option>
-                            <option value="animals">Animals</option>
-                            <option value="flyers">Flyers Test</option>
+                            <option id="plurals" value="plurals" >Plurals</option>
+                            <option id="animals" value="animals" selected>Animals</option>
+                            <option id="flyers" value="flyers">Flyers Test</option>
+                        </select>
+                    </div>
+                    <div id="question_container">
+                        <label for="question">Question:</label>
+                        <select class="input" name="question" id="question">
+                            <option value="english" selected>English</option>
+                            <option value="chinese">Chinese</option>
                         </select>
                     </div>
                     <div>
@@ -44,29 +54,35 @@
                     <button id="main_settings_btn">Settings</button>
                     
                 </div>
-                <div id="pauseMenu">
+                <div id="pause">
                     <button id="resume_btn">Resume</button>
                     <button id="pause_settings_btn">Settings</button>
                     <button id="pause_restart_btn">Restart</button>
                     <button id="pause_quit_btn">Quit</button>
                 </div>
-                <div id="settingsMenu">
-                    <h1>Settings</h1>
-                    <label>Game Window</label>
+                <div id="settings">
+                    <h1 title="設定">Settings</h1>
+                    <label  title="游戲窗戶">Game Window</label>
                     <input class="input" type="range" min="50" max="150" value="100" class="slider" id="windowRange">
-                    <label>Volume</label>
-                    <input class="input" type="range" min="0" max="100" value="100" class="slider" id="volumeRange">
-                    <button id="clearScores_btn">Clear Highscores</button>
+                    <label title="主音量">Master Volume</label>
+                    <input class="input" type="range" min="0" max="100" value="100" class="slider" id="masterVolume">
+                    <label title="用戶界面音量">UI Volume</label>
+                    <input class="input" type="range" min="0" max="100" value="100" class="slider" id="UIVolume">
+                    <label title="效果音量">Effects Volume</label>
+                    <input class="input" type="range" min="0" max="100" value="100" class="slider" id="effectsVolume">
+                    <label title="嗓音音量" >Voice Volume</label>
+                    <input class="input" type="range" min="0" max="100" value="100" class="slider" id="voiceVolume" >
+                    <button title="清除分數" id="clearScores_btn">Clear Highscores</button>
                     <button id="settingsBack_btn">Save & Exit</button>
                 </div>
-                <div id="yesNoMenu">
-                    <h1>Are you sure you want to clear the highscore?</h1>
+                <div id="yesNo">
+                    <h1 id="yesNoQuestion">Are you sure you want to clear the highscore?</h1>
                     <div>
                         <button id="yes_btn">Yes</button>
                         <button id="no_btn">No</button>
                     </div>    
                 </div>
-                <div id="gameOverMenu">
+                <div id="gameOver">
                     <h1>GAME OVER!</h1>
                     <h2 id="go_playerName">playerName</h2>
                     <h2 id="go_score">Score: 0</h2>
@@ -77,18 +93,20 @@
             </div>
             <div id="header">
                 <div id="score">Score: 0</div>
-                <div id="modeName">English Dash</div>
+                <div id="title">English Dash</div>
                 <button id="pause_btn">Pause</button>
             </div>
             <div id="game_camera">
                 <!-- game objects -->
             </div> 
             <div id="footer">
-                <div id="currentWord">Use WASD or the arrow keys to move!</div>
+                <div id="bottomText_div">Use WASD or the arrow keys to move!</div>
             </div>
         </div>
-        <!-- <div>Image by <a href="https://www.freepik.com/free-vector/hand-drawn-animation-frames-element-collection_33591451.htm#query=animal%20sprite%20sheet&position=0&from_view=keyword&track=ais">Freepik</a></div> -->
+        <div>Image by <a href="https://www.freepik.com/free-vector/hand-drawn-animation-frames-element-collection_33591451.htm#query=animal%20sprite%20sheet&position=0&from_view=keyword&track=ais">Freepik</a></div>
+        <div id="inGame">
+             <!--empty  -->
+        </div>
     </div>
-    <script type="module" src="./main.js"></script>
 </body>
 </html>

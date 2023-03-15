@@ -1,85 +1,46 @@
 // localStorage.clear();
 
 
+// import and export hub ---------------------------------------------------
+console.log('begin main.js import and export')
 
-// load game -----------------------------------------------------
-console.log('begin main.js load')
+import {getAudioHandler} from './audio.js';
+export const audioHandler = getAudioHandler();
+audioHandler.audioFolderPath = './audio/'
 
-import {gameObj,Game,playAudio,getSpriteObj} from './classes.js';
+import {getSprites} from './sprites.js';
+export const sprites = getSprites();
 
-//global objects, variables
-const game = new Game(1200,475,0,25,1200,500,'game_camera');
-let player = '';
-let previousMenu = '';
-let currentMenu = 'mainMenu';
-loadGameData();
-updateWordList();
+import {func} from './MiscFunc.js';
 
-console.log('main.js loaded')
+import {Game} from './game.js';
+const game = new Game();
+export {game}
 
-function updateWordList() {
-    const list = document.getElementById('wordList').value;
-    let filePath = '';
-    switch(list) {
-        case 'plurals':
-            filePath = './pluralsList.json'
-            break;
-        case 'animals':
-            filePath = './animals.json'
-            break;
-        case 'flyers':
-            filePath = './flyers.json'
-            break;
-    }
-    fetchFilePath(filePath);
-}
+import { menus } from './menus.js';
 
-async function fetchFilePath(filePath) {
-    try {
-      const response = await fetch(filePath);
-      if (response.ok) {
-        console.log('loaded successfully')
-        const data = await response.text();
-        sessionStorage.setItem('wordList', data);
-      } else {
-        console.log('!!!failed to load');
-      }
-    }
-      catch(error){
-      console.log(error)   //doesnt do anything
-    }
-  }
+console.log('end of main.js import and export')
 
-// load data from local storage ----------------------------------------
-function loadGameData() {
+// load game settings --------------------------------------------------------
+console.log('load game settings')
+loadGameSettings();
+
+function loadGameSettings() {
     loadSettings();
     checkForHighScore();
-    preLoadAudio();
-    // preLoadSprites();
+    menus.main.updateWordList();
 }
 
-// function preLoadSprites() {
-//     sprBird = getSpriteObj('bird')
-//     sprBird.divHeight = 75;
-//     sprBird.divWidth = 75;
-//     sprBird.imgWidth = calcSpriteImgWidth(sprBird);
-//     console.log(sprBird.imgWidth);
-//     sprBird.imgHeight = calcSpriteImgHeight(sprBird);
-//     console.log(sprBird.imgHeight);
-//     sprBird.frameArray = calcSpriteFrameArray(sprBird);
-//     console.log(sprBird.frameArray);
-// }
-
 function loadSettings() {
-    const windowRange = document.getElementById('windowRange');
-    const volumeRange = document.getElementById('volumeRange');
-    const playerInput = document.getElementById('playerName');
     if (localStorage.getItem('playerName') != null) {
-        windowRange.value = Number(localStorage.getItem('windowScale'));
-        volumeRange.value = Number(localStorage.getItem('volume'));  
-        playerInput.value = localStorage.getItem('playerName');
+        menus.settings.gameWindow_range.value = Number(localStorage.getItem('windowScale'));
+        menus.settings.masterVol_range.value = Number(localStorage.getItem('masterVol'));  
+        menus.settings.UIVol_range.value = Number(localStorage.getItem('uiVol'));  
+        menus.settings.effectsVol_range.value = Number(localStorage.getItem('effectsVol'));  
+        menus.settings.voiceVol_range.value = Number(localStorage.getItem('voiceVol'));  
+        menus.main.playerName_input.value = localStorage.getItem('playerName');
     }
-    updateSettings();  
+    menus.settings.update();
 }
 
 function checkForHighScore() {
@@ -89,362 +50,272 @@ function checkForHighScore() {
     }
 }
 
-function preLoadAudio() {
-    playAudio('click',0);
-    playAudio('bounce',0);;
-    playAudio('pop',0);
-    playAudio('ohno',0);
-    playAudio('coin',0);
-    playAudio('wrong',0);
-    playAudio('delete',0);
-    playAudio('sadtrumpet',0);
-    playAudio('update',0);
-}
+console.log('finished loading game settings')
 
-// save data to local storage -------------------------------------------
-function saveGameData() {
+// save game settings -------------------------------------------
+function saveGameSettings() {
     saveSettings();
 }
 
 function saveSettings() {
-    const windowRange = document.getElementById('windowRange');
-    const volumeRange = document.getElementById('volumeRange');
-    const playerInput = document.getElementById('playerName');
-    localStorage.setItem('windowScale', (windowRange.value));
-    localStorage.setItem('volume',volumeRange.value);
-    localStorage.setItem('playerName', playerInput.value);
-
+    localStorage.setItem('windowScale',menus.settings.gameWindow_range.value);
+    localStorage.setItem('masterVol',menus.settings.masterVol_range.value);
+    localStorage.setItem('uiVol',menus.settings.UIVol_range.value);
+    localStorage.setItem('effectsVol',menus.settings.effectsVol_range.value);
+    localStorage.setItem('voiceVol',menus.settings.voiceVol_range.value);
+    localStorage.setItem('playerName', menus.main.playerName_input.value);
 }
 
+window.addEventListener("beforeunload", saveGameSettings, false);
 
-  // main game logic -------------------------------------------------------
-function createWordArray() {
-    const wordArray = JSON.parse(sessionStorage.getItem('wordList'));
-    return randomizeArray(wordArray);
-}
 
-function randomizeArray(array) {
-    const randomArray = [];
-    const length = array.length;
-    for (let i = 0; i < length; i++) {
-        const pair = [i,(Math.random())];
-        randomArray[i] = pair;
-    }
-    randomArray.sort(function(a,b){
-        if (a[1] > b[1]) {
-            return -1;
-          } else {
-            return 1;
-          }
-    });
-    const outputArray = [];
-    for (let i = 0; i < length; i++) {
-        outputArray.push(array[randomArray[i][0]]);
-    }
-    return outputArray;
-}
 
-function startGame() {
-    playAudio('update', game.volume);
-    document.getElementById('floatingMenu').style.backgroundColor = 'transparent';
-    document.getElementById('currentWord').innerHTML = "Use WASD or the arrow keys to move!"
-    eventListeners('add');
-    menuHandler('mainMenu','')
+// game logic ------------------------------------------------------------------------------
 
+game.start = function() {
+    audioHandler.play('update');
+    menus.inGame.bottomText_div.innerHTML = "Use WASD or the arrow keys to move!"
+    game.createOuterBoundry();
     const wordList = createWordArray();
     game.changeWordList(wordList);
 
-    player = game.createGameObj('player','/images/spr_bird.png',200,230,75,75,10,500,true);
-    player.colType = 'block';
-    player.addTextBox('you')
-    player.addSprite(getSpriteObj('bird'));
-    // player.textBox.style.backgroundColor = "white";
-    
-    game.loopTriggers[3] = true;
-    
     game.round = 0;
     game.score = 0;
     game.health = 3;
-    game.resetLoop();
-    game.normal_startGame();
+
+    const playerOne = game.createNewEntity('playerOne','player','/images/spr_bird.png',300,300,1,75,75,5,10,500);
+    playerOne.addTextBox('you');
+    playerOne.addSprite(sprites.get('bird'));
+    
+    buildPlayerControls();
+    game.blockControls = false;
+
+    createLoopEvents();
+    game.startMainLoop();
+    game.runEvent('moveEntities')
+    game.runEvent('spawnInBots');
+    game.runEvent('startRoundOne');
+    game.runEvent('updateSprite')
+
 }
 
-function quitGame() {
-    document.getElementById('floatingMenu').style.backgroundColor = null;
-    game.endGame();
+function createWordArray() {
+    const wordArray = JSON.parse(sessionStorage.getItem('wordList'));
+    return func.randomizeArray(wordArray);
 }
 
-
-// --- menu buttons --------------------------------------------------
-function pauseGame() {
-    game.pauseGame();
-    eventListeners('remove')
-    menuHandler('','pauseMenu');
-    playAudio('click',game.volume);
-}
-
-function unPauseGame() {
-    eventListeners('add');
-    game.unPauseGame();
-    menuHandler('pauseMenu','');
-    playAudio('click',game.volume);
-}
-
-function back() {
-    playAudio('click',game.volume);
-    switch (currentMenu) {
-        case 'settingsMenu':
-            updateSettings();
-            break;
+function buildPlayerControls() {
+    const playerOne = game.entity('playerOne');
+    playerOne.beginAction = function(action) {
+        switch(action) {
+            case 'up':
+                playerOne.yVel = -playerOne.speed;
+                break;
+            case 'down':
+                playerOne.yVel = playerOne.speed;
+                break;
+            case 'left':
+                playerOne.xVel = -playerOne.speed;
+                break;
+            case 'right':
+                playerOne.xVel = playerOne.speed;
+                break;
+        }
     }
-    menuHandler(currentMenu, previousMenu);
+    playerOne.endAction = function(action) {
+        switch(action) {
+            case 'up':
+                if (!game.controls.get('playerOnedown')) {
+                    playerOne.yVel = 0; 
+                }
+                break;
+            case 'down':
+                if (!game.controls.get('playerOneup')) {
+                    playerOne.yVel = 0; 
+                }
+                break;
+            case 'left':
+                if (!game.controls.get('playerOneright')) {
+                    playerOne.xVel = 0; 
+                }
+                break;
+            case 'right':
+                if (!game.controls.get('playerOneleft')) {
+                    playerOne.xVel = 0; 
+                }
+                break;
+        }
+    }
 }
 
-function updateSettings() {
-    const windowRange = document.getElementById('windowRange');
-    const volumeRange = document.getElementById('volumeRange');
-    const game_container = document.getElementById('game_container')
-    const val = windowRange.value/100;
-    game_container.style.transform = "scale(" + val + ")";
-    game.volume = Number(volumeRange.value);
-}
+function newRound() {
+    if (game.round > (game.wordList.length - 1)) {
+      game.round = 0
+      game.changeWordList(randomizeArray(game.wordList));
+    }
+    const question = game.wordList[game.round].question;
+    const answer = game.wordList[game.round].answer;
+    menus.inGame.bottomText_div.innerHTML = question;
+    const answerArray = func.randomizeArray(func.filterOut(Array.from(game.answerSet),answer)); // randomize and remove answer
+    answerArray.unshift(answer); // put answer at top of array
+    const order = func.randomizeArray([5,6,7,8]); // get random order for bot_5 to bot_8
+    game.entity('playerOne').textValue = question;
+    for (let i = 0; i < 4; i++) {
+        const name = 'bot_' + order[i];
+        game.entity(name).textValue = answerArray[i];
+        game.entity(name).speed += 0.15;
+    }
+  }
 
-function openSettingsMenu() {
-    playAudio('click',game.volume);
-    menuHandler(currentMenu,'settingsMenu');
-}
-
-function openMainMenu() {
-    playAudio('click',game.volume);
-    quitGame();
-    menuHandler(currentMenu,'mainMenu');
-}
-
-function openPauseMenu() {
-    playAudio('click',game.volume);
-    menuHandler(currentMenu,'pauseMenu');
-}
-
-function restartGame() {
-    playAudio('click',game.volume);
-    quitGame();
-    menuHandler(currentMenu,'');
-    startGame();
-}
-
-function clearScores() {
-    playAudio('childgoodbye',game.volume);
-    localStorage.setItem('highScore', 0);
-    localStorage.setItem('hsName','');
-    menuHandler(currentMenu,'settingsMenu');
-}
-
-function clickClearScores() {
-    playAudio('click',game.volume); 
-    menuHandler(currentMenu, 'yesNoMenu')   
-}
-
-export function gameOver() {
-    document.getElementById('go_playerName').innerHTML = document.getElementById('playerName').value;
-    document.getElementById('go_score').innerHTML = "Score: " + game.score;
+function gameOver() {
+    console.log('gameOver')
+    menus.gameOver.playerName_h2.innerHTML = menus.main.playerName_input.value;
+    menus.gameOver.score_h2.innerHTML = "Score: " + game.score;
     const text = "Highscore: " + localStorage.getItem('highScore') + " " + localStorage.getItem('hsName');
-    document.getElementById('go_highScore').innerHTML = text;
-    menuHandler('','gameOverMenu');
+    menus.gameOver.highScore_h2.innerHTML = text;
+    menus.gameOver.open();
     if (localStorage.getItem('highScore') < game.score) {
         localStorage.setItem('highScore', game.score)
-        localStorage.setItem('hsName', ("(" + document.getElementById('playerName').value + ")"));
-        setTimeout(()=>{playAudio('wow',game.volume);},200);
+        localStorage.setItem('hsName', ("(" + menus.main.playerName_input.value + ")"));
+        setTimeout(()=>{audioHandler.play('wow');},200);
     } else {
-        setTimeout(()=>{playAudio('childuhoh',game.volume);},200);
+        setTimeout(()=>{audioHandler.play('childuhoh');},200);
     }
-    setTimeout(()=>{game.pauseGame();},500)
+    // setTimeout(()=>{game.stopMainLoop();},500)
 }
 
 
+// build game loop events
 
-export function menuHandler(from_id,to_id) {
-    if (from_id != '') {
-        const from = document.getElementById(from_id);
-        switch (from_id) {
-            case 'settingsMenu':
-                from.style.display = 'none';
-                break;
-            case 'pauseMenu':
-                from.style.display = 'none';
-                previousMenu = from_id;
-                break;
-            case 'mainMenu':
-                from.style.display = 'none';
-                previousMenu = from_id;
-                break;
-            case 'gameOverMenu':
-                from.style.display = 'none';
-                previousMenu = from_id;
-                break;
-            case 'yesNoMenu':
-                from.style.display = 'none';
-                break;
+function createLoopEvents() {
+    // move entities and check for collision 
+    const moveEntities = game.buildEvent('moveEntities');
+    moveEntities.counter = -1; // allows the event to run an infinite number of times
+    moveEntities.delay = 0; // no buffer
+    moveEntities.buffer = 0; // no delay
+    moveEntities.eachEvent = function() {
+        const entityArray = Array.from(game.entities.values()); // to be used in the collision detection
+        for (const entity of game.entities.values()) {
+            
+            if (!entity.isDead && (entity.xVel != 0 || entity.yVel != 0)) {
+                
+                let result = game.moveEntity('x',entity,entityArray);
+                if (result != false && entity.isSpawnMode == false) {
+                    collisionHandler(entity, result);    
+                }
+                entity.updatePos();
+                result = game.moveEntity('y',entity,entityArray);
+                if (result != false && entity.isSpawnMode == false) {
+                    collisionHandler(entity, result);    
+                }
+                entity.updatePos();
+            }
+        }   
+    }
+    function collisionHandler(entity_1, result) {
+        const axis = result[1];
+        const entity_2 = result[0];
+        if ((entity_1.group != 'barrier') && (entity_2.group != 'barrier') && (entity_1.group == 'player' || entity_2.group == 'player')) {
+            let answer;
+            if (entity_1.group == 'bot') {
+                respawnBot(entity_1);
+                answer = entity_1.textValue;
+            } else {
+                respawnBot(entity_2);
+                answer = entity_2.textValue;
+            } 
+            if (answer == game.wordList[game.round].answer) {
+                audioHandler.play('coin');
+                game.score +=1;
+                game.round +=1;
+                newRound();
+            } else {
+                audioHandler.play('wrong');
+                game.health -= 1;
+                game.runEventXTimes('hurtAnimation', 3);
+                if (game.health == 0) {
+                menus.inGame.bottomText_div.innerHTML = '';
+                gameOver();
+                } 
+            }
+        } else {
+            if (entity_1.group == 'bot') {
+                game.colBounce(axis, entity_1, entity_2);
+              } else {
+                game.colBlock(axis, entity_1);
+              }
         }
-    } else {
-        document.getElementById('floatingMenu').style.display = 'flex'
     }
-
-    if (to_id != '') {
-        currentMenu = to_id;
-        const to = document.getElementById(to_id);
-        switch (to_id) {
-            case 'settingsMenu':
-                to.style.display = 'flex';
-                break;
-            case 'pauseMenu':
-                to.style.display = 'flex';
-                break;
-            case 'mainMenu':
-                to.style.display = 'flex';
-                break;
-            case 'gameOverMenu':
-                to.style.display = 'flex';
-                break;
-            case 'yesNoMenu':
-                to.style.display = 'flex';
-                break;
+    function respawnBot(entity) {
+        entity.isSpawnMode = true;
+        entity.xPos = game.width + 10;
+        entity.yPos = game.height / 2;
+        let xVal = func.rndBetween(-(entity.speed),-1);
+        let yVal = func.rndBetween(-(entity.speed),entity.speed)
+        if (Math.abs(xVal / yVal) < 0.30) {
+            xVal = -5;
+            yVal = 0;
+            console.log('ahhh')
         }
-    } else {
-        document.getElementById('floatingMenu').style.display = 'none';
+        entity.xVel = xVal;
+        entity.yVel = yVal;
     }
-}
 
-
-
-// on & off event listeners
-function eventListeners(call) {
-    if (call == 'add') {
-        document.addEventListener("keydown", keysDown);
-        document.addEventListener("keyup", keysUp);
-        document.getElementById('pause_btn').addEventListener('click', pauseGame)
-    }   else {
-        document.removeEventListener("keydown", keysDown);
-        document.removeEventListener("keyup", keysUp);
-        document.getElementById('pause_btn').removeEventListener('click', pauseGame)
+    // spawn in the bots
+    const spawnInBots = game.buildEvent('spawnInBots');
+    spawnInBots.counter = 4;
+    spawnInBots.buffer = .5;
+    spawnInBots.delay = 0;
+    spawnInBots.eachEvent = function() {
+        console.log('spawnInBots')
+        let name = 'bot_' + game.entities.size;
+        const xPos = (game.width + 10) 
+        const yPos = (game.height / 2) - (40/2);
+        const entity = game.createNewEntity(name,'bot','/images/bird2.png',xPos,yPos,1,50,50,5,1,500);
+        entity.addSprite(sprites.get('bird'));
+        entity.addTextBox('');
+        entity.xVel = -3;
     }
-}
-
-// permanent event listeners ----------------------------------------------------
-document.getElementById('resume_btn').addEventListener('click', unPauseGame);
-document.getElementById('settingsBack_btn').addEventListener('click', back);
-document.getElementById('main_settings_btn').addEventListener('click', openSettingsMenu);
-document.getElementById('pause_settings_btn').addEventListener('click', openSettingsMenu);
-document.getElementById('play_btn').addEventListener('click', startGame);
-document.getElementById('pause_quit_btn').addEventListener('click', openMainMenu);
-document.getElementById('pause_restart_btn').addEventListener('click', restartGame);
-document.getElementById('go_quit_btn').addEventListener('click', openMainMenu);
-document.getElementById('go_restart_btn').addEventListener('click', restartGame);
-document.getElementById('clearScores_btn').addEventListener('click', clickClearScores);
-document.getElementById('yes_btn').addEventListener('click', clearScores);
-document.getElementById('no_btn').addEventListener('click', openSettingsMenu);
-document.getElementById('wordList').addEventListener('input', updateWordList);
-window.addEventListener("beforeunload", saveGameData, false);
-
-
-// keyboard controls
-var keysDown = function(e) {
-    e = e || window.event;
-    switch (e.key) {
-        case 'ArrowUp':
-            player.upGo();
-            break;
-        case 'ArrowDown':
-            player.downGo();
-            break;
-        case 'ArrowLeft':
-            player.leftGo();
-            break;
-        case 'ArrowRight':
-            player.rightGo();
-            break;
-        case 'w':
-            player.upGo();
-            break;
-        case 's':
-            player.downGo();
-            break;
-        case 'a':
-            player.leftGo();
-            break;
-        case 'd':
-            player.rightGo();
-            break;    
-    }
-}
-
-var keysUp = function(e) {
-    e = e || window.event;
-    switch (e.key) {
-        case 'ArrowUp':
-            player.upStop();
-            break;
-        case 'ArrowDown':
-            player.downStop();
-            break;
-        case 'ArrowLeft':
-            player.leftStop();
-            break;
-        case 'ArrowRight':
-            player.rightStop();
-            break;
-        case 'w':
-            player.upStop();
-            break;
-        case 's':
-            player.downStop();
-            break;
-        case 'a':
-            player.leftStop();
-            break;
-        case 'd':
-            player.rightStop();
-            break;
-        case 'Escape':
-            pauseGame();
-            break;
-    }
-}
-
-// ---- sprites -----------------
-
-function calcSpriteImgWidth(sprite) {
-    return sprite.divWidth * (sprite.sheetWidth / sprite.frameWidth);
-  }
-  function calcSpriteImgHeight(sprite) {
-    return sprite.divHeight * (sprite.sheetHeight / sprite.frameHeight);
-  }
-  
-  function calcSpriteFrameArray(sprite) {
-    let framesPerAni = sprite.framesPerAni;
-    const aniArray = [];
-    for (let aniIndex = 1; aniIndex <= sprite.numOfAnimations; aniIndex++) {
-      const frameArr = [];
-      let x = sprite.xZero;
-      let y = sprite.yZero;
-      let columnNum = 1;
-      for (let frameIndex = 1; frameIndex <= framesPerAni; frameIndex++ ) {
-        let xyArr = [];
-        if (columnNum > sprite.columns ) {
-          x = sprite.xZero;
-          y = sprite.divHeight + sprite.yBetween;
-          columnNum = 1;
+    
+    // start round one and scatter the direction of the bots
+    const startRoundOne = game.buildEvent('startRoundOne');
+    startRoundOne.counter = 1;
+    startRoundOne. buffer = 0;
+    startRoundOne.delay = 3;
+    startRoundOne.eachEvent = function() {
+        console.log('startRoundOne')
+        newRound();
+        for (let i = 5; i < 9 ;i++) {
+            game.entity('bot_' + i).xVel = func.rndBetween(-2,2)
+            game.entity('bot_' + i).yVel = func.rndBetween(-2,2)
         }
-        xyArr[0] = x;
-        xyArr[1] = y
-        frameArr[frameIndex-1] = xyArr;
-        x += sprite.xBetween + sprite.divWidth;
-        columnNum += 1;
-      }
-      aniArray[aniIndex-1] = frameArr;
     }
-      return aniArray;
-  }
-  
+     // hurt animation
+    const hurtAnimation = game.buildEvent('hurtAnimation');
+    hurtAnimation.buffer = .2;
+    hurtAnimation.counter = 3;
+    hurtAnimation.delay = 0;
+    hurtAnimation.eachEvent = function() {
+        console.log('hurt animation')
+        game.cam_div.style.backgroundColor = "rgb(238, 153, 153)";
+        game.cam_div.style.backgroundBlendMode = 'overlay';
+        setTimeout(()=>{game.cam_div.style.backgroundBlendMode = null;},100)
+    }
 
+    // sprites
+    const updateSprite = game.buildEvent('updateSprite');
+    updateSprite.counter = -1;
+    updateSprite.buffer = 0.03;
+    updateSprite.delay = 0;
+    updateSprite.eachEvent = function() {
+        // console.log('sprites')
+        for (const entity of game.entities.values()) { 
+            if (entity.sprite) {
+                game.spriteHandler(entity);    
+            }    
+        }   
+    }
+
+} // end of create events
 
 
