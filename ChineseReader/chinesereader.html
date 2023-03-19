@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/com_topnav.css" />
-    <link rel="stylesheet" type="text/css" href="../css/projects_styles.css" />
-    <link rel="stylesheet" type="text/css" href="../css/com_scrollbar.css" />
-    <title>Joseph Heaton - Projects</title>
+    <link rel="stylesheet" type="text/css" href="/css/com_topnav.css" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/com_scrollbar.css" />
+    <script type="text/javascript" src="./chinesereader.js"></script>
+    <title>Document</title>
 </head>
 <body>
     <div id="topnav_container">
@@ -18,16 +19,21 @@
                 <a href="/" id="lang22" class="navlink">About</a>
                 <a href="/pages/gallery.html" id="lang4" class="navlink">Photos</a>
                 <a href="/pages/professional.html" id="lang6" class="navlink">Professional</a>
-                <a href="" id="lang8" class="navlink">Projects</a>
+                <a href="/pages/projects.html" id="lang8" class="navlink">Projects</a>
                 <a href="/" id="lang10" class="navlink">Misc</a>
             </div>
         </div>
-    </div>   
-    <div id="main_content">
-        <h1>Games</h1>
-        <a href="/games/EnglishDash/englishDash.html" id="englishDash">English Dash</a>
-        <h1>Tools</h1>
-        <a href="/ChineseReader/chinesereader.html" id="chinesereader">Chinese Reader</a>
-    </div>
+    </div>  
+    <div id="main_container">
+        <div>
+            <input class="input" name="rawtext" id="rawtext_input" type="text" value="我喜歡吃熱狗">
+        </div>
+        <div id="output">
+        </div>
+        <button id="convert_btn" onClick="convert()">Convert</button>
+    </div> 
+    <script>
+        loadDictionary();
+    </script>
 </body>
 </html>

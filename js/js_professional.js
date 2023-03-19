@@ -369,6 +369,8 @@ function sliderUpdate() {
 }
 
 function printResume_div() {
+  document.getElementById("myRange").value = 100;
+  sliderUpdate();
   window.print();
 }
 
