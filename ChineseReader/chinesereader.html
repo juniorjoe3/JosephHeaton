@@ -25,12 +25,9 @@
         </div>
     </div>  
     <div id="main_container">
-        <div>
-            <input class="input" name="rawtext" id="rawtext_input" type="text" value="我喜歡吃熱狗">
-        </div>
+        <input onInput="convert()" class="input" name="rawtext" id="rawtext_input" type="text" value="">
         <div id="output">
         </div>
-        <button id="convert_btn" onClick="convert()">Convert</button>
     </div> 
     <script>
         loadDictionary();
