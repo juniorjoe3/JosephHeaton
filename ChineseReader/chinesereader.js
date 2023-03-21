@@ -21,15 +21,9 @@ async function loadDictionary() {
 
 function buildDict() {
     const dictArray = JSON.parse(dictString);
-
     for (let i = 0; i < dictArray.length; i++) {
         dictMap.set(dictArray[i][0],dictArray[i][1]);   
     }
-
-    let str = "12345"
-    str = str.slice(3,str.length)
-
-    console.log(str)
 }
 
 function clearOutput() {
